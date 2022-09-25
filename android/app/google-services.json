@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "161320931865",
+    "project_id": "nane-14017",
+    "storage_bucket": "nane-14017.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:161320931865:android:07d225628b55a9e24d9088",
+        "android_client_info": {
+          "package_name": "com.daxno.nanny.nanny_co"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "161320931865-bhn052tiig7ofel6sb8sc57dv0u283m6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNP309P5alhjpTViwSBORFkA6ZPaLJs0I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "161320931865-bhn052tiig7ofel6sb8sc57dv0u283m6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
