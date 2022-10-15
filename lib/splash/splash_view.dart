@@ -1,24 +1,46 @@
+import 'dart:io';
+
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:nanny_co/common/role_selection_view.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
 import 'package:nanny_co/onboarding/onboarding_view.dart';
 import 'package:nanny_co/parent/parent_bottombar_view.dart/parent_bottombar_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class splash_view extends StatefulWidget {
-  const splash_view({Key, key}) : super(key: key);
+class SplashView extends StatefulWidget {
+  const SplashView({Key, key}) : super(key: key);
 
   @override
-  _splash_viewState createState() => _splash_viewState();
+  _SplashViewState createState() => _SplashViewState();
 }
 
-class _splash_viewState extends State<splash_view> {
+class _SplashViewState extends State<SplashView> {
   var chk;
+
+  getTokens() async {
+    String? fireBaseToken;
+    String? deviceID;
+    await FirebaseMessaging.instance.getToken().then((value) => fireBaseToken = value);
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      deviceID = androidInfo.id;
+    } else {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      deviceID = iosInfo.identifierForVendor;
+    }
+
+    SettingsProvider.current.saveTokens(deviceToken: deviceID, fireBaseToken: fireBaseToken);
+  }
+
   @override
   void initState() {
+    getTokens();
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         Future.delayed(Duration(milliseconds: 800)).then((value) {

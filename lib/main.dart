@@ -1,9 +1,18 @@
+import 'dart:io';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
+import 'package:nanny_co/shared_cubit/settings_hive/settings_cubit_hive.dart';
 import 'package:nanny_co/splash/splash_view.dart';
+import 'package:path_provider/path_provider.dart';
+
+import 'instance.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -62,13 +71,21 @@ String storagePath = '';
 FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await initAppModule();
+  Directory storageDirectory = (await getApplicationDocumentsDirectory());
+
+  final storage = await HydratedStorage.build(storageDirectory: storageDirectory);
+
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
-  await FirebaseMessaging.instance.getToken().then((value) => print(value));
-
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  HydratedBlocOverrides.runZoned(
+      () => runApp(MultiBlocProvider(providers: [
+            BlocProvider.value(value: injector.get<AuthCubit>()),
+            BlocProvider.value(value: injector.get<SettingsHiveCubit>()),
+          ], child: const MyApp())),
+      storage: storage);
 }
 
 class MyApp extends StatefulWidget {
@@ -94,7 +111,7 @@ class _MyAppState extends State<MyApp> {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(primaryColor: Color(0xff35034C)),
-      home: splash_view(),
+      home: SplashView(),
     );
   }
 }

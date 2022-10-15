@@ -1,57 +1,48 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/common/forgot_password_view.dart';
+import 'package:nanny_co/common/widget/ProgressPopUp.dart';
 import 'package:nanny_co/constants.dart';
-import 'package:nanny_co/nany/auth_view/Controller/Auth_controller.dart';
+import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/nany_signup_view.dart';
 import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
-import 'package:nanny_co/nany/widget/TextFeild.dart';
-
-import '../../common/widget/ProgressPopUp.dart';
+import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 
 class nany_signin_view extends StatefulWidget {
-  const nany_signin_view({Key ,key}) : super(key: key);
+  const nany_signin_view({Key, key}) : super(key: key);
 
   @override
   _nany_signin_viewState createState() => _nany_signin_viewState();
 }
 
 class _nany_signin_viewState extends State<nany_signin_view> {
-  var obscure=true;
+  var obscure = true;
 
-  GlobalKey<FormState> formkey = new GlobalKey();
-  TextEditingController password = new TextEditingController();
-  TextEditingController email = new TextEditingController();
+  GlobalKey<FormState> formkey = GlobalKey();
+  TextEditingController password = TextEditingController();
+  TextEditingController email = TextEditingController();
   double height = 40.0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SizedBox(
         height: sh,
         width: sw,
         child: Stack(
           children: [
             Container(
-              height: sh*0.6,
+              height: sh * 0.6,
               width: sw,
-              decoration: BoxDecoration(
-                  image: DecorationImage(
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/images/Group 723.png')
-                  )
-              ),
+              decoration: const BoxDecoration(image: DecorationImage(fit: BoxFit.fill, image: AssetImage('assets/images/Group 723.png'))),
             ),
             Positioned(
               bottom: 0,
               child: Container(
-                height: sh*0.46,
+                height: sh * 0.46,
                 width: sw,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.only(topLeft: Radius.circular(50),topRight: Radius.circular(50))
-                ),
+                padding: const EdgeInsets.all(20),
+                decoration: const BoxDecoration(
+                    color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))),
                 child: SingleChildScrollView(
                   child: Form(
                     key: formkey,
@@ -60,24 +51,21 @@ class _nany_signin_viewState extends State<nany_signin_view> {
                       children: [
                         Text(
                           'Login As Nanny',
-                          style: GoogleFonts.raleway(
-                              color: Theme.of(context).primaryColor,
-                              fontWeight: FontWeight.bold ,
-                              fontSize: 24
-                          ),
+                          style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 24),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Text(
                           'Please enter details to continue.',
-                          style: GoogleFonts.raleway(
-                              color: Colors.grey.shade400,
-                              fontSize: 14
-                          ),
+                          style: GoogleFonts.raleway(color: Colors.grey.shade400, fontSize: 14),
                         ),
-                        SizedBox(height: 20,),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Container(
                           height: height,
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
                             validator: (String? value) {
                               if (value == '') {
@@ -91,35 +79,29 @@ class _nany_signin_viewState extends State<nany_signin_view> {
                             controller: email,
                             decoration: InputDecoration(
                               hintText: 'Enter Username',
-                              suffixIcon: Icon(Icons.person,color: Colors.grey.shade400,),
-                              hintStyle:GoogleFonts.raleway(
-                                  color: Colors.grey.shade400,
-                                  fontSize: 14
+                              suffixIcon: Icon(
+                                Icons.person,
+                                color: Colors.grey.shade400,
                               ),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                              hintStyle: GoogleFonts.raleway(color: Colors.grey.shade400, fontSize: 14),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.grey.shade400)
-                              ),
-                              focusedBorder:  OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.grey.shade400)
-                              ),
-                              enabledBorder:  OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.grey.shade400)
-                              ),
-                              disabledBorder:  OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.grey.shade400)
-                              ),
+                                  borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey.shade400)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey.shade400)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey.shade400)),
+                              disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey.shade400)),
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Container(
                           height: height,
-                          padding: EdgeInsets.symmetric(horizontal: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
                             controller: password,
                             obscureText: obscure,
@@ -132,86 +114,84 @@ class _nany_signin_viewState extends State<nany_signin_view> {
                             },
                             decoration: InputDecoration(
                               hintText: 'Password',
-                              suffixIcon: InkWell(onTap:(){
-                                setState(() {
-                                  obscure=!obscure;
-                                });
-                              },child: Icon(Icons.remove_red_eye,color: Colors.grey.shade400,)),
-                              hintStyle:GoogleFonts.raleway(
-                                  color: Colors.grey.shade400,
-                                  fontSize: 14
-                              ),
-                              contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                              suffixIcon: InkWell(
+                                  onTap: () {
+                                    setState(() {
+                                      obscure = !obscure;
+                                    });
+                                  },
+                                  child: Icon(
+                                    Icons.remove_red_eye,
+                                    color: Colors.grey.shade400,
+                                  )),
+                              hintStyle: GoogleFonts.raleway(color: Colors.grey.shade400, fontSize: 14),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                               border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.grey.shade400)
-                              ),
-                              focusedBorder:  OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.grey.shade400)
-                              ),
-                              enabledBorder:  OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.grey.shade400)
-                              ),
-                              disabledBorder:  OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                  borderSide: BorderSide(color: Colors.grey.shade400)
-                              ),
+                                  borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey.shade400)),
+                              focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey.shade400)),
+                              enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey.shade400)),
+                              disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(10), borderSide: BorderSide(color: Colors.grey.shade400)),
                             ),
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               InkWell(
-                                onTap:(){
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>forgot_password_view(role: 'nany',)));
+                                onTap: () {
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                      builder: (context) => forgot_password_view(
+                                            role: 'nany',
+                                          )));
                                 },
                                 child: Text(
                                   ' Forgot Password?',
-                                  style: GoogleFonts.raleway(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.bold
-                                  ),
+                                  style:
+                                      GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontSize: 12, fontWeight: FontWeight.bold),
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        SizedBox(height: 10,),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: ElevatedButton(onPressed: (){
-                            if (formkey.currentState!.validate()) {
-                              ProgressPopup(context);
-                              nanyFirebaseAuthController()
-                                  .signInWithEmailAndPassword(
-                                  email.text, password.text,context)
-                                  .then((value) {
-                                if (value == true) {
-                                  setState(() {
-                                    Navigator.of(context).pushAndRemoveUntil(MaterialPageRoute(builder: (context)=>nanny_bottombar_view()),(route) => false,);
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                if (formkey.currentState!.validate()) {
+                                  ProgressPopup(context);
+                                  injector.get<AuthCubit>().signInWithEmailAndPassword(email.text, password.text, context).then((value) {
+                                    if (value == true) {
+                                      setState(() {
+                                        Navigator.of(context).pushAndRemoveUntil(
+                                          MaterialPageRoute(builder: (context) => const nanny_bottombar_view()),
+                                          (route) => false,
+                                        );
+                                      });
+                                    } else {
+                                      Navigator.pop(context);
+                                    }
                                   });
-
                                 } else {
-                                  Navigator.pop(context);
+                                  setState(() {
+                                    height = 60;
+                                  });
                                 }
-                              });
-                            } else {
-                              setState(() {
-                                height = 60;
-                              });
-                            }},
+                              },
                               style: ElevatedButton.styleFrom(
-                                  primary: Theme.of(context).primaryColor,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))
-                              ),
-                              child:Padding(
+                                  backgroundColor: Theme.of(context).primaryColor,
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10))),
+                              child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Center(
                                   child: Row(
@@ -224,38 +204,51 @@ class _nany_signin_viewState extends State<nany_signin_view> {
                                           fontSize: 14,
                                         ),
                                       ),
-                                      Icon(Icons.arrow_forward,color: Colors.white,size: 20,)
+                                      const Icon(
+                                        Icons.arrow_forward,
+                                        color: Colors.white,
+                                        size: 20,
+                                      )
                                     ],
                                   ),
                                 ),
                               )),
-                        ), SizedBox(height: 10,),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
                         Container(
-                          padding: EdgeInsets.symmetric(horizontal: 20),
-                          child: ElevatedButton(onPressed: (){
-                            setState(() {
-                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>nany_signup_view()));
-                            });
-                          },
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: ElevatedButton(
+                              onPressed: () {
+                                setState(() {
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const NannySignupView()));
+                                });
+                              },
                               style: ElevatedButton.styleFrom(
                                   elevation: 0,
-                                  primary: Colors.white,
-                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10),side: BorderSide(width: 1,color: Theme.of(context).primaryColor))
-                              ),
-                              child:Padding(
+                                  backgroundColor: Colors.white,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                      side: BorderSide(width: 1, color: Theme.of(context).primaryColor))),
+                              child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 10.0),
                                 child: Center(
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'New to Nanny App Sign Up here',
+                                        ' to Nanny App Sign Up here',
                                         style: GoogleFonts.raleway(
-                                          color:Theme.of(context).primaryColor,
+                                          color: Theme.of(context).primaryColor,
                                           fontSize: 12,
                                         ),
                                       ),
-                                      Icon(Icons.arrow_forward,color:Theme.of(context).primaryColor,size: 20,)
+                                      Icon(
+                                        Icons.arrow_forward,
+                                        color: Theme.of(context).primaryColor,
+                                        size: 20,
+                                      )
                                     ],
                                   ),
                                 ),
