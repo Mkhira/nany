@@ -3,53 +3,35 @@ import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
 import 'package:flutter_countdown_timer/flutter_countdown_timer.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:nanny_co/common/chnagePassord.dart';
 import 'package:nanny_co/common/widget/ProgressPopUp.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/nany_signin_view.dart';
+import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
 import 'package:nanny_co/nany/widget/TextFeild.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
+import 'package:nanny_co/parent/parent_bottombar_view.dart/parent_bottombar_view.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 
 import '../constants.dart';
 
-class ForgotPasswordOtpView extends StatefulWidget {
-  ForgotPasswordOtpView({Key? key, this.role, required this.email}) : super(key: key);
-  var role;
+class ChangePasswordView extends StatefulWidget {
+  ChangePasswordView({Key? key, required this.email, required this.role}) : super(key: key);
   final String email;
+  final String role;
 
   @override
-  State<ForgotPasswordOtpView> createState() => _ForgotPasswordOtpViewState();
+  State<ChangePasswordView> createState() => _ChangePasswordViewState();
 }
 
-class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
-  TextEditingController otp = TextEditingController();
-  CountdownTimerController? controller;
-  int endTime = DateTime.now().millisecondsSinceEpoch + 1000 * 40;
-  bool resend = false;
-  @override
-  void initState() {
-    super.initState();
-    controller = CountdownTimerController(endTime: endTime, onEnd: onEnd);
-  }
-
-  void onEnd() {
-    setState(() {
-      resend = true;
-    });
-  }
-
-  @override
-  void dispose() {
-    controller!.dispose();
-    super.dispose();
-  }
+class _ChangePasswordViewState extends State<ChangePasswordView> {
+  TextEditingController newPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    print(widget.role);
     return Scaffold(
       body: SizedBox(
         height: sh,
@@ -88,8 +70,7 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                         height: 10,
                       ),
                       Text(
-                        '''Please enter the OTP which we sent you on 
-                 your registered number''',
+                        '''Please enter the New password ''',
                         style: GoogleFonts.nanumGothic(color: Colors.grey.shade400, fontSize: 14),
                       ),
                       SizedBox(
@@ -102,7 +83,7 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                             height: 80,
                             width: MediaQuery.of(context).size.width / 1.2,
                             child: TextFormField(
-                              controller: otp,
+                              controller: newPassword,
                               maxLength: 4,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 20),
@@ -119,49 +100,20 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                           ),
                         ],
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            CountdownTimer(
-                              controller: controller,
-                              widgetBuilder: (_, time) {
-                                if (time == null) {
-                                  return Text('00');
-                                }
-                                return Text(' ${time.sec}');
-                              },
-                              onEnd: onEnd,
-                              endTime: endTime,
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: sh * 0.03,
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: Text(
-                          '''Resend OTP''',
-                          style: GoogleFonts.nanumGothic(color: Colors.white, fontSize: 14),
-                        ),
-                        style: TextButton.styleFrom(backgroundColor: resend ? Theme.of(context).primaryColor : Colors.grey),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
                       Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton(
                             onPressed: () {
                               ProgressPopup(context);
 
-                              injector.get<AuthCubit>().verifyCode(email: widget.email, otp: otp.text, context: context).then((value) {
+                              injector
+                                  .get<AuthCubit>()
+                                  .changePassword(email: widget.email, password: newPassword.text, context: context)
+                                  .then((value) {
                                 value == true
-                                    ? Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(builder: (context) => ChangePasswordView(email: widget.email, role: widget.role)))
+                                    ? Navigator.of(context).pushReplacement(MaterialPageRoute(
+                                        builder: (context) =>
+                                            widget.role != 'nany' ? const nany_signin_view() : const parent_signin_view()))
                                     : Navigator.pop(context);
                               });
                             },

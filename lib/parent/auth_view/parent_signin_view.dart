@@ -150,7 +150,7 @@ class _parent_signin_viewState extends State<parent_signin_view> {
                                 InkWell(
                                   onTap: () {
                                     Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                        builder: (context) => forgot_password_view(
+                                        builder: (context) => ForgotPasswordView(
                                               role: 'parent',
                                             )));
                                   },

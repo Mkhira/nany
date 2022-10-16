@@ -148,7 +148,7 @@ class _nany_signin_viewState extends State<nany_signin_view> {
                               InkWell(
                                 onTap: () {
                                   Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                      builder: (context) => forgot_password_view(
+                                      builder: (context) => ForgotPasswordView(
                                             role: 'nany',
                                           )));
                                 },
