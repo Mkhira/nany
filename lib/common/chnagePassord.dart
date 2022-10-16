@@ -84,7 +84,6 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                             width: MediaQuery.of(context).size.width / 1.2,
                             child: TextFormField(
                               controller: newPassword,
-                              maxLength: 4,
                               decoration: InputDecoration(
                                 contentPadding: const EdgeInsets.symmetric(horizontal: 20),
                                 border: OutlineInputBorder(
