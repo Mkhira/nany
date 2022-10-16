@@ -4,7 +4,10 @@ import 'package:nanny_co/busoness_layer/use_case/login_use_case.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 import 'package:nanny_co/shared_cubit/settings_hive/settings_cubit_hive.dart';
 
+import 'busoness_layer/use_case/change_password_use_case.dart';
+import 'busoness_layer/use_case/check_email_use_case.dart';
 import 'busoness_layer/use_case/register_use_case.dart';
+import 'busoness_layer/use_case/verify_use_case.dart';
 import 'data/data_source/remote_data_source.dart';
 import 'data/network/api.dart';
 import 'data/network/dio_factory.dart';
@@ -42,4 +45,8 @@ Future<void> initAppModule() async {
   //UseCase
   injector.registerLazySingleton<LoginUseCase>(() => LoginUseCase(injector()));
   injector.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(injector()));
+  injector.registerLazySingleton<ChangePasswordUseCase>(() => ChangePasswordUseCase(injector()));
+  injector.registerLazySingleton<ChangePasswordUseCase>(() => ChangePasswordUseCase(injector()));
+  injector.registerLazySingleton<CheckEmailUseCase>(() => CheckEmailUseCase(injector()));
+  injector.registerLazySingleton<VerifyUseCase>(() => VerifyUseCase(injector()));
 }

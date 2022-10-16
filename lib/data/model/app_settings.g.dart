@@ -10,9 +10,13 @@ AppSettings _$AppSettingsFromJson(Map<String, dynamic> json) => AppSettings(
       userData: json['userData'] == null
           ? null
           : AuthDataResponse.fromJson(json['userData'] as Map<String, dynamic>),
-    );
+    )
+      ..fireBaseToken = json['fireBaseToken'] as String?
+      ..deviceToken = json['deviceToken'] as String?;
 
 Map<String, dynamic> _$AppSettingsToJson(AppSettings instance) =>
     <String, dynamic>{
       'userData': instance.userData?.toJson(),
+      'fireBaseToken': instance.fireBaseToken,
+      'deviceToken': instance.deviceToken,
     };
