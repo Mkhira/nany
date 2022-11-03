@@ -1,6 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nanny_co/busoness_layer/use_case/get_cities_use_case.dart';
 import 'package:nanny_co/busoness_layer/use_case/login_use_case.dart';
+import 'package:nanny_co/busoness_layer/use_case/update_use_case/sister_update_use_case.dart';
+import 'package:nanny_co/busoness_layer/use_case/update_use_case/update_parent_use_ase.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 import 'package:nanny_co/shared_cubit/settings_hive/settings_cubit_hive.dart';
 
@@ -48,4 +51,7 @@ Future<void> initAppModule() async {
   injector.registerLazySingleton<ChangePasswordUseCase>(() => ChangePasswordUseCase(injector()));
   injector.registerLazySingleton<CheckEmailUseCase>(() => CheckEmailUseCase(injector()));
   injector.registerLazySingleton<VerifyUseCase>(() => VerifyUseCase(injector()));
+  injector.registerLazySingleton<GetCitiesUseCase>(() => GetCitiesUseCase());
+  injector.registerLazySingleton<UpdateParentUseCase>(() => UpdateParentUseCase());
+  injector.registerLazySingleton<SisterUpdateUseCase>(() => SisterUpdateUseCase());
 }

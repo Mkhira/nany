@@ -67,6 +67,62 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
+  Future<LoginResponseModel> updateSister(
+    token,
+    postUpdateSisterProfileModel,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(postUpdateSisterProfileModel.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/nanny/update-profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = LoginResponseModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<LoginResponseModel> updateParent(
+    token,
+    postUpdateParent,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(postUpdateParent.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/nanny/update-profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = LoginResponseModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
   Future<LoginResponseModel> verifyCode(verifyCodeModel) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
@@ -115,12 +171,12 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<BasicResponseModel> changePassword(checkEmailModel) async {
+  Future<BasicResponseModel> changePassword(changePassword) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    _data.addAll(checkEmailModel.toJson());
+    _data.addAll(changePassword.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<BasicResponseModel>(Options(
       method: 'POST',
@@ -135,6 +191,29 @@ class _AppServiceClient implements AppServiceClient {
             )
             .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BasicResponseModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<CitiesModel> getCities() async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{};
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<CitiesModel>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/cities',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = CitiesModel.fromJson(_result.data!);
     return value;
   }
 

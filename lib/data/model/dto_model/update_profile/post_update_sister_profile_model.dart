@@ -1,18 +1,15 @@
 import 'package:json_annotation/json_annotation.dart';
 
-part 'auth_data_response.g.dart';
+part 'post_update_sister_profile_model.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class AuthDataResponse {
-  AuthDataResponse({
-    required this.id,
+class PostUpdateSisterProfileModel {
+  PostUpdateSisterProfileModel({
     this.image,
     this.fullName,
     this.userName,
     required this.email,
     required this.phone,
-    required this.jwtToken,
-    required this.appType,
     this.dob,
     this.cityId,
     this.gender,
@@ -27,28 +24,22 @@ class AuthDataResponse {
     this.specialNeeds,
     this.idType,
     this.idNumber,
-    this.expiredDate,
     this.lessonsType,
     this.minPrice,
     this.maxPrice,
     this.noOfChildren,
   });
-
-  final int id;
-  final String? image;
   final String? fullName;
   final String? userName;
   final String email;
   final String phone;
-  final String jwtToken;
-  final String appType;
   final DateTime? dob;
+  final String? image;
   final int? cityId;
   final String? gender;
   final String? lat;
   final String? lng;
   final String? address;
-  final String? sitterType;
   final String? courseName;
   final String? universityName;
   final int? educationCity;
@@ -56,13 +47,13 @@ class AuthDataResponse {
   final String? specialNeeds;
   final String? idType;
   final String? idNumber;
-  final String? expiredDate;
-  final int? lessonsType;
   final int? minPrice;
   final String? maxPrice;
+  final int? lessonsType;
   final String? noOfChildren;
+  final String? sitterType;
 
-  factory AuthDataResponse.fromJson(Map<String, dynamic> json) => _$AuthDataResponseFromJson(json);
+  factory PostUpdateSisterProfileModel.fromJson(Map<String, dynamic> json) => _$PostUpdateSisterProfileModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$AuthDataResponseToJson(this);
+  Map<String, dynamic> toJson() => _$PostUpdateSisterProfileModelToJson(this);
 }

@@ -55,10 +55,11 @@ android {
 
     signingConfigs {
         release {
-            storeFile file("C:\\Users\\123\\Desktop\\nanny_co\\android\\app")
+            storeFile file('D:/componyProject/nany/android/app/keystore.jks')
             storePassword "123456"
             keyAlias "key0"
             keyPassword "123456"
+
         }
     }
     buildTypes {
