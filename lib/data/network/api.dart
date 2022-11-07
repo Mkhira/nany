@@ -3,7 +3,11 @@ import 'package:nanny_co/data/model/dto_model/basic_response.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
 import 'package:nanny_co/data/model/dto_model/cities_model.dart';
 import 'package:nanny_co/data/model/dto_model/cyhange_password.dart';
+import 'package:nanny_co/data/model/dto_model/favourit/add_favourite.dart';
+import 'package:nanny_co/data/model/dto_model/favourit/add_favourite_response.dart';
+import 'package:nanny_co/data/model/dto_model/favourit/get_favourite_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
+import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_parent.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
@@ -37,4 +41,18 @@ abstract class AppServiceClient {
 
   @GET('/cities')
   Future<CitiesModel> getCities();
+
+  @GET('/favorite')
+  Future<FavouriteDto> getFavorite(@Header('Authorization') token);
+  @POST('/favorite/add-remove')
+  Future<AddFavouriteResponse> addRemoveFavourite(@Header('Authorization') token, @Body() AddFavoriteDto addFavoriteDto);
+
+
+  @GET('/nanny/search')
+  Future<SearchForNannyModel> searchForNanny(@Header('Authorization') token, @Queries() Map<String, dynamic> queries);
+
+
+
+
+
 }

@@ -3,8 +3,13 @@ import 'package:nanny_co/data/model/dto_model/basic_response.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
 import 'package:nanny_co/data/model/dto_model/cities_model.dart';
 import 'package:nanny_co/data/model/dto_model/cyhange_password.dart';
+import 'package:nanny_co/data/model/dto_model/favourit/add_favourite.dart';
+import 'package:nanny_co/data/model/dto_model/favourit/add_favourite_response.dart';
+import 'package:nanny_co/data/model/dto_model/favourit/get_favourite_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
+import 'package:nanny_co/data/model/dto_model/nany/nanny_search_model.dart';
+import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_parent.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
@@ -54,5 +59,20 @@ class RepositoryImpl extends Repository {
   @override
   Future<LoginResponseModel> updateSister(PostUpdateSisterProfileModel postUpdateSisterProfileModel) {
     return _remoteDataSource.updateSister(postUpdateSisterProfileModel);
+  }
+
+  @override
+  Future<FavouriteDto> getFavourite() {
+    return _remoteDataSource.getFavourite();
+   }
+
+  @override
+  Future<AddFavouriteResponse> addRemoveFavourite(AddFavoriteDto addFavoriteDto) {
+     return _remoteDataSource.addRemoveFavourite(addFavoriteDto);
+  }
+
+  @override
+  Future<SearchForNannyModel> searchForNanny(NannySearchFilterModel filterModel) {
+    return _remoteDataSource.searchForNanny(filterModel);
   }
 }
