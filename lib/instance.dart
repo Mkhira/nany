@@ -1,16 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nanny_co/busoness_layer/use_case/get_cities_use_case.dart';
-import 'package:nanny_co/busoness_layer/use_case/login_use_case.dart';
-import 'package:nanny_co/busoness_layer/use_case/update_use_case/sister_update_use_case.dart';
-import 'package:nanny_co/busoness_layer/use_case/update_use_case/update_parent_use_ase.dart';
+import 'package:nanny_co/business_layer/use_case/get_cities_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/login_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/update_use_case/sister_update_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/update_use_case/update_parent_use_ase.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 import 'package:nanny_co/shared_cubit/settings_hive/settings_cubit_hive.dart';
 
-import 'busoness_layer/use_case/change_password_use_case.dart';
-import 'busoness_layer/use_case/check_email_use_case.dart';
-import 'busoness_layer/use_case/register_use_case.dart';
-import 'busoness_layer/use_case/verify_use_case.dart';
+import 'business_layer/use_case/change_password_use_case.dart';
+import 'business_layer/use_case/check_email_use_case.dart';
+import 'business_layer/use_case/register_use_case.dart';
+import 'business_layer/use_case/verify_use_case.dart';
 import 'data/data_source/remote_data_source.dart';
 import 'data/network/api.dart';
 import 'data/network/dio_factory.dart';

@@ -1,11 +1,11 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
-import 'package:nanny_co/busoness_layer/use_case/change_password_use_case.dart';
-import 'package:nanny_co/busoness_layer/use_case/check_email_use_case.dart';
-import 'package:nanny_co/busoness_layer/use_case/login_use_case.dart';
-import 'package:nanny_co/busoness_layer/use_case/register_use_case.dart';
-import 'package:nanny_co/busoness_layer/use_case/verify_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/change_password_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/check_email_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/login_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/register_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/verify_use_case.dart';
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
 import 'package:nanny_co/data/model/dto_model/cyhange_password.dart';
@@ -90,7 +90,7 @@ class AuthCubit extends Cubit<AuthState> {
         Alerts.showSnackBar(context: context, message: basicResponseModel.message ?? '');
         return false;
       }
-    } on Exception catch (e) {
+    } on Exception {
       Alerts.showSnackBar(context: context, message: 'Check Connection');
 
       return false;
@@ -106,7 +106,7 @@ class AuthCubit extends Cubit<AuthState> {
         Alerts.showSnackBar(context: context, message: loginModelResponse.message ?? '');
         return false;
       }
-    } on Exception catch (e) {
+    } on Exception {
       Alerts.showSnackBar(context: context, message: 'Check Connection');
 
       return false;
@@ -122,7 +122,7 @@ class AuthCubit extends Cubit<AuthState> {
         Alerts.showSnackBar(context: context, message: basicResponseModel.message ?? '');
         return false;
       }
-    } on Exception catch (e) {
+    } on Exception {
       Alerts.showSnackBar(context: context, message: 'Check Connection');
 
       return false;
