@@ -65,7 +65,7 @@ class _role_selection_viewState extends State<role_selection_view> {
                       children: [
                         InkWell(
                           onTap:(){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>parent_signin_view()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ParentSignInView()));
                           },
                           child: Container(
                             height: 50,

@@ -22,12 +22,11 @@ class parentSearch_Controller extends GetxController{
   var mindist=0.0.obs;
   var maxdist=1000.0.obs;
   var ratting=5.0.obs;
-  getProfileData(){
-    print(FirebaseAuth.instance.currentUser!.uid);
-    FirebaseFirestore.instance.collection('parent').doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) {
-      parentModel.value=parentDataModel.fromJson(value.data()!);
-    });
-  }
+  // getProfileData(){
+  //   FirebaseFirestore.instance.collection('parent').doc(FirebaseAuth.instance.currentUser!.uid).get().then((value) {
+  //     parentModel.value=parentDataModel.fromJson(value.data()!);
+  //   });
+  // }
  Stream<List<nannyDataModel>> getSearchResults()async*{
     print(FirebaseAuth.instance.currentUser!.uid);
     var data =await FirebaseFirestore.instance.collection('nanny').get();

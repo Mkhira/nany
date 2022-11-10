@@ -71,7 +71,7 @@ class parent_gallery_view extends StatelessWidget {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                parent_signin_view()));
+                                                ParentSignInView()));
                                   },
                                   child: Icon(
                                     Icons.logout,

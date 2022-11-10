@@ -112,7 +112,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                                 value == true
                                     ? Navigator.of(context).pushReplacement(MaterialPageRoute(
                                         builder: (context) =>
-                                            widget.role != 'nany' ? const nany_signin_view() : const parent_signin_view()))
+                                            widget.role != 'nany' ? const nany_signin_view() : const ParentSignInView()))
                                     : Navigator.pop(context);
                               });
                             },
@@ -150,7 +150,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                         child: ElevatedButton(
                             onPressed: () {
                               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                  builder: (context) => widget.role == 'nany' ? const nany_signin_view() : const parent_signin_view()));
+                                  builder: (context) => widget.role == 'nany' ? const nany_signin_view() : const ParentSignInView()));
                             },
                             style: ElevatedButton.styleFrom(
                                 elevation: 0,

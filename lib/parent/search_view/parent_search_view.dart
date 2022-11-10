@@ -30,7 +30,7 @@ class _parent_search_viewState extends State<parent_search_view> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    search_controller.getProfileData();
+    // search_controller.getProfileData();
   }
 
   @override
@@ -73,7 +73,7 @@ class _parent_search_viewState extends State<parent_search_view> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              parent_signin_view()));
+                                              ParentSignInView()));
                                 },
                                 child: Icon(
                                   Icons.logout,

@@ -30,8 +30,8 @@ class parent_bottombar_viewState extends State<parent_bottombar_view> {
     parent_search_view(), //0
     parent_booking_history_view(), //1
     parent_favourite_nanny(), //2
-    parent_profile_view(), //3
-    parent_edit_profile_view(), //4
+    ParentProfileViewScreen(), //3
+    ParentEditProfileView(), //4
     parent_book_nany_view(), //5
     parent_booking_history_view(), //6
     parent_booking_confirmation_view(), //7

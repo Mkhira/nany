@@ -82,7 +82,7 @@ class _parent_favourite_nannyState extends State<parent_favourite_nanny> {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    parent_signin_view()));
+                                                    ParentSignInView()));
                                       },
                                       child: Icon(
                                         Icons.logout,

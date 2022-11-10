@@ -11,6 +11,7 @@ class LoginUseCase extends BaseCase<LoginModel, LoginResponseModel> {
   @override
   Future<LoginResponseModel> execute(LoginModel input) async {
     LoginResponseModel loginResponseModel = await _repository.login(input);
+    print('loginResponseModel.status!  ${loginResponseModel.status!}');
     if (loginResponseModel.status! == 200) {
       SettingsProvider.current.saveUser(loginResponseModel.data!);
     }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
@@ -31,6 +33,7 @@ abstract class AppServiceClient {
   Future<LoginResponseModel> updateSister(
       @Header('Authorization') token, @Body() PostUpdateSisterProfileModel postUpdateSisterProfileModel);
   @POST('/nanny/update-profile')
+  @MultiPart()
   Future<LoginResponseModel> updateParent(@Header('Authorization') token, @Body() PostUpdateParentModel postUpdateParent);
   @POST('/verify-code')
   Future<LoginResponseModel> verifyCode(@Body() VerifyCodeModel verifyCodeModel);

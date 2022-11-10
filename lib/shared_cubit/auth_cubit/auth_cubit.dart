@@ -34,6 +34,8 @@ class AuthCubit extends Cubit<AuthState> {
           password: password,
           firebaseToken: SettingsProvider.current.appSettings.fireBaseToken ?? '',
           deviceToken: SettingsProvider.current.appSettings.fireBaseToken ?? ''));
+
+      print(loginResponseModel.status!);
       if (loginResponseModel.status! == 200) {
         return true;
       } else {
@@ -42,6 +44,7 @@ class AuthCubit extends Cubit<AuthState> {
         return false;
       }
     } catch (e) {
+      print(e);
       Alerts.showSnackBar(context: context, message: 'Check Connection');
 
       return false;

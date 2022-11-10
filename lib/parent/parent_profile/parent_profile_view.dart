@@ -1,32 +1,27 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nanny_co/constants.dart';
-import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
-import 'package:nanny_co/parent/add_child/parent_children_view.dart';
+import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
 import 'package:nanny_co/parent/parent_bottombar_view.dart/parent_bottombar_view.dart';
-import 'package:nanny_co/parent/parent_profile/Controller/parentProfile_Controller.dart';
 
 import '../auth_view/Controller/Auth_controller.dart';
 import '../parent_drawer.dart/parent_drawer_view.dart';
-class parent_profile_view extends StatefulWidget{
-  parent_profile_view();
+class ParentProfileViewScreen extends StatefulWidget{
+  const ParentProfileViewScreen({Key? key}) : super(key: key);
 
   @override
-  State<parent_profile_view> createState() => _parent_profile_viewState();
+  State<ParentProfileViewScreen> createState() => _ParentProfileViewScreenState();
 }
 
-class _parent_profile_viewState extends State<parent_profile_view> {
-  final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
-  final parentProfile_Controller profile_controller=Get.put(parentProfile_Controller());
+class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
+  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
-    profile_controller.getProfileData();
+    // profile_controller.getProfileData();
     // TODO: implement initState
     super.initState();
   }
@@ -34,9 +29,9 @@ class _parent_profile_viewState extends State<parent_profile_view> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldkey,
+      key: scaffoldKey,
       drawer: parent_drawer_view(),
-      body: Container(
+      body: SizedBox(
         height: sh,
         width: sw,
         child: Stack(
@@ -56,9 +51,9 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                             children: [
                               InkWell(
                                 onTap: (){
-                                  scaffoldkey.currentState!.openDrawer();
+                                  scaffoldKey.currentState!.openDrawer();
                                 },
-                                child: Icon(Icons.menu,size: 20,color: Colors.white,),
+                                child: const Icon(Icons.menu,size: 20,color: Colors.white,),
                               ),
                               InkWell(
                                 onTap: (){
@@ -66,9 +61,9 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              parent_signin_view()));
+                                              const ParentSignInView()));
                                   },
-                                child: Icon(Icons.logout,size: 20,color: Colors.white,),
+                                child: const Icon(Icons.logout,size: 20,color: Colors.white,),
                               )
                             ],
                           ),
@@ -83,7 +78,7 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                     fontSize: 20
                                 ),
                               ),
-                              Image(image:AssetImage('assets/images/dots.png')),
+                              const Image(image:AssetImage('assets/images/dots.png')),
                             ],
                           )
                         ],
@@ -97,10 +92,10 @@ class _parent_profile_viewState extends State<parent_profile_view> {
               child: Container(
                 height: sh*0.71,
                 width: sw,
-                padding: EdgeInsets.only(left: 30,right: 30,top: 30),
+                padding: const EdgeInsets.only(left: 30,right: 30,top: 30),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
                 ),
                 child: SingleChildScrollView(
                   child: Column(
@@ -110,7 +105,7 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          Obx(()=> Container(
+                          Container(
                             height:90,
                             width: 90,
                             decoration: BoxDecoration(
@@ -119,49 +114,49 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                 image: DecorationImage(
                                     fit: BoxFit.fill,
                                     image: NetworkImage(
-                                      '${profile_controller.parentModel.value.image}',
+                                      SettingsProvider.current.appSettings.userData?.image??'',
                                     )
                                 )
                             ),
-                          )
                           ),
-                          SizedBox(width: 10,),
+
+                          const SizedBox(width: 10,),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Obx(()=> Text(
-                                '${profile_controller.parentModel.value.fullname==null?"":profile_controller.parentModel.value.fullname}',
+                               Text(
+                                SettingsProvider.userData.fullName??'',
                                 style: GoogleFonts.raleway(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold ,
                                     fontSize: 20
                                 ),
-                              )),
-                              Obx(()=> Text(
-                                '${profile_controller.parentModel.value.address?.city==null?"":profile_controller.parentModel.value.address?.city}',
+                              ),
+                              Text(
+                                SettingsProvider.userData.courseName??'',
                                 style: GoogleFonts.raleway(
                                     color:Colors.redAccent,
                                     fontSize: 12
                                 ),
-                              )),
-                              SizedBox(height: 5,),
-                              Container(
+                              ),
+                              const SizedBox(height: 5,),
+                              SizedBox(
                                 height: 30,
                                 child: ElevatedButton(onPressed: (){
                                   parent_bottombar_viewState.selectedIndex=4;
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_bottombar_view()));
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
                                 },
                                     style: ElevatedButton.styleFrom(
                                         primary: Theme.of(context).primaryColor,
                                         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1000))
                                     ),
                                     child:Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 5.0,horizontal:5),
+                                      padding: const EdgeInsets.symmetric(vertical: 5.0,horizontal:5),
                                       child: Center(
                                         child: Row(
                                           crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
-                                            Icon(FontAwesomeIcons.edit,size: 12,),
+                                            const Icon(FontAwesomeIcons.edit,size: 12,),
                                             Text(
                                               ' Edit Profile',
                                               style: GoogleFonts.raleway(
@@ -178,10 +173,10 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 20,),
+                      const SizedBox(height: 20,),
                       Container(
                         width: sw,
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: Colors.grey.shade200,
                           boxShadow: [BoxShadow(
@@ -210,18 +205,18 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                             fontSize: 14
                                         ),
                                       ),
-                                      Obx(()=> Text(
-                                        '${profile_controller.parentModel.value.mobile==null?"":profile_controller.parentModel.value.mobile}',
+                                    Text(
+                                        SettingsProvider.userData.phone??'',
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold ,
                                             fontSize: 14
-                                        ),
+                                        ,
                                       )),
                                     ],
                                   ),
                                 ),
-                                Divider(thickness: 2,),
+                                const Divider(thickness: 2,),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical:5),
                                   child: Row(
@@ -235,18 +230,18 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                             fontSize: 14
                                         ),
                                       ),
-                                      Obx(()=>Text(
-                                        '${profile_controller.parentModel.value.email==null?"":profile_controller.parentModel.value.email}',
+                                      Text(
+                                        SettingsProvider.userData.email??'',
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold ,
                                             fontSize: 14
                                         ),
-                                      )),
+                                      ),
                                     ],
                                   ),
                                 ),
-                                Divider(thickness: 2,),
+                                const Divider(thickness: 2,),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical:5),
                                   child: Row(
@@ -260,18 +255,18 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                             fontSize: 14
                                         ),
                                       ),
-                                      Obx(()=> Text(
-                                        '${profile_controller.parentModel.value.dob==null?"":profile_controller.parentModel.value.dob}',
+                                    Text(
+                                        DateFormat('MM/dd/yyyy').format(SettingsProvider.userData.dob!)??'',
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold ,
                                             fontSize: 14
                                         ),
-                                      )),
+                                      ),
                                     ],
                                   ),
                                 ),
-                                Divider(thickness: 2,),
+                                const Divider(thickness: 2,),
                                 Padding(
                                   padding: const EdgeInsets.symmetric(vertical:5),
                                   child: Row(
@@ -285,14 +280,14 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                             fontSize: 14
                                         ),
                                       ),
-                                      Obx(()=> Text(
-                                        '${profile_controller.parentModel.value.gender==null?"":profile_controller.parentModel.value.gender}',
+                                      Text(
+                                        SettingsProvider.userData.gender??'',
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold ,
                                             fontSize: 14
                                         ),
-                                      )),
+                                      )
                                     ],
                                   ),
                                 ),
@@ -301,10 +296,10 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                     ],
                   ),
                 ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       Container(
                         width: sw,
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
                           color: Colors.grey.shade200,
                           boxShadow: [BoxShadow(
@@ -326,9 +321,9 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                   fontSize: 14
                               ),
                             ),
-                            SizedBox(height: 10,),
-                            Obx(()=>Text(
-                                '${profile_controller.parentModel.value.address?.address==null?"":profile_controller.parentModel.value.address?.address}',
+                            const SizedBox(height: 10,),
+                            Text(
+                                SettingsProvider.userData.address??'',
                                 maxLines: 10,
                                 style: GoogleFonts.raleway(
                                     color: Colors.black,
@@ -336,20 +331,19 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                                     fontSize: 14
                                 )
                             ),
-                            ),
                           ],
                         ),
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
 
                       InkWell(
                         onTap: (){
                           parent_bottombar_viewState.selectedIndex=6;
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_bottombar_view()));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
                         },
                         child: Container(
                           width: sw,
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             boxShadow: [BoxShadow(
@@ -376,14 +370,14 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                           ),
                         ),
                       ),
-                      SizedBox(height: 10,),
+                      const SizedBox(height: 10,),
                       InkWell(
                         onTap: (){
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_signin_view()));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const ParentSignInView()));
                         },
                         child: Container(
                           width: sw,
-                          padding: EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
                           decoration: BoxDecoration(
                             color: Colors.grey.shade200,
                             boxShadow: [BoxShadow(
@@ -409,7 +403,7 @@ class _parent_profile_viewState extends State<parent_profile_view> {
                             ],
                           ),
                         ),
-                      ),                      SizedBox(height: 10,),
+                      ),                      const SizedBox(height: 10,),
                     ]),
             ),
         ),

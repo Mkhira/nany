@@ -6,6 +6,7 @@ import 'package:nanny_co/business_layer/use_case/get_favourite_use_case.dart';
 import 'package:nanny_co/business_layer/use_case/login_use_case.dart';
 import 'package:nanny_co/business_layer/use_case/update_use_case/sister_update_use_case.dart';
 import 'package:nanny_co/business_layer/use_case/update_use_case/update_parent_use_ase.dart';
+import 'package:nanny_co/parent/parent_profile/Controller/update_parent_cubit/update_parent_cubit.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 import 'package:nanny_co/shared_cubit/settings_hive/settings_cubit_hive.dart';
 
@@ -60,4 +61,5 @@ Future<void> initAppModule() async {
   injector.registerLazySingleton<GetFavouriteUseCase>(() => GetFavouriteUseCase());
   injector.registerLazySingleton<AddRemoveFavouriteUseCase>(() => AddRemoveFavouriteUseCase());
   injector.registerLazySingleton<SearchForNannyUseCase>(() => SearchForNannyUseCase());
+  injector.registerLazySingleton<UpdateParentCubit>(() => UpdateParentCubit());
 }

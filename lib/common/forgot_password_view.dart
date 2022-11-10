@@ -123,7 +123,7 @@ class ForgotPasswordView extends StatelessWidget {
                           child: ElevatedButton(
                               onPressed: () {
                                 Navigator.of(context).pushReplacement(MaterialPageRoute(
-                                    builder: (context) => role == 'nany' ? const nany_signin_view() : const parent_signin_view()));
+                                    builder: (context) => role == 'nany' ? const nany_signin_view() : const ParentSignInView()));
                               },
                               style: ElevatedButton.styleFrom(
                                   elevation: 0,

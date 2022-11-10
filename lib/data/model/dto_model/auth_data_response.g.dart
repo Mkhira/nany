@@ -33,8 +33,8 @@ AuthDataResponse _$AuthDataResponseFromJson(Map<String, dynamic> json) =>
       expiredDate: json['expired_date'] as String?,
       lessonsType: json['lessons_type'] as int?,
       minPrice: json['min_price'] as int?,
-      maxPrice: json['max_price'] as String?,
-      noOfChildren: json['no_of_children'] as String?,
+      maxPrice: json['max_price'] as int?,
+      noOfChildren: json['no_of_children'] as int?,
     );
 
 Map<String, dynamic> _$AuthDataResponseToJson(AuthDataResponse instance) =>

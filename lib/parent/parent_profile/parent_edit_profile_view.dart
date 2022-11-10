@@ -3,36 +3,32 @@ import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:nanny_co/constants.dart';
-import 'package:nanny_co/nany/nanny_drawer.dart/nanny_drawer_view.dart';
-import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
-import 'package:nanny_co/parent/add_child/parent_children_view.dart';
-import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
-
+import 'package:nanny_co/domain/config/setting_provider.dart';
+import 'package:nanny_co/instance.dart';
 import '../../common/widget/ProgressPopUp.dart';
 import '../parent_bottombar_view.dart/parent_bottombar_view.dart';
 import '../parent_drawer.dart/parent_drawer_view.dart';
 import 'Controller/parentProfile_Controller.dart';
+import 'Controller/update_parent_cubit/update_parent_cubit.dart';
 
-class parent_edit_profile_view extends StatefulWidget{
-  parent_edit_profile_view();
+class ParentEditProfileView extends StatefulWidget{
+  const ParentEditProfileView({Key? key}) : super(key: key);
 
   @override
-  State<parent_edit_profile_view> createState() => _parent_edit_profile_viewState();
+  State<ParentEditProfileView> createState() => _ParentEditProfileViewState();
 }
 
-class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
-  final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
+class _ParentEditProfileViewState extends State<ParentEditProfileView> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  parentProfile_Controller profile_controller=Get.put(parentProfile_Controller());
+  // parentProfile_Controller profileController=Get.put(parentProfile_Controller());
 
-  TextEditingController email=new TextEditingController();
+  TextEditingController email=TextEditingController();
 
   bool gender=false;
 
@@ -40,13 +36,18 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
 
   var image;
 
-
+@override
+  void initState() {
+    // TODO: implement initState
+  injector.get<UpdateParentCubit>().initialValue();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldkey,
+        key: scaffoldKey,
         drawer: parent_drawer_view(),
-        body: Container(
+        body: SizedBox(
             height: sh,
             width: sw,
             child: Stack(
@@ -66,9 +67,9 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                   children: [
                                     InkWell(
                                       onTap: (){
-                                        scaffoldkey.currentState!.openDrawer();
+                                        scaffoldKey.currentState!.openDrawer();
                                       },
-                                      child: Icon(Icons.menu,size: 20,color: Colors.white,),
+                                      child: const Icon(Icons.menu,size: 20,color: Colors.white,),
                                     ),
                                   ],
                                 ),
@@ -83,7 +84,7 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                           fontSize: 20
                                       ),
                                     ),
-                                    Image(image:AssetImage('assets/images/dots.png')),
+                                    const Image(image:AssetImage('assets/images/dots.png')),
                                   ],
                                 )
                               ],
@@ -97,10 +98,10 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                     child: Container(
                       height: sh*0.71,
                       width: sw,
-                      padding: EdgeInsets.only(left: 20,right: 20,top: 20),
+                      padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
                       decoration: BoxDecoration(
                         color: Colors.grey.shade200,
-                        borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+                        borderRadius: const BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
                       ),
                       child: SingleChildScrollView(
                           child:Column(
@@ -114,7 +115,7 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 20
                                 ),
                               ),
-                              SizedBox(height: 20,),
+                              const SizedBox(height: 20,),
                               Text(
                                 'Full Name',
                                 style: GoogleFonts.raleway(
@@ -123,36 +124,36 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 14
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 50,
-                                child: Obx(()=>TextField(
+                                child: TextField(
                                   onChanged: (value){
-                                    profile_controller.parentModel.value.fullname=value;
+                                    injector.get<UpdateParentCubit>().postUpdateParentModel.fullName =value;
                                   },
                                   decoration: InputDecoration(
 
                                     fillColor: Colors.white,
                                     filled: true,
-                                    hintText:'${profile_controller.parentModel.value.fullname==null?"":profile_controller.parentModel.value.fullname}',
+                                    hintText:SettingsProvider.userData.fullName ?? "",
                                     hintStyle: GoogleFonts.raleway(
                                         color:Colors.grey.shade400,
                                         fontWeight: FontWeight.w500,
                                         fontSize:16),
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),
                                     disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),
                                   ),
                                 )
-                                ),
+                                ,
                               ),
-                              SizedBox(height: 10,),
+                              const SizedBox(height: 10,),
                               Text(
                                 'Upload Photo',
                                 style: GoogleFonts.raleway(
@@ -161,51 +162,48 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 14
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 50,
                                 child: InkWell(
                                   onTap: ()async{
                                     FilePickerResult? result = await FilePicker.platform.pickFiles(type:FileType.image,allowMultiple: false);
                                     if(result != null) {
                                       var file = result.files.single.path;
-                                      var name= result.files.single.name;
                                       FirebaseStorage storage = FirebaseStorage.instance;
                                       Reference ref = storage.ref('profile_images').child(result.files.single.name+FirebaseAuth.instance.currentUser!.uid);
                                       await ref.putFile(File(file!));
                                       var upload = await ref.getDownloadURL();
-                                      if(upload!=null){
-                                        profile_controller.parentModel.value.image=upload;
-                                      }
+                                      // profileController.parentModel.value.image=upload;
                                     } else {
                                       // User canceled the picker
                                     }
                                   },
-                                  child: Obx(()=>TextField(
+                                  child: TextField(
                                     decoration: InputDecoration(
                                       fillColor: Colors.white,
                                       filled: true,
                                       enabled: false,
-                                      hintText: '${profile_controller.parentModel.value.image==null?"":profile_controller.parentModel.value.image}',
-                                      suffixIcon: Icon(Icons.upload_outlined,color: Colors.grey,),
+                                      hintText:   "image",
+                                      suffixIcon: const Icon(Icons.upload_outlined,color: Colors.grey,),
                                       hintStyle: GoogleFonts.raleway(
                                           color:Colors.grey.shade400,
                                           fontWeight: FontWeight.w500,
                                           fontSize:16),
                                       border: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                        borderSide: BorderSide(width: 1,color: Colors.grey),
+                                        borderSide: const BorderSide(width: 1,color: Colors.grey),
                                       ),
                                       disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                        borderSide: BorderSide(width: 1,color: Colors.grey),
+                                        borderSide: const BorderSide(width: 1,color: Colors.grey),
                                       ),focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),
                                     ),
                                   )),
-                                ),
+
                               ),
-                              SizedBox(height: 10,),
+                              const SizedBox(height: 10,),
                               Text(
                                 'Date of Birth',
                                 style: GoogleFonts.raleway(
@@ -214,34 +212,37 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 14
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 50,
-                                child: Obx(()=>TextField(
+                                child: TextField(
                                   onChanged: (value){
-                                    profile_controller.parentModel.value.dob=value;
+                                    injector.get<UpdateParentCubit>().postUpdateParentModel.dob = DateFormat('yyyy-mm-dd').format(value as DateTime);
+
                                   },
+                                  keyboardType: TextInputType.datetime,
                                   decoration: InputDecoration(
+
                                     fillColor: Colors.white,
                                     filled: true,
-                                    hintText: '${profile_controller.parentModel.value.dob==null?"":profile_controller.parentModel.value.dob}',
+                                    hintText:  DateFormat('yyyy-mm-dd').format(SettingsProvider.userData.dob!) ?? "",
                                     hintStyle: GoogleFonts.raleway(
                                         color:Colors.grey.shade400,
                                         fontWeight: FontWeight.w500,
                                         fontSize:16),
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),
                                     disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(100),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),
                                   ),
                                 )),
-                              ),
-                              SizedBox(height: 10,),
+
+                              const SizedBox(height: 10,),
                               Text(
                                 'Gender',
                                 style: GoogleFonts.raleway(
@@ -256,15 +257,15 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                   InkWell(
                                     onTap:(){
                                       setState(() {
-                                        profile_controller.parentModel.value.gender='Male';
+                                        injector.get<UpdateParentCubit>().postUpdateParentModel.gender='Male';
                                       });
                                     },
-                                    child: Obx(()=>Container(
+                                    child: Container(
                                       height: 50,
                                       width: sw*0.43,
                                       decoration: BoxDecoration(
-                                          color:  profile_controller.parentModel.value.gender=="Male"?Colors.green.shade500:Colors.white,
-                                          borderRadius: BorderRadius.only(topLeft: Radius.circular(100),bottomLeft: Radius.circular(100)),
+                                          color:    injector.get<UpdateParentCubit>().postUpdateParentModel.gender=="Male"?Colors.green.shade500:Colors.white,
+                                          borderRadius: const BorderRadius.only(topLeft: Radius.circular(100),bottomLeft: Radius.circular(100)),
                                           border: Border.all(width: 1,color: Colors.grey.shade400)
                                       ),
                                       child: Row(
@@ -273,28 +274,28 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                           Text(
                                             'Male',
                                             style: GoogleFonts.raleway(
-                                                color:profile_controller.parentModel.value.gender=="Male"?Colors.white:Colors.grey.shade400,
+                                                color:   injector.get<UpdateParentCubit>().postUpdateParentModel.gender=="Male"?Colors.white:Colors.grey.shade400,
                                                 fontSize: 14
                                             ),
                                           ),
                                         ],
                                       ),
                                     )),
-                                  ),
+
                                   InkWell(
                                     onTap: (){
 
                                       setState(() {
-                                        profile_controller.parentModel.value.gender='Female';
+                                        injector.get<UpdateParentCubit>().postUpdateParentModel.gender='Female';
 
                                       });
                                     },
-                                    child: Obx(()=>Container(
+                                    child: Container(
                                       height: 50,
                                       width: sw*0.45,
                                       decoration: BoxDecoration(
-                                          color:  profile_controller.parentModel.value.gender=="Female"?Colors.green:Colors.white,
-                                          borderRadius: BorderRadius.only(topRight: Radius.circular(100),bottomRight: Radius.circular(100)),
+                                          color:    injector.get<UpdateParentCubit>().postUpdateParentModel.gender=="Female"?Colors.green:Colors.white,
+                                          borderRadius: const BorderRadius.only(topRight: Radius.circular(100),bottomRight: Radius.circular(100)),
                                           border: Border.all(width: 1,color: Colors.grey.shade400)
                                       ),
                                       child: Row(
@@ -302,17 +303,17 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                         children: [Text(
                                           'Female',
                                           style: GoogleFonts.raleway(
-                                              color:profile_controller.parentModel.value.gender=="Female"?Colors.white:Colors.grey.shade400,
+                                              color:  injector.get<UpdateParentCubit>().postUpdateParentModel.gender=="Female"?Colors.white:Colors.grey.shade400,
                                               fontSize: 14
                                           ),
                                         ),
                                         ],
                                       ),
                                     )),
-                                  )
+
                                 ],
                               ),
-                              SizedBox(height: 20,),
+                              const SizedBox(height: 20,),
                               Text(
                                 'Address',
                                 style: GoogleFonts.raleway(
@@ -321,7 +322,7 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 20
                                 ),
                               ),
-                              SizedBox(height: 20,),
+                              const SizedBox(height: 20,),
                               Text(
                                 'Address',
                                 style: GoogleFonts.raleway(
@@ -330,34 +331,34 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 14
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 50,
-                                child: Obx(()=>TextField(
+                                child: TextField(
                                   onChanged: (value){
-                                    profile_controller.parentModel.value.address?.address=value;
+                                    injector.get<UpdateParentCubit>().postUpdateParentModel.address=value;
                                   },
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     filled: true,
-                                    hintText: '${profile_controller.parentModel.value.address?.address==null?"":profile_controller.parentModel.value.address?.address}',
+                                    hintText: SettingsProvider.userData.address ?? "",
                                     hintStyle: GoogleFonts.raleway(
                                         color:Colors.grey.shade400,
                                         fontWeight: FontWeight.w500,
                                         fontSize:16),
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),
                                     disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),
                                   ),
                                 )),
-                              ),
-                              SizedBox(height: 10,),
+
+                              const SizedBox(height: 10,),
                               Text(
                                 'City',
                                 style: GoogleFonts.raleway(
@@ -366,34 +367,34 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 14
                                 ),
                               ),
-                              Container(
-                                height: 50,
-                                child:Obx(()=> TextField(
-                                  onChanged: (value){
-                                    profile_controller.parentModel.value.address?.city=value;
-                                  },
-                                  decoration: InputDecoration(
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    hintText: '${profile_controller.parentModel.value.address?.city==null?"":profile_controller.parentModel.value.address?.city}',
-                                    hintStyle: GoogleFonts.raleway(
-                                        color:Colors.grey.shade400,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize:16),
-                                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
-                                    ),focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
-                                  ),enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
-                                  ),
-                                  ),
-                                )),
-                              ),
-                              SizedBox(height: 20,),
+                              // SizedBox(
+                              //   height: 50,
+                              //   child:Obx(()=> TextField(
+                              //     onChanged: (value){
+                              //       profileController.parentModel.value.address?.city=value;
+                              //     },
+                              //     decoration: InputDecoration(
+                              //       fillColor: Colors.white,
+                              //       filled: true,
+                              //       hintText: profileController.parentModel.value.address?.city ?? "",
+                              //       hintStyle: GoogleFonts.raleway(
+                              //           color:Colors.grey.shade400,
+                              //           fontWeight: FontWeight.w500,
+                              //           fontSize:16),
+                              //       border: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
+                              //         borderSide: const BorderSide(width: 1,color: Colors.grey),
+                              //       ),
+                              //       disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
+                              //         borderSide: const BorderSide(width: 1,color: Colors.grey),
+                              //       ),focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
+                              //       borderSide: const BorderSide(width: 1,color: Colors.grey),
+                              //     ),enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
+                              //       borderSide: const BorderSide(width: 1,color: Colors.grey),
+                              //     ),
+                              //     ),
+                              //   )),
+                              // ),
+                              const SizedBox(height: 20,),
                               Text(
                                 'Phone / Email',
                                 style: GoogleFonts.raleway(
@@ -402,7 +403,7 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 20
                                 ),
                               ),
-                              SizedBox(height: 20,),
+                              const SizedBox(height: 20,),
                               Text(
                                 'Phone Number',
                                 style: GoogleFonts.raleway(
@@ -411,34 +412,34 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 14
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 50,
-                                child: Obx(()=>TextField(
+                                child: TextField(
                                   onChanged: (value){
-                                    profile_controller.parentModel.value.mobile=value;
+                                    injector.get<UpdateParentCubit>().postUpdateParentModel.phone=value;
                                   },
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     filled: true,
-                                    hintText: '${profile_controller.parentModel.value.mobile==null?"":profile_controller.parentModel.value.mobile}',
+                                    hintText: SettingsProvider.userData.phone ?? "",
                                     hintStyle: GoogleFonts.raleway(
                                         color:Colors.grey.shade400,
                                         fontWeight: FontWeight.w500,
                                         fontSize:16),
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),
                                     disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),
                                   ),
                                 )),
-                              ),
-                              SizedBox(height: 10,),
+
+                              const SizedBox(height: 10,),
                               Text(
                                 'Email',
                                 style: GoogleFonts.raleway(
@@ -447,71 +448,68 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
                                     fontSize: 14
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 50,
-                                child:Obx(()=> TextField(
+                                child: TextField(
                                   controller: email,
                                   onChanged: (value){
                                   },
                                   decoration: InputDecoration(
                                     fillColor: Colors.white,
                                     filled: true,
-                                    hintText: '${profile_controller.parentModel.value.email==null?"":profile_controller.parentModel.value.email}',
+                                    hintText: SettingsProvider.userData.email ?? "",
                                     hintStyle: GoogleFonts.raleway(
                                         color:Colors.grey.shade400,
                                         fontWeight: FontWeight.w500,
                                         fontSize:16),
                                     border: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),
                                     disabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                      borderSide: BorderSide(width: 1,color: Colors.grey),
+                                      borderSide: const BorderSide(width: 1,color: Colors.grey),
                                     ),focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(150),
-                                    borderSide: BorderSide(width: 1,color: Colors.grey),
+                                    borderSide: const BorderSide(width: 1,color: Colors.grey),
                                   ),
                                   ),
                                 ) ),
-                              ),
-                              SizedBox(height: 20,),
-                              Container(
-                                child: ElevatedButton(onPressed: (){
-                                  CheckEmailUpdate().then((value) => {
-                                    if(value==true){
-                                      profile_controller.parentModel.value.email=email.text
-                                    },
-                                    print(profile_controller.parentModel.toJson()),
-                                    ProgressPopup(context),
-                                    profile_controller.UpdateProfile(profile_controller.parentModel.toJson()).then((value){
-                                      parent_bottombar_viewState.selectedIndex=3;
-                                      Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_bottombar_view()));
-                                    }),
-                                  });
-                                },
-                                    style: ElevatedButton.styleFrom(
-                                        primary: Theme.of(context).primaryColor,
-                                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1000))
-                                    ),
-                                    child:Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 15.0,horizontal: 10),
-                                      child: Center(
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            Text(
-                                              'Submit',
-                                              style: GoogleFonts.raleway(
-                                                  color:Colors.white,
-                                                  fontSize: 20
-                                              ),
+
+                              const SizedBox(height: 20,),
+                              ElevatedButton(onPressed: (){
+                                // checkEmailUpdate().then((value) => {
+                                //   if(value==true){
+                                //     injector.get<UpdateParentCubit>().postUpdateParentModel.email=email.text
+                                //   },
+                                //   ProgressPopup(context),
+                                //   profileController.UpdateProfile(profileController.parentModel.toJson()).then((value){
+                                //     parent_bottombar_viewState.selectedIndex=3;
+                                //     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
+                                //   }),
+                                // });
+                              },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Theme.of(context).primaryColor,
+                                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(1000))
+                                  ),
+                                  child:Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 10),
+                                    child: Center(
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            'Submit',
+                                            style: GoogleFonts.raleway(
+                                                color:Colors.white,
+                                                fontSize: 20
                                             ),
-                                          ],
-                                        ),
+                                          ),
+                                        ],
                                       ),
-                                    )),
-                              ),
-                              SizedBox(height: 10,),
+                                    ),
+                                  )),
+                              const SizedBox(height: 10,),
                             ],
                           )
                       ),
@@ -521,21 +519,20 @@ class _parent_edit_profile_viewState extends State<parent_edit_profile_view> {
             )));
   }
 
-  Future CheckEmailUpdate()async{
-    if(email.text.isNotEmpty){
-      print('aya');
-      try{
-        FirebaseAuth _auth = FirebaseAuth.instance;
-        await _auth
-            .signInWithEmailAndPassword( email: '${profile_controller.parentModel.value.email}',password: '${profile_controller.parentModel.value.password}')
-            .then((userCredential) {
-          userCredential.user!.updateEmail(email.text).then((value){
-          });
-        });
-        return true;
-      }catch(ex){
-        return false;
-      }
-    }
-  }
+  // Future checkEmailUpdate()async{
+  //   if(email.text.isNotEmpty){
+  //     try{
+  //       FirebaseAuth _auth = FirebaseAuth.instance;
+  //       await _auth
+  //           .signInWithEmailAndPassword( email: '${profileController.parentModel.value.email}',password: '${profileController.parentModel.value.password}')
+  //           .then((userCredential) {
+  //         userCredential.user!.updateEmail(email.text).then((value){
+  //         });
+  //       });
+  //       return true;
+  //     }catch(ex){
+  //       return false;
+  //     }
+  //   }
+  // }
 }

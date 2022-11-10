@@ -10,14 +10,14 @@ import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 import '../../common/forgot_password_view.dart';
 import '../../common/widget/ProgressPopUp.dart';
 
-class parent_signin_view extends StatefulWidget {
-  const parent_signin_view({Key, key}) : super(key: key);
+class ParentSignInView extends StatefulWidget {
+  const ParentSignInView({Key? key}) : super(key: key);
 
   @override
-  _parent_signin_viewState createState() => _parent_signin_viewState();
+  _ParentSignInViewState createState() => _ParentSignInViewState();
 }
 
-class _parent_signin_viewState extends State<parent_signin_view> {
+class _ParentSignInViewState extends State<ParentSignInView> {
   var obscure = true;
   GlobalKey<FormState> formkey = GlobalKey();
   TextEditingController password = TextEditingController();
@@ -173,6 +173,7 @@ class _parent_signin_viewState extends State<parent_signin_view> {
                                   if (formkey.currentState!.validate()) {
                                     ProgressPopup(context);
                                     injector.get<AuthCubit>().signInWithEmailAndPassword(email.text, password.text, context).then((value) {
+                                      print(value);
                                       if (value == true) {
                                         setState(() {
                                           Navigator.of(context).pushAndRemoveUntil(

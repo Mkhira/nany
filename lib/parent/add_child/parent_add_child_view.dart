@@ -454,7 +454,7 @@ class _parent_add_child_viewState extends State<parent_add_child_view> {
                               type: AnimatedSnackBarType.success,
                               ).show(context),
                               });
-                              search_controller.getProfileData();
+                              // search_controller.getProfileData();
                               }else{
                               AnimatedSnackBar.material(
                                 'Please Input Image',

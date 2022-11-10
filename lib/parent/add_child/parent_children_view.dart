@@ -28,7 +28,7 @@ class _parent_children_viewState extends State<parent_children_view> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    search_controller.getProfileData();
+    // search_controller.getProfileData();
   }
   @override
   Widget build(BuildContext context) {
@@ -290,7 +290,7 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                                               setState(() {
                                                                                 parentChild_Controller().removeChild(search_controller.parentModel.value.children!.elementAt(index).toJson()).then((value)
                                                                                 {
-                                                                                  search_controller.getProfileData();
+                                                                                  // search_controller.getProfileData();
                                                                                 });
                                                                               });
                                                                               parent_bottombar_viewState.selectedIndex=0;

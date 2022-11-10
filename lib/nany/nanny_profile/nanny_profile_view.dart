@@ -700,7 +700,7 @@ class _nanny_profile_viewState extends State<nanny_profile_view> {
                       InkWell(
                         onTap: () {
                           NanyAuthController().signOut();
-                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => parent_signin_view()));
+                          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => ParentSignInView()));
                         },
                         child: Container(
                           width: sw,

@@ -4,23 +4,23 @@ part 'post_update_parent.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PostUpdateParentModel {
-  final String? fullName;
-  final String? userName;
-  final String email;
-  final String phone;
-  final DateTime? dob;
-  final String? image;
-  final int? cityId;
-  final String? gender;
-  final String? lat;
-  final String? lng;
-  final String? address;
+   String? fullName;
+   String? userName;
+   String? email;
+   String? phone;
+   String? dob;
+   String? image;
+   int? cityId;
+   String? gender;
+   String? lat;
+   String? lng;
+   String? address;
 
   PostUpdateParentModel(
       {this.fullName,
       this.userName,
-      required this.email,
-      required this.phone,
+       this.email,
+       this.phone,
       this.dob,
       this.image,
       this.cityId,

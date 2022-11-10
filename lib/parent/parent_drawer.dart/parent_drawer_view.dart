@@ -210,7 +210,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                 Divider(),
                 InkWell(
                   onTap: (){
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_signin_view()));
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>ParentSignInView()));
                   },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
