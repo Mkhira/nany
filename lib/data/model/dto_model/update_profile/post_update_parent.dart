@@ -1,26 +1,25 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:io';
 
-part 'post_update_parent.g.dart';
+// part 'post_update_parent.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
 class PostUpdateParentModel {
-   String? fullName;
-   String? userName;
-   String? email;
-   String? phone;
-   String? dob;
-   String? image;
-   int? cityId;
-   String? gender;
-   String? lat;
-   String? lng;
-   String? address;
+  String? fullName;
+  String? userName;
+  String? email;
+  String? phone;
+  String? dob;
+  File? image;
+  int? cityId;
+  String? gender;
+  String? lat;
+  String? lng;
+  String? address;
 
   PostUpdateParentModel(
       {this.fullName,
       this.userName,
-       this.email,
-       this.phone,
+      this.email,
+      this.phone,
       this.dob,
       this.image,
       this.cityId,
@@ -29,7 +28,12 @@ class PostUpdateParentModel {
       this.lng,
       this.address});
 
-  factory PostUpdateParentModel.fromJson(Map<String, dynamic> json) => _$PostUpdateParentModelFromJson(json);
+  @override
+  String toString() {
+    return 'PostUpdateParentModel{fullName: $fullName, userName: $userName, email: $email, phone: $phone, dob: $dob, image: $image, cityId: $cityId, gender: $gender, lat: $lat, lng: $lng, address: $address}';
+  }
 
-  Map<String, dynamic> toJson() => _$PostUpdateParentModelToJson(this);
+// factory PostUpdateParentModel.fromJson(Map<String, dynamic> json) => _$PostUpdateParentModelFromJson(json);
+  //
+  // Map<String, dynamic> toJson() => _$PostUpdateParentModelToJson(this);
 }

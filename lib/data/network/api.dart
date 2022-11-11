@@ -11,7 +11,6 @@ import 'package:nanny_co/data/model/dto_model/favourit/get_favourite_model.dart'
 import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
 import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
-import 'package:nanny_co/data/model/dto_model/update_profile/post_update_parent.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
 import 'package:retrofit/retrofit.dart';
@@ -34,7 +33,20 @@ abstract class AppServiceClient {
       @Header('Authorization') token, @Body() PostUpdateSisterProfileModel postUpdateSisterProfileModel);
   @POST('/nanny/update-profile')
   @MultiPart()
-  Future<LoginResponseModel> updateParent(@Header('Authorization') token, @Body() PostUpdateParentModel postUpdateParent);
+  Future<LoginResponseModel> updateParent(
+    @Header('Authorization') token,
+    @Part() String? full_name,
+    @Part() String? user_name,
+    @Part() String? email,
+    @Part() String? phone,
+    @Part() String? dob,
+    @Part() File? image,
+    @Part() int? city_id,
+    @Part() String? gender,
+    @Part() String? lat,
+    @Part() String? lng,
+    @Part() String? address,
+  );
   @POST('/verify-code')
   Future<LoginResponseModel> verifyCode(@Body() VerifyCodeModel verifyCodeModel);
   @POST('/check-email')
@@ -50,12 +62,6 @@ abstract class AppServiceClient {
   @POST('/favorite/add-remove')
   Future<AddFavouriteResponse> addRemoveFavourite(@Header('Authorization') token, @Body() AddFavoriteDto addFavoriteDto);
 
-
   @GET('/nanny/search')
   Future<SearchForNannyModel> searchForNanny(@Header('Authorization') token, @Queries() Map<String, dynamic> queries);
-
-
-
-
-
 }

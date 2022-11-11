@@ -58,8 +58,8 @@ class AuthDataResponse {
   final String? idNumber;
   final String? expiredDate;
   final int? lessonsType;
-  final int? minPrice;
-  final int? maxPrice;
+  final String? minPrice;
+  final String? maxPrice;
   final int? noOfChildren;
 
   factory AuthDataResponse.fromJson(Map<String, dynamic> json) => _$AuthDataResponseFromJson(json);

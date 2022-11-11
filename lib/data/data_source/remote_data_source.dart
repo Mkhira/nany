@@ -9,9 +9,9 @@ import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
 import 'package:nanny_co/data/model/dto_model/nany/nanny_search_model.dart';
 import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
-import 'package:nanny_co/data/model/dto_model/update_profile/post_update_parent.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
+import 'package:nanny_co/data/model/updae_parent_model.dart';
 import 'package:nanny_co/data/network/api.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 
@@ -21,7 +21,7 @@ abstract class RemoteDataSource {
   Future<LoginResponseModel> login(LoginModel loginModel);
 
   Future<LoginResponseModel> register(RegisterModel registerModel);
-  Future<LoginResponseModel> updateParent(PostUpdateParentModel postUpdateParentModel);
+  Future<LoginResponseModel> updateParent(ParentUpdateModel parentUpdateModel);
   Future<LoginResponseModel> updateSister(PostUpdateSisterProfileModel postUpdateSisterProfileModel);
   Future<BasicResponseModel> checkEmail(CheckEmailModel checkEmailModel);
   Future<LoginResponseModel> verifyCode(VerifyCodeModel verifyCodeModel);
@@ -68,8 +68,21 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<LoginResponseModel> updateParent(PostUpdateParentModel postUpdateParentModel) {
-    return _appServiceClient.updateParent('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', postUpdateParentModel);
+  Future<LoginResponseModel> updateParent(ParentUpdateModel parentUpdateModel) {
+    return _appServiceClient.updateParent(
+      'Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}',
+      parentUpdateModel.postUpdateParentModel.fullName,
+      parentUpdateModel.postUpdateParentModel.userName,
+      parentUpdateModel.postUpdateParentModel.email,
+      parentUpdateModel.postUpdateParentModel.phone,
+      parentUpdateModel.postUpdateParentModel.dob,
+      parentUpdateModel.postUpdateParentModel.image,
+      parentUpdateModel.postUpdateParentModel.cityId,
+      parentUpdateModel.postUpdateParentModel.gender,
+      parentUpdateModel.postUpdateParentModel.lat,
+      parentUpdateModel.postUpdateParentModel.lng,
+      parentUpdateModel.postUpdateParentModel.address,
+    );
   }
 
   @override
@@ -80,7 +93,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
 
   @override
   Future<FavouriteDto> getFavourite() {
-     return _appServiceClient.getFavorite('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}');
+    return _appServiceClient.getFavorite('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}');
   }
 
   @override
@@ -89,8 +102,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<SearchForNannyModel> searchForNanny(NannySearchFilterModel filterData)async {
-
+  Future<SearchForNannyModel> searchForNanny(NannySearchFilterModel filterData) async {
     filterData.toJson().removeWhere((key, value) => value == null);
     Map<String, dynamic> data = {};
     filterData.toJson().forEach((key, value) {
@@ -99,6 +111,6 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
       }
     });
 
-     return _appServiceClient.searchForNanny('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', data);
+    return _appServiceClient.searchForNanny('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', data);
   }
 }

@@ -11,9 +11,9 @@ import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
 import 'package:nanny_co/data/model/dto_model/nany/nanny_search_model.dart';
 import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
-import 'package:nanny_co/data/model/dto_model/update_profile/post_update_parent.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
+import 'package:nanny_co/data/model/updae_parent_model.dart';
 import 'package:nanny_co/domain/repository/repository.dart';
 
 class RepositoryImpl extends Repository {
@@ -52,8 +52,8 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<LoginResponseModel> updateParent(PostUpdateParentModel postUpdateParentModel) {
-    return _remoteDataSource.updateParent(postUpdateParentModel);
+  Future<LoginResponseModel> updateParent(ParentUpdateModel parentUpdateModel) {
+    return _remoteDataSource.updateParent(parentUpdateModel);
   }
 
   @override
@@ -64,11 +64,11 @@ class RepositoryImpl extends Repository {
   @override
   Future<FavouriteDto> getFavourite() {
     return _remoteDataSource.getFavourite();
-   }
+  }
 
   @override
   Future<AddFavouriteResponse> addRemoveFavourite(AddFavoriteDto addFavoriteDto) {
-     return _remoteDataSource.addRemoveFavourite(addFavoriteDto);
+    return _remoteDataSource.addRemoveFavourite(addFavoriteDto);
   }
 
   @override
