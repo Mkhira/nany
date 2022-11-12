@@ -8,7 +8,9 @@ class AppSettings {
   AuthDataResponse? userData;
   String? fireBaseToken;
   String? deviceToken;
-  AppSettings({this.userData});
+  bool isFirstTime;
+  bool isLogin;
+  AppSettings({this.userData, this.isFirstTime = true, this.isLogin = false});
   factory AppSettings.fromJson(Map<String, dynamic> json) => _$AppSettingsFromJson(json);
 
   Map<String, dynamic> toJson() => _$AppSettingsToJson(this);

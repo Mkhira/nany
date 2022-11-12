@@ -22,10 +22,10 @@ class CitiesModel {
 @JsonSerializable(explicitToJson: true)
 class CitiesResponse {
   CitiesResponse({
-    this.cites,
+    this.data,
   });
 
-  final List<CityModel>? cites;
+  final List<CityModel>? data;
 
   factory CitiesResponse.fromJson(Map<String, dynamic> json) => _$CitiesResponseFromJson(json);
 

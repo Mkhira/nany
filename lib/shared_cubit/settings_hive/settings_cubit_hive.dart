@@ -57,4 +57,16 @@ class SettingsHiveCubit extends HydratedCubit<SettingsLoaded> implements Setting
     state.appSettings.deviceToken = deviceToken;
     save();
   }
+
+  @override
+  void saveFirstOpen(bool isFirstTime) {
+    state.appSettings.isFirstTime = isFirstTime;
+    save();
+  }
+
+  @override
+  void saveLogin(bool isLogin) {
+    state.appSettings.isLogin = isLogin;
+    save();
+  }
 }

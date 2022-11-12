@@ -23,14 +23,14 @@ Map<String, dynamic> _$CitiesModelToJson(CitiesModel instance) =>
 
 CitiesResponse _$CitiesResponseFromJson(Map<String, dynamic> json) =>
     CitiesResponse(
-      cites: (json['cites'] as List<dynamic>?)
+      data: (json['data'] as List<dynamic>?)
           ?.map((e) => CityModel.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
 Map<String, dynamic> _$CitiesResponseToJson(CitiesResponse instance) =>
     <String, dynamic>{
-      'cites': instance.cites?.map((e) => e.toJson()).toList(),
+      'data': instance.data?.map((e) => e.toJson()).toList(),
     };
 
 CityModel _$CityModelFromJson(Map<String, dynamic> json) => CityModel(

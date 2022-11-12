@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:nanny_co/common/role_selection_view.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
@@ -44,9 +45,21 @@ class _SplashViewState extends State<SplashView> {
     FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user == null) {
         Future.delayed(Duration(milliseconds: 800)).then((value) {
-          Navigator.of(context).pushReplacement(MaterialPageRoute(
-            builder: (context) => onboarding_view(),
-          ));
+          Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) {
+            if (SettingsProvider.current.appSettings.isFirstTime) {
+              return OnboardingView();
+            } else {
+              if (SettingsProvider.current.appSettings.isLogin) {
+                if (SettingsProvider.current.appSettings.userData?.appType == 'parent') {
+                  return parent_bottombar_view();
+                } else {
+                  return nanny_bottombar_view();
+                }
+              } else {
+                return role_selection_view();
+              }
+            }
+          }));
         });
       } else {
         SharedPreferences.getInstance().then((value) {
@@ -62,7 +75,7 @@ class _SplashViewState extends State<SplashView> {
           } else {
             Future.delayed(Duration(milliseconds: 800)).then((value) {
               Navigator.of(context).pushReplacement(MaterialPageRoute(
-                builder: (context) => onboarding_view(),
+                builder: (context) => OnboardingView(),
               ));
             });
           }

@@ -13,4 +13,6 @@ abstract class SettingsProvider {
   void save();
   void saveUser(AuthDataResponse loginResponseModel);
   void saveTokens({String? deviceToken, String? fireBaseToken});
+  void saveLogin(bool isLogin);
+  void saveFirstOpen(bool isLogin);
 }

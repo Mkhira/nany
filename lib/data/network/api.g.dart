@@ -142,13 +142,15 @@ class _AppServiceClient implements AppServiceClient {
         dob,
       ));
     }
-    _data.files.add(MapEntry(
-      'image',
-      MultipartFile.fromFileSync(
-        image!.path,
-        filename: image.path.split(Platform.pathSeparator).last,
-      ),
-    ));
+    if (image != null) {
+      _data.files.add(MapEntry(
+        'image',
+        MultipartFile.fromFileSync(
+          image.path,
+          filename: image.path.split(Platform.pathSeparator).last,
+        ),
+      ));
+    }
     if (city_id != null) {
       _data.fields.add(MapEntry(
         'city_id',

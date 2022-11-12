@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:nanny_co/business_layer/use_case/get_cities_use_case.dart';
 import 'package:nanny_co/business_layer/use_case/update_use_case/update_parent_use_ase.dart';
+import 'package:nanny_co/data/model/dto_model/cities_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_parent.dart';
 import 'package:nanny_co/data/model/updae_parent_model.dart';
@@ -33,20 +35,21 @@ class UpdateParentCubit extends Cubit<UpdateParentState> {
   PostUpdateParentModel postUpdateParentModel = PostUpdateParentModel();
 
   initialValue() {
-    print(DateFormat('yyyy-mm-dd').format(SettingsProvider.userData.dob!));
+    print(DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!));
     postUpdateParentModel.fullName = SettingsProvider.userData.fullName;
     postUpdateParentModel.userName = SettingsProvider.userData.userName;
     postUpdateParentModel.userName = SettingsProvider.userData.userName;
-    postUpdateParentModel.dob = DateFormat('yyyy-mm-dd').format(SettingsProvider.userData.dob!);
+    postUpdateParentModel.dob = DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!);
     postUpdateParentModel.address = SettingsProvider.userData.address;
     postUpdateParentModel.gender = SettingsProvider.userData.gender;
     postUpdateParentModel.email = SettingsProvider.userData.email;
+    postUpdateParentModel.phone = SettingsProvider.userData.phone;
     emit(UpdateParentGetInitial());
   }
 
   final UpdateParentUseCase _updateParentUseCase = injector.get<UpdateParentUseCase>();
 
-  updateParent(BuildContext context) async {
+  Future<bool> updateParent(BuildContext context) async {
     print(postUpdateParentModel.toString());
     try {
       LoginResponseModel loginResponseModel =
@@ -71,5 +74,26 @@ class UpdateParentCubit extends Cubit<UpdateParentState> {
   getImage(File? file) {
     image = file;
     postUpdateParentModel.image = file;
+  }
+
+  final GetCitiesUseCase cityUseCase = injector.get<GetCitiesUseCase>();
+  List<CityModel> cites = [];
+  int? cityIdValue;
+  String cityName = '';
+  getCites() async {
+    cites = await cityUseCase.execute(null);
+    if (cites.isNotEmpty) {
+      cityIdValue = cites.first.id;
+      cityName = cites.first.name;
+    }
+    emit(UpdateParentGetInitial());
+  }
+
+  changeDropDownButton(int value) {
+    cityIdValue = value;
+    postUpdateParentModel.cityId = value;
+    cityName = cites.firstWhere((element) => element.id == value).name;
+
+    emit(UpdateParentGetInitial());
   }
 }
