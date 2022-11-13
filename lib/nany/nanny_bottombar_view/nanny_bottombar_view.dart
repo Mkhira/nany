@@ -26,8 +26,8 @@ class nanny_bottombar_viewState extends State<nanny_bottombar_view> {
     nanny_home_view(),
     nanny_booking_history_view(),
     nanny_wallet_view(),
-    nanny_profile_view(),
-    nanny_edit_profile_view(),
+    NannyProfileView(),
+    NannyEditProfileView(),
     nanny_booking_detail_view(),
   ];
   @override

@@ -1,8 +1,7 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'dart:io';
 
-part 'post_update_sister_profile_model.g.dart';
 
-@JsonSerializable(fieldRename: FieldRename.snake)
+
 class PostUpdateSisterProfileModel {
   PostUpdateSisterProfileModel({
     this.image,
@@ -33,8 +32,8 @@ class PostUpdateSisterProfileModel {
   final String? userName;
   final String email;
   final String phone;
-  final DateTime? dob;
-  final String? image;
+  final String? dob;
+  final File? image;
   final int? cityId;
   final String? gender;
   final String? lat;
@@ -53,7 +52,5 @@ class PostUpdateSisterProfileModel {
   final String? noOfChildren;
   final String? sitterType;
 
-  factory PostUpdateSisterProfileModel.fromJson(Map<String, dynamic> json) => _$PostUpdateSisterProfileModelFromJson(json);
 
-  Map<String, dynamic> toJson() => _$PostUpdateSisterProfileModelToJson(this);
 }

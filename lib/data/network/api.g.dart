@@ -25,18 +25,19 @@ class _AppServiceClient implements AppServiceClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(loginModel.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/login',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/login',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = LoginResponseModel.fromJson(_result.data!);
     return value;
   }
@@ -48,52 +49,26 @@ class _AppServiceClient implements AppServiceClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(registerModel.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/register',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/register',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = LoginResponseModel.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<LoginResponseModel> updateSister(
-    token,
-    postUpdateSisterProfileModel,
-  ) async {
-    const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
-    final _headers = <String, dynamic>{r'Authorization': token};
-    _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
-    _data.addAll(postUpdateSisterProfileModel.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          '/nanny/update-profile',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
-    final value = LoginResponseModel.fromJson(_result.data!);
-    return value;
-  }
-
-  @override
-  Future<LoginResponseModel> updateParent(
-    token,
+  Future<LoginResponseModel> updateSister({
+    required token,
     full_name,
     user_name,
     email,
@@ -105,7 +80,19 @@ class _AppServiceClient implements AppServiceClient {
     lat,
     lng,
     address,
-  ) async {
+    course_name,
+    university_name,
+    education_ity,
+    total_experience,
+    special_needs,
+    id_type,
+    id_number,
+    min_price,
+    max_price,
+    lessons_type,
+    no_of_children,
+    sitter_type,
+  }) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     queryParameters.removeWhere((k, v) => v == null);
@@ -181,18 +168,198 @@ class _AppServiceClient implements AppServiceClient {
         address,
       ));
     }
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
+    if (course_name != null) {
+      _data.fields.add(MapEntry(
+        'course_name',
+        course_name,
+      ));
+    }
+    if (university_name != null) {
+      _data.fields.add(MapEntry(
+        'university_name',
+        university_name,
+      ));
+    }
+    if (education_ity != null) {
+      _data.fields.add(MapEntry(
+        'education_ity',
+        education_ity.toString(),
+      ));
+    }
+    if (total_experience != null) {
+      _data.fields.add(MapEntry(
+        'total_experience',
+        total_experience.toString(),
+      ));
+    }
+    if (special_needs != null) {
+      _data.fields.add(MapEntry(
+        'special_needs',
+        special_needs,
+      ));
+    }
+    if (id_type != null) {
+      _data.fields.add(MapEntry(
+        'id_type',
+        id_type,
+      ));
+    }
+    if (id_number != null) {
+      _data.fields.add(MapEntry(
+        'id_number',
+        id_number,
+      ));
+    }
+    if (min_price != null) {
+      _data.fields.add(MapEntry(
+        'min_price',
+        min_price.toString(),
+      ));
+    }
+    if (max_price != null) {
+      _data.fields.add(MapEntry(
+        'max_price',
+        max_price,
+      ));
+    }
+    if (lessons_type != null) {
+      _data.fields.add(MapEntry(
+        'lessons_type',
+        lessons_type.toString(),
+      ));
+    }
+    if (no_of_children != null) {
+      _data.fields.add(MapEntry(
+        'no_of_children',
+        no_of_children,
+      ));
+    }
+    if (sitter_type != null) {
+      _data.fields.add(MapEntry(
+        'sitter_type',
+        sitter_type,
+      ));
+    }
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/nanny/update-profile',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/nanny/update-profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = LoginResponseModel.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<LoginResponseModel> updateParent({
+    required token,
+    full_name,
+    user_name,
+    email,
+    phone,
+    dob,
+    image,
+    city_id,
+    gender,
+    lat,
+    lng,
+    address,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    if (full_name != null) {
+      _data.fields.add(MapEntry(
+        'full_name',
+        full_name,
+      ));
+    }
+    if (user_name != null) {
+      _data.fields.add(MapEntry(
+        'user_name',
+        user_name,
+      ));
+    }
+    if (email != null) {
+      _data.fields.add(MapEntry(
+        'email',
+        email,
+      ));
+    }
+    if (phone != null) {
+      _data.fields.add(MapEntry(
+        'phone',
+        phone,
+      ));
+    }
+    if (dob != null) {
+      _data.fields.add(MapEntry(
+        'dob',
+        dob,
+      ));
+    }
+    if (image != null) {
+      _data.files.add(MapEntry(
+        'image',
+        MultipartFile.fromFileSync(
+          image.path,
+          filename: image.path.split(Platform.pathSeparator).last,
+        ),
+      ));
+    }
+    if (city_id != null) {
+      _data.fields.add(MapEntry(
+        'city_id',
+        city_id.toString(),
+      ));
+    }
+    if (gender != null) {
+      _data.fields.add(MapEntry(
+        'gender',
+        gender,
+      ));
+    }
+    if (lat != null) {
+      _data.fields.add(MapEntry(
+        'lat',
+        lat,
+      ));
+    }
+    if (lng != null) {
+      _data.fields.add(MapEntry(
+        'lng',
+        lng,
+      ));
+    }
+    if (address != null) {
+      _data.fields.add(MapEntry(
+        'address',
+        address,
+      ));
+    }
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/nanny/update-profile',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = LoginResponseModel.fromJson(_result.data!);
     return value;
   }
@@ -204,18 +371,19 @@ class _AppServiceClient implements AppServiceClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(verifyCodeModel.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/verify-code',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/verify-code',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = LoginResponseModel.fromJson(_result.data!);
     return value;
   }
@@ -227,18 +395,19 @@ class _AppServiceClient implements AppServiceClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(checkEmailModel.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<BasicResponseModel>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BasicResponseModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/check-email',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/check-email',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BasicResponseModel.fromJson(_result.data!);
     return value;
   }
@@ -250,18 +419,19 @@ class _AppServiceClient implements AppServiceClient {
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(changePassword.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<BasicResponseModel>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<BasicResponseModel>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/change-forget-password',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/change-forget-password',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = BasicResponseModel.fromJson(_result.data!);
     return value;
   }
@@ -272,18 +442,19 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<CitiesModel>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<CitiesModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/cities',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/cities',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = CitiesModel.fromJson(_result.data!);
     return value;
   }
@@ -295,18 +466,19 @@ class _AppServiceClient implements AppServiceClient {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<FavouriteDto>(Options(
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<FavouriteDto>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/favorite',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/favorite',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = FavouriteDto.fromJson(_result.data!);
     return value;
   }
@@ -322,18 +494,19 @@ class _AppServiceClient implements AppServiceClient {
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
     _data.addAll(addFavoriteDto.toJson());
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<AddFavouriteResponse>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<AddFavouriteResponse>(Options(
       method: 'POST',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/favorite/add-remove',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/favorite/add-remove',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = AddFavouriteResponse.fromJson(_result.data!);
     return value;
   }
@@ -349,24 +522,27 @@ class _AppServiceClient implements AppServiceClient {
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
-    final _result = await _dio.fetch<Map<String, dynamic>>(_setStreamType<SearchForNannyModel>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<SearchForNannyModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
-        .compose(
-          _dio.options,
-          '/nanny/search',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+            .compose(
+              _dio.options,
+              '/nanny/search',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = SearchForNannyModel.fromJson(_result.data!);
     return value;
   }
 
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
-    if (T != dynamic && !(requestOptions.responseType == ResponseType.bytes || requestOptions.responseType == ResponseType.stream)) {
+    if (T != dynamic &&
+        !(requestOptions.responseType == ResponseType.bytes ||
+            requestOptions.responseType == ResponseType.stream)) {
       if (T == String) {
         requestOptions.responseType = ResponseType.plain;
       } else {

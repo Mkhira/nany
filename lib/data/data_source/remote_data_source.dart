@@ -70,25 +70,46 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   @override
   Future<LoginResponseModel> updateParent(ParentUpdateModel parentUpdateModel) {
     return _appServiceClient.updateParent(
-      'Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}',
-      parentUpdateModel.postUpdateParentModel.fullName,
-      parentUpdateModel.postUpdateParentModel.userName,
-      parentUpdateModel.postUpdateParentModel.email,
-      parentUpdateModel.postUpdateParentModel.phone,
-      parentUpdateModel.postUpdateParentModel.dob,
-      parentUpdateModel.postUpdateParentModel.image,
-      parentUpdateModel.postUpdateParentModel.cityId,
-      parentUpdateModel.postUpdateParentModel.gender,
-      parentUpdateModel.postUpdateParentModel.lat,
-      parentUpdateModel.postUpdateParentModel.lng,
-      parentUpdateModel.postUpdateParentModel.address,
+      token: 'Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}',
+      full_name: parentUpdateModel.postUpdateParentModel.fullName,
+     user_name:  parentUpdateModel.postUpdateParentModel.userName,
+     email:  parentUpdateModel.postUpdateParentModel.email,
+     phone:  parentUpdateModel.postUpdateParentModel.phone,
+     dob:  parentUpdateModel.postUpdateParentModel.dob,
+     image:  parentUpdateModel.postUpdateParentModel.image,
+    city_id:   parentUpdateModel.postUpdateParentModel.cityId,
+    gender:   parentUpdateModel.postUpdateParentModel.gender,
+     lat:  parentUpdateModel.postUpdateParentModel.lat,
+     lng:  parentUpdateModel.postUpdateParentModel.lng,
+     address:  parentUpdateModel.postUpdateParentModel.address,
     );
   }
 
   @override
   Future<LoginResponseModel> updateSister(PostUpdateSisterProfileModel postUpdateSisterProfileModel) {
-    return _appServiceClient.updateSister(
-        'Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', postUpdateSisterProfileModel);
+    return _appServiceClient.updateSister(token: 'Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}',
+    address:postUpdateSisterProfileModel.address,city_id: postUpdateSisterProfileModel.cityId,course_name: postUpdateSisterProfileModel.courseName,
+    dob: postUpdateSisterProfileModel.dob,education_ity: postUpdateSisterProfileModel.educationCity,
+      email: postUpdateSisterProfileModel.email,full_name: postUpdateSisterProfileModel.fullName,
+      gender: postUpdateSisterProfileModel.gender,
+      id_number: postUpdateSisterProfileModel.idNumber,
+      id_type: postUpdateSisterProfileModel.idType,
+      image: postUpdateSisterProfileModel.image,
+      lat: postUpdateSisterProfileModel.lat,
+      lng: postUpdateSisterProfileModel.lng,
+      lessons_type: postUpdateSisterProfileModel.lessonsType,
+      max_price: postUpdateSisterProfileModel.maxPrice,
+      min_price: postUpdateSisterProfileModel.minPrice,
+      no_of_children: postUpdateSisterProfileModel.noOfChildren,
+      phone: postUpdateSisterProfileModel.phone,
+      sitter_type: postUpdateSisterProfileModel.sitterType,
+      special_needs: postUpdateSisterProfileModel.specialNeeds,
+      total_experience: postUpdateSisterProfileModel.totalExperience,
+      university_name: postUpdateSisterProfileModel.universityName,
+      user_name: postUpdateSisterProfileModel.userName
+
+
+    );
   }
 
   @override

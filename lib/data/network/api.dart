@@ -29,12 +29,8 @@ abstract class AppServiceClient {
   @POST('/register')
   Future<LoginResponseModel> register(@Body() RegisterModel registerModel);
   @POST('/nanny/update-profile')
-  Future<LoginResponseModel> updateSister(
-      @Header('Authorization') token, @Body() PostUpdateSisterProfileModel postUpdateSisterProfileModel);
-  @POST('/nanny/update-profile')
-  @MultiPart()
-  Future<LoginResponseModel> updateParent(
-    @Header('Authorization') token,
+  Future<LoginResponseModel> updateSister({
+    @Header('Authorization') required token,
     @Part() String? full_name,
     @Part() String? user_name,
     @Part() String? email,
@@ -46,7 +42,35 @@ abstract class AppServiceClient {
     @Part() String? lat,
     @Part() String? lng,
     @Part() String? address,
-  );
+    @Part() String? course_name,
+    @Part() String? university_name,
+    @Part() int? education_ity,
+    @Part() int? total_experience,
+    @Part() String? special_needs,
+    @Part() String? id_type,
+    @Part() String? id_number,
+    @Part() int? min_price,
+    @Part() String? max_price,
+    @Part() int? lessons_type,
+    @Part() String? no_of_children,
+    @Part() String? sitter_type,
+  });
+  @POST('/nanny/update-profile')
+  @MultiPart()
+  Future<LoginResponseModel> updateParent({
+    @Header('Authorization') required token,
+    @Part() String? full_name,
+    @Part() String? user_name,
+    @Part() String? email,
+    @Part() String? phone,
+    @Part() String? dob,
+    @Part() File? image,
+    @Part() int? city_id,
+    @Part() String? gender,
+    @Part() String? lat,
+    @Part() String? lng,
+    @Part() String? address,
+  });
   @POST('/verify-code')
   Future<LoginResponseModel> verifyCode(@Body() VerifyCodeModel verifyCodeModel);
   @POST('/check-email')
@@ -60,7 +84,8 @@ abstract class AppServiceClient {
   @GET('/favorite')
   Future<FavouriteDto> getFavorite(@Header('Authorization') token);
   @POST('/favorite/add-remove')
-  Future<AddFavouriteResponse> addRemoveFavourite(@Header('Authorization') token, @Body() AddFavoriteDto addFavoriteDto);
+  Future<AddFavouriteResponse> addRemoveFavourite(
+      @Header('Authorization') token, @Body() AddFavoriteDto addFavoriteDto);
 
   @GET('/nanny/search')
   Future<SearchForNannyModel> searchForNanny(@Header('Authorization') token, @Queries() Map<String, dynamic> queries);

@@ -2,8 +2,6 @@ import 'dart:io';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:intl/intl.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:date_time_picker/date_time_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -15,59 +13,54 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/common/widget/ProgressPopUp.dart';
 import 'package:nanny_co/constants.dart';
-import 'package:nanny_co/nany/auth_view/Controller/Auth_controller.dart';
 import 'package:nanny_co/nany/auth_view/Model/nannyDataModel.dart';
 import 'package:nanny_co/nany/nanny_drawer.dart/nanny_drawer_view.dart';
-import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
-import 'package:nanny_co/parent/add_child/parent_children_view.dart';
-import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
-
 import '../nanny_bottombar_view/nanny_bottombar_view.dart';
 import '../nanny_notification_view/nanny_notifications_view.dart';
 import 'Controller/nannyProfile_Controller.dart';
 
-class nanny_edit_profile_view extends StatefulWidget {
-  nanny_edit_profile_view();
+class NannyEditProfileView extends StatefulWidget {
+  const NannyEditProfileView({Key? key}) : super(key: key);
 
   @override
-  State<nanny_edit_profile_view> createState() =>
-      _nanny_edit_profile_viewState();
+  State<NannyEditProfileView> createState() =>
+      _NannyEditProfileViewState();
 }
 
-class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
-  final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
+class _NannyEditProfileViewState extends State<NannyEditProfileView> {
+  final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   RangeValues _currentRangeValues = const RangeValues(0, 100);
 
   nannyProfile_Controller profile_controller =
       Get.put(nannyProfile_Controller());
 
-  TextEditingController fullName = new TextEditingController();
-  TextEditingController entry = new TextEditingController();
-  TextEditingController exit = new TextEditingController();
-  TextEditingController date = new TextEditingController();
+  TextEditingController fullName = TextEditingController();
+  TextEditingController entry = TextEditingController();
+  TextEditingController exit = TextEditingController();
+  TextEditingController date = TextEditingController();
 
-  TextEditingController dob = new TextEditingController();
+  TextEditingController dob = TextEditingController();
 
-  TextEditingController address = new TextEditingController();
+  TextEditingController address = TextEditingController();
 
-  TextEditingController city = new TextEditingController();
+  TextEditingController city = TextEditingController();
 
-  TextEditingController course = new TextEditingController();
+  TextEditingController course = TextEditingController();
 
-  TextEditingController university = new TextEditingController();
+  TextEditingController university = TextEditingController();
 
-  TextEditingController uniCity = new TextEditingController();
+  TextEditingController uniCity = TextEditingController();
 
-  TextEditingController phone = new TextEditingController();
+  TextEditingController phone = TextEditingController();
 
-  TextEditingController email = new TextEditingController();
+  TextEditingController email = TextEditingController();
 
-  TextEditingController experience = new TextEditingController();
+  TextEditingController experience = TextEditingController();
 
-  TextEditingController children = new TextEditingController();
+  TextEditingController children = TextEditingController();
 
-  TextEditingController nic = new TextEditingController();
+  TextEditingController nic = TextEditingController();
 
   bool gender = false;
 
@@ -84,9 +77,9 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        key: scaffoldkey,
+        key: scaffoldKey,
         drawer: nanny_drawer_view(),
-        body: Container(
+        body: SizedBox(
             height: sh,
             width: sw,
             child: Stack(children: [
@@ -113,7 +106,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                     },
                                     child: Stack(
                                       children: [
-                                        Container(
+                                        const SizedBox(
                                           height: 30,
                                           width: 30,
                                           child: Icon(
@@ -132,7 +125,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                               color: Colors.purple.shade400,
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Center(
+                                            child: const Center(
                                               child: Text(
                                                 '11',
                                                 style: TextStyle(
@@ -156,7 +149,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Image(
+                                const Image(
                                     image:
                                         AssetImage('assets/images/dots.png')),
                               ],
@@ -171,10 +164,10 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                 child: Container(
                   height: sh * 0.71,
                   width: sw,
-                  padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
                   ),
@@ -189,7 +182,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -199,7 +192,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: fullName,
@@ -219,27 +212,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -249,7 +242,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: InkWell(
                           onTap: () async {
@@ -280,7 +273,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                   enabled: false,
                                   hintText:
                                       '${profile_controller.nannyModel.value.image == null ? "" : profile_controller.nannyModel.value.image}',
-                                  suffixIcon: Icon(
+                                  suffixIcon: const Icon(
                                     Icons.upload_outlined,
                                     color: Colors.grey,
                                   ),
@@ -290,29 +283,29 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                       fontSize: 16),
                                   border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.grey),
                                   ),
                                   disabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.grey),
                                   ),
                                   focusedBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.grey),
                                   ),
                                   enabledBorder: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(15),
-                                    borderSide: BorderSide(
+                                    borderSide: const BorderSide(
                                         width: 1, color: Colors.grey),
                                   ),
                                 ),
                               )),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -322,7 +315,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: dob,
@@ -341,27 +334,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -390,7 +383,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                               "Male"
                                           ? Colors.green.shade500
                                           : Colors.white,
-                                      borderRadius: BorderRadius.only(
+                                      borderRadius: const BorderRadius.only(
                                           topLeft: Radius.circular(15),
                                           bottomLeft: Radius.circular(15)),
                                       border: Border.all(
@@ -430,7 +423,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                               "Female"
                                           ? Colors.green
                                           : Colors.white,
-                                      borderRadius: BorderRadius.only(
+                                      borderRadius: const BorderRadius.only(
                                           topRight: Radius.circular(15),
                                           bottomRight: Radius.circular(15)),
                                       border: Border.all(
@@ -456,7 +449,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -466,13 +459,13 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Row(
                         children: [
                           Expanded(
-                            child: Container(
+                            child: SizedBox(
                               height: 50,
                               child: InkWell(
                                 onTap: () {
@@ -487,7 +480,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                     filled: true,
                                     hintText: 'Sitter',
                                     enabled: false,
-                                    contentPadding: EdgeInsets.symmetric(
+                                    contentPadding: const EdgeInsets.symmetric(
                                         vertical: 5, horizontal: 10),
                                     prefixIcon: InkWell(
                                       onTap: () {
@@ -504,7 +497,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                     "Sitter"
                                                 ? Colors.green
                                                 : Colors.white,
-                                            borderRadius: BorderRadius.only(
+                                            borderRadius: const BorderRadius.only(
                                                 bottomLeft: Radius.circular(15),
                                                 topLeft: Radius.circular(15)),
                                             border: Border.all(
@@ -535,22 +528,22 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                         fontSize: 16),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.grey),
                                     ),
                                     disabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.grey),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.grey),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.grey),
                                     ),
                                   ),
@@ -558,11 +551,11 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                               ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
-                            child: Container(
+                            child: SizedBox(
                               height: 50,
                               child: InkWell(
                                 onTap: () {
@@ -577,7 +570,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                     fillColor: Colors.white,
                                     filled: true,
                                     hintText: 'Goto Sitter',
-                                    contentPadding: EdgeInsets.symmetric(
+                                    contentPadding: const EdgeInsets.symmetric(
                                         vertical: 5, horizontal: 10),
                                     prefixIcon: InkWell(
                                       onTap: () {
@@ -596,7 +589,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         "Goto Sitter"
                                                     ? Colors.green
                                                     : Colors.white,
-                                                borderRadius: BorderRadius.only(
+                                                borderRadius: const BorderRadius.only(
                                                     bottomLeft:
                                                         Radius.circular(15),
                                                     topLeft:
@@ -630,22 +623,22 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                         fontSize: 16),
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.grey),
                                     ),
                                     disabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.grey),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.grey),
                                     ),
                                     enabledBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(15),
-                                      borderSide: BorderSide(
+                                      borderSide: const BorderSide(
                                           width: 1, color: Colors.grey),
                                     ),
                                   ),
@@ -655,7 +648,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -665,7 +658,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -675,7 +668,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: address,
@@ -695,27 +688,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -725,7 +718,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: city,
@@ -745,27 +738,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -775,7 +768,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -785,7 +778,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: course,
@@ -805,27 +798,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -835,7 +828,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: university,
@@ -855,27 +848,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -885,7 +878,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: uniCity,
@@ -905,27 +898,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -935,7 +928,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -945,7 +938,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: phone,
@@ -965,27 +958,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -995,7 +988,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: email,
@@ -1012,27 +1005,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -1042,7 +1035,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -1052,7 +1045,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: experience,
@@ -1072,27 +1065,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -1102,7 +1095,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: InkWell(
                           onTap: () {
@@ -1121,7 +1114,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                               filled: true,
                               enabled: false,
                               hintText: 'Specialize in special needs',
-                              contentPadding: EdgeInsets.symmetric(
+                              contentPadding: const EdgeInsets.symmetric(
                                   vertical: 5, horizontal: 10),
                               prefixIcon: Container(
                                 width: 50,
@@ -1131,7 +1124,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                             true
                                         ? Colors.green
                                         : Colors.white,
-                                    borderRadius: BorderRadius.only(
+                                    borderRadius: const BorderRadius.only(
                                         bottomLeft: Radius.circular(15),
                                         topLeft: Radius.circular(15)),
                                     border: Border.all(
@@ -1159,28 +1152,28 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.grey),
+                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                               disabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.grey),
+                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.grey),
+                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.grey),
+                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -1190,7 +1183,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(() => TextField(
                               controller: children,
@@ -1211,27 +1204,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
+                                      const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -1241,7 +1234,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -1251,7 +1244,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: DropdownButtonFormField(
                           decoration: InputDecoration(
@@ -1261,27 +1254,27 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                 color: Colors.grey.shade400,
                                 fontWeight: FontWeight.w500,
                                 fontSize: 16),
-                            contentPadding: EdgeInsets.symmetric(
+                            contentPadding: const EdgeInsets.symmetric(
                                 vertical: 5, horizontal: 10),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                               borderSide:
-                                  BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                             ),
                             disabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                               borderSide:
-                                  BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                             ),
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                               borderSide:
-                                  BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                             ),
                             enabledBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(15),
                               borderSide:
-                                  BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                             ),
                           ),
                           value: 'Select Indentification',
@@ -1295,7 +1288,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                           onChanged: (value) {},
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                       Text(
@@ -1305,7 +1298,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Container(
+                      SizedBox(
                         height: 50,
                         child: Obx(
                           () => TextField(
@@ -1325,28 +1318,28 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                               border: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.grey),
+                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                               disabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.grey),
+                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                               focusedBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.grey),
+                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                               enabledBorder: OutlineInputBorder(
                                 borderRadius: BorderRadius.circular(15),
                                 borderSide:
-                                    BorderSide(width: 1, color: Colors.grey),
+                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                             ),
                           ),
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -1356,7 +1349,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 20),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -1398,7 +1391,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                         ],
                       ),
                       SliderTheme(
-                          data: SliderThemeData(
+                          data: const SliderThemeData(
                             trackHeight: 1,
                           ),
                           child: RangeSlider(
@@ -1439,7 +1432,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                     return Dialog(
                                       child: Container(
                                         height: 420,
-                                        padding: EdgeInsets.all(20),
+                                        padding: const EdgeInsets.all(20),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -1459,7 +1452,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 20,
                                             ),
                                             Text(
@@ -1475,7 +1468,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                 lastDate: DateTime(2035),);
                                               date.text=DateFormat('MMM,dd,yyyy').format(data!);
                                               },
-                                              child: Container(
+                                              child: SizedBox(
                                                 height: 50,
                                                 child: InkWell(
                                                   child: TextField(
@@ -1496,7 +1489,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1505,7 +1498,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1514,7 +1507,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1523,7 +1516,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1532,7 +1525,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             Text(
@@ -1547,7 +1540,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                TimeOfDay? data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
                                                entry.text=data!.format(context).toString();
                                                },
-                                              child: Container(
+                                              child: SizedBox(
                                                 height: 50,
                                                 child: InkWell(
                                                   child: TextField(
@@ -1568,7 +1561,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1577,7 +1570,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1586,7 +1579,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1595,7 +1588,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1604,7 +1597,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             Text(
@@ -1619,7 +1612,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                var data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
                                                exit.text=data!.format(context).toString();
                                               },
-                                              child: Container(
+                                              child: SizedBox(
                                                 height: 50,
                                                 child: InkWell(
                                                   child: TextField(
@@ -1640,7 +1633,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1649,7 +1642,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1658,7 +1651,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1667,7 +1660,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(15),
-                                                        borderSide: BorderSide(
+                                                        borderSide: const BorderSide(
                                                             width: 1,
                                                             color: Colors.grey),
                                                       ),
@@ -1676,7 +1669,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                 ),
                                               ),
                                             ),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             ElevatedButton(
@@ -1686,7 +1679,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                         entry.text.isNotEmpty &&
                                                         exit.text.isNotEmpty) {
                                                       Availability availability =
-                                                      new Availability(
+                                                      Availability(
                                                         booked: false,
                                                         date: date.text,
                                                         endTime: exit.text,
@@ -1716,7 +1709,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                                     .circular(
                                                                         1000))),
                                                 child: Padding(
-                                                  padding: EdgeInsets.symmetric(
+                                                  padding: const EdgeInsets.symmetric(
                                                     vertical: 15.0,
                                                   ),
                                                   child: Center(
@@ -1737,7 +1730,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                     ),
                                                   ),
                                                 )),
-                                            SizedBox(
+                                            const SizedBox(
                                               height: 10,
                                             ),
                                             ElevatedButton(
@@ -1753,7 +1746,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                                     .circular(
                                                                         1000))),
                                                 child: Padding(
-                                                  padding: EdgeInsets.symmetric(
+                                                  padding: const EdgeInsets.symmetric(
                                                       vertical: 15.0),
                                                   child: Center(
                                                     child: Row(
@@ -1781,7 +1774,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                             },
                             child: Row(
                               children: [
-                                Icon(
+                                const Icon(
                                   Icons.add,
                                   color: Colors.blue,
                                   size: 20,
@@ -1796,11 +1789,11 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                           )
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       profile_controller.nannyModel.value.availability != null
-                          ? Container(
+                          ? SizedBox(
                               height: 150,
                               child: ListView.builder(
                                   itemCount: profile_controller
@@ -1811,7 +1804,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                       children: [
                                         Container(
                                             width: 150,
-                                            margin: EdgeInsets.all(10),
+                                            margin: const EdgeInsets.all(10),
                                             decoration: BoxDecoration(
                                                 border: Border.all(
                                                     color: Colors.grey,
@@ -1822,8 +1815,8 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                               children: [
                                                 Expanded(
                                                   child: Container(
-                                                    padding: EdgeInsets.all(10),
-                                                    decoration: BoxDecoration(
+                                                    padding: const EdgeInsets.all(10),
+                                                    decoration: const BoxDecoration(
                                                         color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius.only(
@@ -1867,8 +1860,8 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                 ),
                                                 Expanded(
                                                   child: Container(
-                                                    padding: EdgeInsets.all(5),
-                                                    decoration: BoxDecoration(
+                                                    padding: const EdgeInsets.all(5),
+                                                    decoration: const BoxDecoration(
                                                         color: Colors
                                                             .transparent,
                                                         borderRadius:
@@ -1943,7 +1936,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                                 profile_controller.nannyModel.value.availability!.removeAt(index);
                                               });
                                             },
-                                            child: Icon(
+                                            child: const Icon(
                                               Icons.remove_circle,
                                               size: 30,
                                               color: Colors.red,
@@ -1955,40 +1948,20 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                                   }),
                             )
                           : Container(),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Container(
                         child: ElevatedButton(
                             onPressed: () {
-                              CheckEmailUpdate().then((value) => {
-                                    if (value == true)
-                                      {
-                                        profile_controller
-                                            .nannyModel.value.email = email.text
-                                      },
-                                    print(
-                                        profile_controller.nannyModel.toJson()),
-                                    ProgressPopup(context),
-                                    profile_controller.UpdateProfile(
-                                            profile_controller.nannyModel
-                                                .toJson())
-                                        .then((value) {
-                                      nanny_bottombar_viewState.selectedIndex =
-                                          3;
-                                      Navigator.of(context).pushReplacement(
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  nanny_bottombar_view()));
-                                    }),
-                                  });
+
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: Theme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(1000))),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 15.0, horizontal: 10),
                               child: Center(
                                 child: Row(
@@ -2004,7 +1977,7 @@ class _nanny_edit_profile_viewState extends State<nanny_edit_profile_view> {
                               ),
                             )),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
                     ],
