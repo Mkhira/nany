@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:animated_snack_bar/animated_snack_bar.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,11 +14,14 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/common/widget/ProgressPopUp.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/domain/config/setting_provider.dart';
+import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/Model/nannyDataModel.dart';
 import 'package:nanny_co/nany/nanny_drawer.dart/nanny_drawer_view.dart';
 import '../nanny_bottombar_view/nanny_bottombar_view.dart';
 import '../nanny_notification_view/nanny_notifications_view.dart';
 import 'Controller/nannyProfile_Controller.dart';
+import 'Controller/update_nanny_profile_cubit.dart';
 
 class NannyEditProfileView extends StatefulWidget {
   const NannyEditProfileView({Key? key}) : super(key: key);
@@ -71,6 +75,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
   @override
   void initState() {
     // TODO: implement initState
+    injector.get<UpdateNannyProfileCubit>().initialValue();
     super.initState();
   }
 
@@ -79,7 +84,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
     return Scaffold(
         key: scaffoldKey,
         drawer: nanny_drawer_view(),
-        body: SizedBox(
+        body: BlocBuilder<UpdateNannyProfileCubit,UpdateNannyProfileState>(builder: (context,state)=> SizedBox(
             height: sh,
             width: sw,
             child: Stack(children: [
@@ -151,7 +156,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                 ),
                                 const Image(
                                     image:
-                                        AssetImage('assets/images/dots.png')),
+                                    AssetImage('assets/images/dots.png')),
                               ],
                             )
                           ],
@@ -173,38 +178,38 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                   ),
                   child: SingleChildScrollView(
                       child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Nanny Information',
-                        style: GoogleFonts.raleway(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Full Name',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            'Nanny Information',
+                            style: GoogleFonts.raleway(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Full Name',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child:  TextField(
                               controller: fullName,
                               onChanged: (value) {
-                                profile_controller.nannyModel.value.fullname =
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.fullName =
                                     value;
                               },
                               decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 filled: true,
                                 hintText:
-                                    '${profile_controller.nannyModel.value.fullname == null ? "" : profile_controller.nannyModel.value.fullname}',
+                                SettingsProvider.userData.fullName,
                                 hintStyle: GoogleFonts.raleway(
                                     color: Colors.grey.shade400,
                                     fontWeight: FontWeight.w500,
@@ -212,67 +217,55 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Upload Photo',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: InkWell(
-                          onTap: () async {
-                            FilePickerResult? result = await FilePicker.platform
-                                .pickFiles(
-                                    type: FileType.image, allowMultiple: false);
-                            if (result != null) {
-                              var file = result.files.single.path;
-                              var name = result.files.single.name;
-                              FirebaseStorage storage =
-                                  FirebaseStorage.instance;
-                              Reference ref =
-                                  storage.ref().child('profile_images').child(result.files.single.name+FirebaseAuth.instance.currentUser!.uid);
-                              await ref.putFile(File(file!));
-                              var upload = await ref.getDownloadURL();
-                              if (upload != null) {
-                                profile_controller.nannyModel.value.image =
-                                    upload;
-                              }
-                            } else {
-                              // User canceled the picker
-                            }
-                          },
-                          child: Obx(() => TextField(
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Upload Photo',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: InkWell(
+                              onTap: () async {
+                                FilePickerResult? result = await FilePicker.platform.pickFiles(type: FileType.image, allowMultiple: false);
+                                if (result != null) {
+                                  // profileController.parentModel.value.image=upload;
+                                  injector.get<UpdateNannyProfileCubit>().getImage(File(result.files.single.path!));
+                                } else {
+                                  // User canceled the picker
+                                }
+                              },
+                              child:  TextField(
                                 decoration: InputDecoration(
                                   fillColor: Colors.white,
                                   filled: true,
                                   enabled: false,
-                                  hintText:
-                                      '${profile_controller.nannyModel.value.image == null ? "" : profile_controller.nannyModel.value.image}',
+
+                                  hintText: SettingsProvider.userData.image??'',
                                   suffixIcon: const Icon(
                                     Icons.upload_outlined,
                                     color: Colors.grey,
@@ -302,31 +295,31 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                         width: 1, color: Colors.grey),
                                   ),
                                 ),
-                              )),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Date of Birth',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Date of Birth',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: TextField(
                               controller: dob,
                               onChanged: (value) {
-                                profile_controller.nannyModel.value.dob = value;
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.dob= value;
                               },
+                              keyboardType: TextInputType.datetime,
                               decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.dob == null ? "" : profile_controller.nannyModel.value.dob}',
+                                hintText: DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!) ?? "",
                                 hintStyle: GoogleFonts.raleway(
                                     color: Colors.grey.shade400,
                                     fontWeight: FontWeight.w500,
@@ -334,53 +327,52 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Gender',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                profile_controller.nannyModel.value.gender =
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Gender',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.gender =
                                     'Male';
-                              });
-                            },
-                            child: Obx(() => Container(
+                                  });
+                                },
+                                child: Container(
                                   height: 50,
                                   width: sw * 0.43,
                                   decoration: BoxDecoration(
-                                      color: profile_controller
-                                                  .nannyModel.value.gender ==
-                                              "Male"
+                                      color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.gender ==
+                                          "Male"
                                           ? Colors.green.shade500
                                           : Colors.white,
                                       borderRadius: const BorderRadius.only(
@@ -391,36 +383,34 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                           color: Colors.grey.shade400)),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
                                         'Male',
                                         style: GoogleFonts.raleway(
-                                            color: profile_controller.nannyModel
-                                                        .value.gender ==
-                                                    "Male"
+                                            color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.gender ==
+                                                "Male"
                                                 ? Colors.white
                                                 : Colors.grey.shade400,
                                             fontSize: 14),
                                       ),
                                     ],
                                   ),
-                                )),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              setState(() {
-                                profile_controller.nannyModel.value.gender =
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.gender =
                                     'Female';
-                              });
-                            },
-                            child: Obx(() => Container(
+                                  });
+                                },
+                                child: Container(
                                   height: 50,
                                   width: sw * 0.45,
                                   decoration: BoxDecoration(
-                                      color: profile_controller
-                                                  .nannyModel.value.gender ==
-                                              "Female"
+                                      color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.gender ==
+                                          "Female"
                                           ? Colors.green
                                           : Colors.white,
                                       borderRadius: const BorderRadius.only(
@@ -431,169 +421,244 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                           color: Colors.grey.shade400)),
                                   child: Row(
                                     mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
+                                    MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
                                         'Female',
                                         style: GoogleFonts.raleway(
-                                            color: profile_controller.nannyModel
-                                                        .value.gender ==
-                                                    "Female"
+                                            color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.gender ==
+                                                "Female"
                                                 ? Colors.white
                                                 : Colors.grey.shade400,
                                             fontSize: 14),
                                       ),
                                     ],
                                   ),
-                                )),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Sitter Type',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: SizedBox(
-                              height: 50,
-                              child: InkWell(
+                                ),
+                              )
+                            ],
+                          ),     Text(
+                            'Lesson type',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
                                 onTap: () {
                                   setState(() {
-                                    profile_controller.nannyModel.value.type =
-                                        'Sitter';
+                                    injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.lessonsType = 1;
                                   });
                                 },
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    hintText: 'Sitter',
-                                    enabled: false,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 10),
-                                    prefixIcon: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          profile_controller
-                                              .nannyModel.value.type = 'Sitter';
-                                        });
-                                      },
-                                      child: Container(
-                                        width: 50,
-                                        decoration: BoxDecoration(
-                                            color: profile_controller.nannyModel
-                                                        .value.type ==
-                                                    "Sitter"
-                                                ? Colors.green
-                                                : Colors.white,
-                                            borderRadius: const BorderRadius.only(
-                                                bottomLeft: Radius.circular(15),
-                                                topLeft: Radius.circular(15)),
-                                            border: Border.all(
-                                                color: Colors.grey, width: 1)),
-                                        child: Row(
-                                          children: [
-                                            Padding(
-                                              padding:
+                                child: Container(
+                                  height: 50,
+                                  width: sw * 0.43,
+                                  decoration: BoxDecoration(
+                                      color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.lessonsType== 1
+                                          ? Colors.green.shade500
+                                          : Colors.white,
+                                      borderRadius: const BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          bottomLeft: Radius.circular(15)),
+                                      border: Border.all(
+                                          width: 1,
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'Follow lessons',
+                                        style: GoogleFonts.raleway(
+                                            color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.lessonsType ==
+                                                1
+                                                ? Colors.white
+                                                : Colors.grey.shade400,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.lessonsType = 2;
+                                  });
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: sw * 0.45,
+                                  decoration: BoxDecoration(
+                                      color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.lessonsType ==
+                                          2
+                                          ? Colors.green
+                                          : Colors.white,
+                                      borderRadius: const BorderRadius.only(
+                                          topRight: Radius.circular(15),
+                                          bottomRight: Radius.circular(15)),
+                                      border: Border.all(
+                                          width: 1,
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'the lessons online',
+                                        style: GoogleFonts.raleway(
+                                            color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.lessonsType ==
+                                                2
+                                                ? Colors.white
+                                                : Colors.grey.shade400,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Sitter Type',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Row(
+                            children: [
+                              Expanded(
+                                child: SizedBox(
+                                  height: 50,
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.sitterType =
+                                        'Home Sitter';
+                                      });
+                                    },
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        hintText: 'Home Sitter',
+                                        enabled: false,
+                                        contentPadding: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 10),
+                                        prefixIcon: InkWell(
+                                          onTap: () {
+                                            setState(() {
+
+                                              injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.sitterType  = 'Home Sitter';
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.sitterType ==
+                                                    "Home Sitter"
+                                                    ? Colors.green
+                                                    : Colors.white,
+                                                borderRadius: const BorderRadius.only(
+                                                    bottomLeft: Radius.circular(15),
+                                                    topLeft: Radius.circular(15)),
+                                                border: Border.all(
+                                                    color: Colors.grey, width: 1)),
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
                                                   const EdgeInsets.all(8.0),
-                                              child: Icon(
-                                                Icons.check,
-                                                color: profile_controller
-                                                            .nannyModel
-                                                            .value
-                                                            .type ==
-                                                        "Sitter"
-                                                    ? Colors.white
-                                                    : Colors.grey.shade400,
-                                              ),
+                                                  child: Icon(
+                                                    Icons.check,
+                                                    color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.sitterType ==
+                                                        "Home Sitter"
+                                                        ? Colors.white
+                                                        : Colors.grey.shade400,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.raleway(
+                                            color: Colors.grey.shade400,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
                                         ),
                                       ),
-                                    ),
-                                    hintStyle: GoogleFonts.raleway(
-                                        color: Colors.grey.shade400,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.grey),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.grey),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.grey),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.grey),
                                     ),
                                   ),
                                 ),
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Expanded(
-                            child: SizedBox(
-                              height: 50,
-                              child: InkWell(
-                                onTap: () {
-                                  setState(() {
-                                    profile_controller.nannyModel.value.type =
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              Expanded(
+                                child: SizedBox(
+                                  height: 50,
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.sitterType =
                                         'Goto Sitter';
-                                  });
-                                },
-                                child: TextField(
-                                  decoration: InputDecoration(
-                                    enabled: false,
-                                    fillColor: Colors.white,
-                                    filled: true,
-                                    hintText: 'Goto Sitter',
-                                    contentPadding: const EdgeInsets.symmetric(
-                                        vertical: 5, horizontal: 10),
-                                    prefixIcon: InkWell(
-                                      onTap: () {
-                                        setState(() {
-                                          profile_controller.nannyModel.value
-                                              .type = 'Goto Sitter';
-                                        });
-                                      },
-                                      child: Obx(() => Container(
+                                      });
+                                    },
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        hintText: 'Goto Sitter',
+                                        contentPadding: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 10),
+                                        prefixIcon: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.sitterType = 'Goto Sitter';
+                                            });
+                                          },
+                                          child:  Container(
                                             width: 50,
                                             decoration: BoxDecoration(
-                                                color: profile_controller
-                                                            .nannyModel
-                                                            .value
-                                                            .type ==
-                                                        "Goto Sitter"
+                                                color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.sitterType ==
+                                                    "Goto Sitter"
                                                     ? Colors.green
                                                     : Colors.white,
                                                 borderRadius: const BorderRadius.only(
                                                     bottomLeft:
-                                                        Radius.circular(15),
+                                                    Radius.circular(15),
                                                     topLeft:
-                                                        Radius.circular(15)),
+                                                    Radius.circular(15)),
                                                 border: Border.all(
                                                     color: Colors.grey,
                                                     width: 1)),
@@ -601,86 +666,81 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                               children: [
                                                 Padding(
                                                   padding:
-                                                      const EdgeInsets.all(8.0),
+                                                  const EdgeInsets.all(8.0),
                                                   child: Icon(
                                                     Icons.check,
-                                                    color: profile_controller
-                                                                .nannyModel
-                                                                .value
-                                                                .type ==
-                                                            "Goto Sitter"
+                                                    color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.sitterType ==
+                                                        "Goto Sitter"
                                                         ? Colors.white
                                                         : Colors.grey.shade400,
                                                   ),
                                                 )
                                               ],
                                             ),
-                                          )),
-                                    ),
-                                    hintStyle: GoogleFonts.raleway(
-                                        color: Colors.grey.shade400,
-                                        fontWeight: FontWeight.w500,
-                                        fontSize: 16),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.grey),
-                                    ),
-                                    disabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.grey),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.grey),
-                                    ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(15),
-                                      borderSide: const BorderSide(
-                                          width: 1, color: Colors.grey),
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.raleway(
+                                            color: Colors.grey.shade400,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Address',
-                        style: GoogleFonts.raleway(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Address',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Address',
+                            style: GoogleFonts.raleway(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Address',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: TextField(
                               controller: address,
                               onChanged: (value) {
-                                profile_controller
-                                    .nannyModel.value.address?.address = value;
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.address = value;
                               },
                               decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.address?.address == null ? "" : profile_controller.nannyModel.value.address?.address}',
+                                hintText: SettingsProvider.userData.address??'',
                                 hintStyle: GoogleFonts.raleway(
                                     color: Colors.grey.shade400,
                                     fontWeight: FontWeight.w500,
@@ -688,515 +748,321 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'City',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
-                              controller: city,
-                              onChanged: (value) {
-                                profile_controller
-                                    .nannyModel.value.address?.city = value;
-                              },
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.address?.city == null ? "" : profile_controller.nannyModel.value.address?.city}',
-                                hintStyle: GoogleFonts.raleway(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Education',
-                        style: GoogleFonts.raleway(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Course Name',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
-                              controller: course,
-                              onChanged: (value) {
-                                profile_controller
-                                    .nannyModel.value.education?.course = value;
-                              },
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.education?.course == null ? "" : profile_controller.nannyModel.value.education?.course}',
-                                hintStyle: GoogleFonts.raleway(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'University Name',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
-                              controller: university,
-                              onChanged: (value) {
-                                profile_controller.nannyModel.value.education
-                                    ?.university = value;
-                              },
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.education?.university == null ? "" : profile_controller.nannyModel.value.education?.university}',
-                                hintStyle: GoogleFonts.raleway(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'City',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
-                              controller: uniCity,
-                              onChanged: (value) {
-                                profile_controller
-                                    .nannyModel.value.education?.city = value;
-                              },
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.education?.city == null ? "" : profile_controller.nannyModel.value.education?.city}',
-                                hintStyle: GoogleFonts.raleway(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Phone / Email',
-                        style: GoogleFonts.raleway(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Phone Number',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
-                              controller: phone,
-                              onChanged: (value) {
-                                profile_controller.nannyModel.value.mobile =
-                                    value;
-                              },
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.mobile == null ? "" : profile_controller.nannyModel.value.mobile}',
-                                hintStyle: GoogleFonts.raleway(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Email',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
-                              controller: email,
-                              onChanged: (value) {},
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.email == null ? "" : profile_controller.nannyModel.value.email}',
-                                hintStyle: GoogleFonts.raleway(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Personal Information',
-                        style: GoogleFonts.raleway(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Total Experience',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
-                              controller: experience,
-                              onChanged: (value) {
-                                profile_controller.nannyModel.value.experience =
-                                    value;
-                              },
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.experience == null ? "" : profile_controller.nannyModel.value.experience}',
-                                hintStyle: GoogleFonts.raleway(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(15),
-                                  borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'Special Needs',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: InkWell(
-                          onTap: () {
-                            setState(() {
-                              profile_controller.nannyModel.value.special ==
-                                      true
-                                  ? profile_controller
-                                      .nannyModel.value.special = false
-                                  : profile_controller
-                                      .nannyModel.value.special = true;
-                            });
-                          },
-                          child: TextField(
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              enabled: false,
-                              hintText: 'Specialize in special needs',
-                              contentPadding: const EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 10),
-                              prefixIcon: Container(
-                                width: 50,
-                                decoration: BoxDecoration(
-                                    color: profile_controller
-                                                .nannyModel.value.special ==
-                                            true
-                                        ? Colors.green
-                                        : Colors.white,
-                                    borderRadius: const BorderRadius.only(
-                                        bottomLeft: Radius.circular(15),
-                                        topLeft: Radius.circular(15)),
-                                    border: Border.all(
-                                        color: Colors.grey, width: 1)),
-                                child: Row(
-                                  children: [
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Icon(
-                                        Icons.check,
-                                        color: profile_controller
-                                                    .nannyModel.value.special ==
-                                                true
-                                            ? Colors.white
-                                            : Colors.grey.shade300,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              hintStyle: GoogleFonts.raleway(
-                                  color: Colors.grey.shade400,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(width: 1, color: Colors.grey),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(width: 1, color: Colors.grey),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(width: 1, color: Colors.grey),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(width: 1, color: Colors.grey),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'No. of Children Willing to care',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(() => TextField(
-                              controller: children,
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'City',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          if (injector.get<UpdateNannyProfileCubit>().cites.isNotEmpty) ...[
+                            DropdownButton(
+                              value: injector.get<UpdateNannyProfileCubit>().cityIdValue,
                               onChanged: (value) {
-                                profile_controller.nannyModel.value.children =
+                                setState(() {
+                                  injector.get<UpdateNannyProfileCubit>().changeDropDownButton(int.parse(value.toString()));
+                                });
+                              },
+                              items: injector.get<UpdateNannyProfileCubit>().cites.map((city) {
+                                return DropdownMenuItem(value: city.id, child: Text(city.name));
+                              }).toList(),
+                            )
+                          ],
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Education',
+                            style: GoogleFonts.raleway(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Course Name',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child:  TextField(
+                              controller: course,
+                              onChanged: (value) {
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.courseName = value;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: SettingsProvider.userData.courseName??'',
+                                hintStyle: GoogleFonts.raleway(
+                                    color: Colors.grey.shade400,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'University Name',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: TextField(
+                              controller: university,
+                              onChanged: (value) {
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.universityName = value;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText:  SettingsProvider.userData.universityName,
+                                hintStyle: GoogleFonts.raleway(
+                                    color: Colors.grey.shade400,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'City Education',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          if (injector.get<UpdateNannyProfileCubit>().cites.isNotEmpty) ...[
+                            DropdownButton(
+                              value: injector.get<UpdateNannyProfileCubit>().cityIdEducationValue,
+                              onChanged: (value) {
+                                setState(() {
+                                  injector.get<UpdateNannyProfileCubit>().changeDropDownButtonEducation(int.parse(value.toString()));
+                                });
+                              },
+                              items: injector.get<UpdateNannyProfileCubit>().cites.map((city) {
+                                return DropdownMenuItem(value: city.id, child: Text(city.name));
+                              }).toList(),
+                            )
+                          ],
+
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Phone / Email',
+                            style: GoogleFonts.raleway(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Phone Number',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child:  TextField(
+                              controller: phone,
+                              onChanged: (value) {
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.phone=
+                                    value;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText:
+                                SettingsProvider.userData.phone,
+
+                                hintStyle: GoogleFonts.raleway(
+                                    color: Colors.grey.shade400,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'Email',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child:  TextField(
+                              controller: email,
+                              onChanged: (value) {
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.email = value;
+                              },
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText:SettingsProvider.userData.email,
+                                hintStyle: GoogleFonts.raleway(
+                                    color: Colors.grey.shade400,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Personal Information',
+                            style: GoogleFonts.raleway(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Total Experience',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child:  TextField(
+                              controller: experience,
+                              onChanged: (value) {
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.totalExperience =
                                     int.parse(value);
                               },
                               keyboardType: TextInputType.number,
                               decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 filled: true,
-                                hintText:
-                                    '${profile_controller.nannyModel.value.children == null ? "" : profile_controller.nannyModel.value.children}',
+                                hintText:'${SettingsProvider.userData.totalExperience}',
                                 hintStyle: GoogleFonts.raleway(
                                     color: Colors.grey.shade400,
                                     fontWeight: FontWeight.w500,
@@ -1204,787 +1070,931 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 disabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                                 enabledBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(15),
                                   borderSide:
-                                      const BorderSide(width: 1, color: Colors.grey),
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
                               ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'National ID',
-                        style: GoogleFonts.raleway(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Choose ID',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: DropdownButtonFormField(
-                          decoration: InputDecoration(
-                            fillColor: Colors.white,
-                            filled: true,
-                            hintStyle: GoogleFonts.raleway(
-                                color: Colors.grey.shade400,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 16),
-                            contentPadding: const EdgeInsets.symmetric(
-                                vertical: 5, horizontal: 10),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide:
-                                  const BorderSide(width: 1, color: Colors.grey),
-                            ),
-                            disabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide:
-                                  const BorderSide(width: 1, color: Colors.grey),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide:
-                                  const BorderSide(width: 1, color: Colors.grey),
-                            ),
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15),
-                              borderSide:
-                                  const BorderSide(width: 1, color: Colors.grey),
                             ),
                           ),
-                          value: 'Select Indentification',
-                          items: ['Select Indentification', 'Nic', 'Passport']
-                              .map((value) {
-                            return DropdownMenuItem(
-                              value: value,
-                              child: Text(value.toString()),
-                            );
-                          }).toList(),
-                          onChanged: (value) {},
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Text(
-                        'ID Number',
-                        style: GoogleFonts.raleway(
-                            color: Colors.grey,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
-                      SizedBox(
-                        height: 50,
-                        child: Obx(
-                          () => TextField(
-                            controller: nic,
-                            onChanged: (value) {
-                              profile_controller.nannyModel.value.nic = value;
-                            },
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText:
-                                  '${profile_controller.nannyModel.value.nic == null ? "" : profile_controller.nannyModel.value.nic}',
-                              hintStyle: GoogleFonts.raleway(
-                                  color: Colors.grey.shade400,
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 16),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(width: 1, color: Colors.grey),
-                              ),
-                              disabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(width: 1, color: Colors.grey),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(width: 1, color: Colors.grey),
-                              ),
-                              enabledBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(15),
-                                borderSide:
-                                    const BorderSide(width: 1, color: Colors.grey),
-                              ),
-                            ),
+                          const SizedBox(
+                            height: 10,
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Text(
-                        'Charges',
-                        style: GoogleFonts.raleway(
-                            color: Theme.of(context).primaryColor,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                '20 Riyal',
-                                style: GoogleFonts.raleway(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
-                              ),
-                              Text(
-                                '[Min]',
-                                style: GoogleFonts.raleway(
-                                    color: Colors.grey, fontSize: 12),
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                '50 Riyal',
-                                style: GoogleFonts.raleway(
-                                    color: Colors.grey,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 14),
-                              ),
-                              Text(
-                                '[Max]',
-                                style: GoogleFonts.raleway(
-                                    color: Colors.grey, fontSize: 12),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      SliderTheme(
-                          data: const SliderThemeData(
-                            trackHeight: 1,
-                          ),
-                          child: RangeSlider(
-                            values: _currentRangeValues,
-                            max: 1000,
-                            divisions: 1000,
-                            activeColor: Theme.of(context).primaryColor,
-                            inactiveColor: Colors.grey.shade200,
-                            labels: RangeLabels(
-                              _currentRangeValues.start.round().toString(),
-                              _currentRangeValues.end.round().toString(),
-                            ),
-                            onChanged: (RangeValues values) {
-                              setState(() {
-                                _currentRangeValues = values;
-                                profile_controller.nannyModel.value.minRange =
-                                    _currentRangeValues.start;
-                                profile_controller.nannyModel.value.maxRange =
-                                    _currentRangeValues.end;
-                              });
-                            },
-                          )),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
                           Text(
-                            'Availability',
+                            'Special Needs',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: InkWell(
+                              onTap: () {
+                                setState(() {
+                                  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.specialNeeds ==
+                                      'Yes'
+                                      ? injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.specialNeeds = 'No'
+                                      : injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.specialNeeds = 'Yes';
+                                });
+                              },
+                              child: TextField(
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  enabled: false,
+                                  hintText: 'Specialize in special needs',
+                                  contentPadding: const EdgeInsets.symmetric(
+                                      vertical: 5, horizontal: 10),
+                                  prefixIcon: Container(
+                                    width: 50,
+                                    decoration: BoxDecoration(
+                                        color: injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.specialNeeds ==
+                                            'Yes'
+                                            ? Colors.green
+                                            : Colors.white,
+                                        borderRadius: const BorderRadius.only(
+                                            bottomLeft: Radius.circular(15),
+                                            topLeft: Radius.circular(15)),
+                                        border: Border.all(
+                                            color: Colors.grey, width: 1)),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Icon(
+                                            Icons.check,
+                                            color: profile_controller
+                                                .nannyModel.value.special ==
+                                                true
+                                                ? Colors.white
+                                                : Colors.grey.shade300,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  hintStyle: GoogleFonts.raleway(
+                                      color: Colors.grey.shade400,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(width: 1, color: Colors.grey),
+                                  ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(width: 1, color: Colors.grey),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(width: 1, color: Colors.grey),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(width: 1, color: Colors.grey),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'No. of Children Willing to care',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child:  TextField(
+                              controller: children,
+                              onChanged: (value) {
+                                injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.noOfChildren =
+                                    value;
+                              },
+                              keyboardType: TextInputType.number,
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: SettingsProvider.userData.noOfChildren.toString()??'',
+                                hintStyle: GoogleFonts.raleway(
+                                    color: Colors.grey.shade400,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'National ID',
                             style: GoogleFonts.raleway(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
                                 fontSize: 20),
                           ),
-                          InkWell(
-                            onTap: () {
-                              showDialog(
-                                  context: context,
-                                  builder: (context) {
-                                    return Dialog(
-                                      child: Container(
-                                        height: 420,
-                                        padding: const EdgeInsets.all(20),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Text(
-                                                  'Add Availability',
-                                                  style: GoogleFonts.raleway(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      fontSize: 20),
-                                                ),
-                                              ],
-                                            ),
-                                            const SizedBox(
-                                              height: 20,
-                                            ),
-                                            Text(
-                                              'Date',
-                                              style: GoogleFonts.raleway(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14),
-                                            ),
-                                            InkWell(
-                                              onTap: () async{
-                                              var data=await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000),
-                                                lastDate: DateTime(2035),);
-                                              date.text=DateFormat('MMM,dd,yyyy').format(data!);
-                                              },
-                                              child: SizedBox(
-                                                height: 50,
-                                                child: InkWell(
-                                                  child: TextField(
-                                                    decoration: InputDecoration(
-                                                      fillColor: Colors.white,
-                                                      filled: true,
-                                                      enabled: false,
-                                                      hintStyle:
-                                                          GoogleFonts.raleway(
-                                                              color: Colors.grey
-                                                                  .shade400,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 16),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      disabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'Start time',
-                                              style: GoogleFonts.raleway(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14),
-                                            ),
-                                            InkWell(
-                                              onTap: () async{
-                                               TimeOfDay? data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
-                                               entry.text=data!.format(context).toString();
-                                               },
-                                              child: SizedBox(
-                                                height: 50,
-                                                child: InkWell(
-                                                  child: TextField(
-                                                    decoration: InputDecoration(
-                                                      fillColor: Colors.white,
-                                                      filled: true,
-                                                      enabled: false,
-                                                      hintStyle:
-                                                          GoogleFonts.raleway(
-                                                              color: Colors.grey
-                                                                  .shade400,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 16),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      disabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            Text(
-                                              'End time',
-                                              style: GoogleFonts.raleway(
-                                                  color: Colors.grey,
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 14),
-                                            ),
-                                            InkWell(
-                                              onTap: () async{
-                                               var data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
-                                               exit.text=data!.format(context).toString();
-                                              },
-                                              child: SizedBox(
-                                                height: 50,
-                                                child: InkWell(
-                                                  child: TextField(
-                                                    decoration: InputDecoration(
-                                                      fillColor: Colors.white,
-                                                      filled: true,
-                                                      enabled: false,
-                                                      hintStyle:
-                                                          GoogleFonts.raleway(
-                                                              color: Colors.grey
-                                                                  .shade400,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                              fontSize: 16),
-                                                      border:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      disabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      focusedBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                      enabledBorder:
-                                                          OutlineInputBorder(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(15),
-                                                        borderSide: const BorderSide(
-                                                            width: 1,
-                                                            color: Colors.grey),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            ElevatedButton(
-                                                onPressed: () {
-                                                  setState(() {
-                                                    if (date.text.isNotEmpty &&
-                                                        entry.text.isNotEmpty &&
-                                                        exit.text.isNotEmpty) {
-                                                      Availability availability =
-                                                      Availability(
-                                                        booked: false,
-                                                        date: date.text,
-                                                        endTime: exit.text,
-                                                        startTime: entry.text,
-                                                      );
-                                                      profile_controller
-                                                          .nannyModel
-                                                          .value
-                                                          .availability!
-                                                          .add(availability);
-                                                      Navigator.pop(context);
-                                                    } else {
-                                                      AnimatedSnackBar.material(
-                                                        'Fill out all fields',
-                                                        type: AnimatedSnackBarType
-                                                            .error,
-                                                      ).show(context);
-                                                    }
-                                                  });
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    primary: Colors.green,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        1000))),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.symmetric(
-                                                    vertical: 15.0,
-                                                  ),
-                                                  child: Center(
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          'Submit',
-                                                          style: GoogleFonts
-                                                              .raleway(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 16),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )),
-                                            const SizedBox(
-                                              height: 10,
-                                            ),
-                                            ElevatedButton(
-                                                onPressed: () {
-                                                  Navigator.pop(context);
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    primary: Colors.red,
-                                                    shape:
-                                                        RoundedRectangleBorder(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        1000))),
-                                                child: Padding(
-                                                  padding: const EdgeInsets.symmetric(
-                                                      vertical: 15.0),
-                                                  child: Center(
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .center,
-                                                      children: [
-                                                        Text(
-                                                          'Cancel',
-                                                          style: GoogleFonts
-                                                              .raleway(
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 16),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                )),
-                                          ],
-                                        ),
-                                      ),
-                                    );
-                                  });
-                            },
-                            child: Row(
-                              children: [
-                                const Icon(
-                                  Icons.add,
-                                  color: Colors.blue,
-                                  size: 20,
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Choose ID',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: DropdownButtonFormField(
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintStyle: GoogleFonts.raleway(
+                                    color: Colors.grey.shade400,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 16),
+                                contentPadding: const EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 10),
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
-                                Text(
-                                  'Add',
-                                  style: GoogleFonts.raleway(
-                                      color: Colors.blue, fontSize: 18),
+                                disabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
                                 ),
-                              ],
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(15),
+                                  borderSide:
+                                  const BorderSide(width: 1, color: Colors.grey),
+                                ),
+                              ),
+                              value: injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.idType,
+                              items: [ 'Nic', 'Passport']
+                                  .map((value) {
+                                return DropdownMenuItem(
+                                  value: value,
+                                  child: Text(value.toString()),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.idType = value.toString();
+                                });
+                              },
                             ),
-                          )
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      profile_controller.nannyModel.value.availability != null
-                          ? SizedBox(
-                              height: 150,
-                              child: ListView.builder(
-                                  itemCount: profile_controller
-                                      .nannyModel.value.availability!.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    return Stack(
-                                      children: [
-                                        Container(
-                                            width: 150,
-                                            margin: const EdgeInsets.all(10),
-                                            decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    color: Colors.grey,
-                                                    width: 1),
-                                                borderRadius:
-                                                    BorderRadius.circular(20)),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            'ID Number',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          SizedBox(
+                            height: 50,
+                            child: TextField(
+                                onChanged: (value) {
+                                  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.idNumber = value;
+                                },
+                                    keyboardType: TextInputType.number,
+                                decoration: InputDecoration(
+                                  fillColor: Colors.white,
+                                  filled: true,
+                                  hintText: SettingsProvider.userData.idNumber??'',
+                                  hintStyle: GoogleFonts.raleway(
+                                      color: Colors.grey.shade400,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 16),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(width: 1, color: Colors.grey),
+                                  ),
+                                  disabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(width: 1, color: Colors.grey),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(width: 1, color: Colors.grey),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                    borderSide:
+                                    const BorderSide(width: 1, color: Colors.grey),
+                                  ),
+                                ),
+
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text(
+                            'Charges',
+                            style: GoogleFonts.raleway(
+                                color: Theme.of(context).primaryColor,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Column(
+                                children: [
+                                  Text(
+                                    '20 Riyal',
+                                    style: GoogleFonts.raleway(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Text(
+                                    '[Min]',
+                                    style: GoogleFonts.raleway(
+                                        color: Colors.grey, fontSize: 12),
+                                  ),
+                                ],
+                              ),
+                              Column(
+                                children: [
+                                  Text(
+                                    '50 Riyal',
+                                    style: GoogleFonts.raleway(
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                  Text(
+                                    '[Max]',
+                                    style: GoogleFonts.raleway(
+                                        color: Colors.grey, fontSize: 12),
+                                  ),
+                                ],
+                              )
+                            ],
+                          ),
+                          SliderTheme(
+                              data: const SliderThemeData(
+                                trackHeight: 1,
+                              ),
+                              child: RangeSlider(
+                                values: _currentRangeValues,
+                                max: 1000,
+                                divisions: 1000,
+                                activeColor: Theme.of(context).primaryColor,
+                                inactiveColor: Colors.grey.shade200,
+                                labels: RangeLabels(
+                                  _currentRangeValues.start.round().toString(),
+                                  _currentRangeValues.end.round().toString(),
+                                ),
+                                onChanged: (RangeValues values) {
+                                  setState(() {
+                                    _currentRangeValues = values;
+                                    injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.minPrice =
+                                        _currentRangeValues.start.toString();
+                                    injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.maxPrice =
+                                        _currentRangeValues.end.toString();
+                                  });
+                                },
+                              )),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                'Availability',
+                                style: GoogleFonts.raleway(
+                                    color: Theme.of(context).primaryColor,
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 20),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) {
+                                        return Dialog(
+                                          child: Container(
+                                            height: 420,
+                                            padding: const EdgeInsets.all(20),
                                             child: Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                               children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    padding: const EdgeInsets.all(10),
-                                                    decoration: const BoxDecoration(
-                                                        color: Colors.white,
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                topLeft: Radius
-                                                                    .circular(
-                                                                        20),
-                                                                topRight: Radius
-                                                                    .circular(
-                                                                        20))),
-                                                    child: Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                          '${profile_controller.nannyModel.value.availability!.elementAt(index).date}        ',
-                                                          style: GoogleFonts.raleway(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .primaryColor,
+                                                Row(
+                                                  mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                                  children: [
+                                                    Text(
+                                                      'Add Availability',
+                                                      style: GoogleFonts.raleway(
+                                                          color: Theme.of(context)
+                                                              .primaryColor,
+                                                          fontWeight:
+                                                          FontWeight.bold,
+                                                          fontSize: 20),
+                                                    ),
+                                                  ],
+                                                ),
+                                                const SizedBox(
+                                                  height: 20,
+                                                ),
+                                                Text(
+                                                  'Date',
+                                                  style: GoogleFonts.raleway(
+                                                      color: Colors.grey,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 14),
+                                                ),
+                                                InkWell(
+                                                  onTap: () async{
+                                                    var data=await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000),
+                                                      lastDate: DateTime(2035),);
+                                                    date.text=DateFormat('MMM,dd,yyyy').format(data!);
+                                                  },
+                                                  child: SizedBox(
+                                                    height: 50,
+                                                    child: InkWell(
+                                                      child: TextField(
+                                                        decoration: InputDecoration(
+                                                          fillColor: Colors.white,
+                                                          filled: true,
+                                                          enabled: false,
+                                                          hintStyle:
+                                                          GoogleFonts.raleway(
+                                                              color: Colors.grey
+                                                                  .shade400,
                                                               fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
+                                                              FontWeight
+                                                                  .w500,
                                                               fontSize: 16),
+                                                          border:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          disabledBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          focusedBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          enabledBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
                                                         ),
-                                                        Text(
-                                                          'Selected time    ',
-                                                          style: GoogleFonts
-                                                              .raleway(
-                                                                  color: Colors
-                                                                      .grey
-                                                                      .shade500,
-                                                                  fontSize: 12),
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
-                                                Expanded(
-                                                  child: Container(
-                                                    padding: const EdgeInsets.all(5),
-                                                    decoration: const BoxDecoration(
-                                                        color: Colors
-                                                            .transparent,
-                                                        borderRadius:
-                                                            BorderRadius.only(
-                                                                bottomLeft: Radius
-                                                                    .circular(
-                                                                        20),
-                                                                bottomRight: Radius
-                                                                    .circular(
-                                                                        20))),
-                                                    child: Column(
-                                                      children: [
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              '${profile_controller.nannyModel.value.availability!.elementAt(index).startTime}    ',
-                                                              style: GoogleFonts.raleway(
-                                                                  color: Colors
-                                                                      .grey
-                                                                      .shade600,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 16),
-                                                            ),
-                                                            Icon(
-                                                              Icons
-                                                                  .keyboard_arrow_down_sharp,
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  'Start time',
+                                                  style: GoogleFonts.raleway(
+                                                      color: Colors.grey,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 14),
+                                                ),
+                                                InkWell(
+                                                  onTap: () async{
+                                                    TimeOfDay? data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
+                                                    entry.text=data!.format(context).toString();
+                                                  },
+                                                  child: SizedBox(
+                                                    height: 50,
+                                                    child: InkWell(
+                                                      child: TextField(
+                                                        decoration: InputDecoration(
+                                                          fillColor: Colors.white,
+                                                          filled: true,
+                                                          enabled: false,
+                                                          hintStyle:
+                                                          GoogleFonts.raleway(
                                                               color: Colors.grey
-                                                                  .shade600,
-                                                            )
-                                                          ],
+                                                                  .shade400,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .w500,
+                                                              fontSize: 16),
+                                                          border:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          disabledBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          focusedBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          enabledBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
                                                         ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: [
-                                                            Text(
-                                                              '${profile_controller.nannyModel.value.availability!.elementAt(index).startTime}    ',
-                                                              style: GoogleFonts.raleway(
-                                                                  color: Colors
-                                                                      .grey
-                                                                      .shade600,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  fontSize: 16),
-                                                            ),
-                                                            Icon(
-                                                              Icons
-                                                                  .keyboard_arrow_down_sharp,
-                                                              color: Colors.grey
-                                                                  .shade600,
-                                                            )
-                                                          ],
-                                                        ),
-                                                      ],
+                                                      ),
                                                     ),
                                                   ),
-                                                )
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                Text(
+                                                  'End time',
+                                                  style: GoogleFonts.raleway(
+                                                      color: Colors.grey,
+                                                      fontWeight: FontWeight.bold,
+                                                      fontSize: 14),
+                                                ),
+                                                InkWell(
+                                                  onTap: () async{
+                                                    var data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
+                                                    exit.text=data!.format(context).toString();
+                                                  },
+                                                  child: SizedBox(
+                                                    height: 50,
+                                                    child: InkWell(
+                                                      child: TextField(
+                                                        decoration: InputDecoration(
+                                                          fillColor: Colors.white,
+                                                          filled: true,
+                                                          enabled: false,
+                                                          hintStyle:
+                                                          GoogleFonts.raleway(
+                                                              color: Colors.grey
+                                                                  .shade400,
+                                                              fontWeight:
+                                                              FontWeight
+                                                                  .w500,
+                                                              fontSize: 16),
+                                                          border:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          disabledBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          focusedBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                          enabledBorder:
+                                                          OutlineInputBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(15),
+                                                            borderSide: const BorderSide(
+                                                                width: 1,
+                                                                color: Colors.grey),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      setState(() {
+                                                        if (date.text.isNotEmpty &&
+                                                            entry.text.isNotEmpty &&
+                                                            exit.text.isNotEmpty) {
+                                                          Availability availability =
+                                                          Availability(
+                                                            booked: false,
+                                                            date: date.text,
+                                                            endTime: exit.text,
+                                                            startTime: entry.text,
+                                                          );
+                                                          profile_controller
+                                                              .nannyModel
+                                                              .value
+                                                              .availability!
+                                                              .add(availability);
+                                                          Navigator.pop(context);
+                                                        } else {
+                                                          AnimatedSnackBar.material(
+                                                            'Fill out all fields',
+                                                            type: AnimatedSnackBarType
+                                                                .error,
+                                                          ).show(context);
+                                                        }
+                                                      });
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        primary: Colors.green,
+                                                        shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                1000))),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.symmetric(
+                                                        vertical: 15.0,
+                                                      ),
+                                                      child: Center(
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                          children: [
+                                                            Text(
+                                                              'Submit',
+                                                              style: GoogleFonts
+                                                                  .raleway(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 16),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )),
+                                                const SizedBox(
+                                                  height: 10,
+                                                ),
+                                                ElevatedButton(
+                                                    onPressed: () {
+                                                      Navigator.pop(context);
+                                                    },
+                                                    style: ElevatedButton.styleFrom(
+                                                        primary: Colors.red,
+                                                        shape:
+                                                        RoundedRectangleBorder(
+                                                            borderRadius:
+                                                            BorderRadius
+                                                                .circular(
+                                                                1000))),
+                                                    child: Padding(
+                                                      padding: const EdgeInsets.symmetric(
+                                                          vertical: 15.0),
+                                                      child: Center(
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                          MainAxisAlignment
+                                                              .center,
+                                                          children: [
+                                                            Text(
+                                                              'Cancel',
+                                                              style: GoogleFonts
+                                                                  .raleway(
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontSize: 16),
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                    )),
                                               ],
-                                            )),
-                                        Positioned(
-                                          right: 0,
-                                          child: InkWell(
-                                            onTap:(){
-                                              setState((){
-                                                profile_controller.nannyModel.value.availability!.removeAt(index);
-                                              });
-                                            },
-                                            child: const Icon(
-                                              Icons.remove_circle,
-                                              size: 30,
-                                              color: Colors.red,
                                             ),
                                           ),
-                                        )
-                                      ],
-                                    );
-                                  }),
-                            )
-                          : Container(),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Container(
-                        child: ElevatedButton(
-                            onPressed: () {
-
-                            },
-                            style: ElevatedButton.styleFrom(
-                                primary: Theme.of(context).primaryColor,
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(1000))),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(
-                                  vertical: 15.0, horizontal: 10),
-                              child: Center(
+                                        );
+                                      });
+                                },
                                 child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    const Icon(
+                                      Icons.add,
+                                      color: Colors.blue,
+                                      size: 20,
+                                    ),
                                     Text(
-                                      'Submit',
+                                      'Add',
                                       style: GoogleFonts.raleway(
-                                          color: Colors.white, fontSize: 20),
+                                          color: Colors.blue, fontSize: 18),
                                     ),
                                   ],
                                 ),
-                              ),
-                            )),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                    ],
-                  )),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          profile_controller.nannyModel.value.availability != null
+                              ? SizedBox(
+                            height: 150,
+                            child: ListView.builder(
+                                itemCount: profile_controller
+                                    .nannyModel.value.availability!.length,
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  return Stack(
+                                    children: [
+                                      Container(
+                                          width: 150,
+                                          margin: const EdgeInsets.all(10),
+                                          decoration: BoxDecoration(
+                                              border: Border.all(
+                                                  color: Colors.grey,
+                                                  width: 1),
+                                              borderRadius:
+                                              BorderRadius.circular(20)),
+                                          child: Column(
+                                            children: [
+                                              Expanded(
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(10),
+                                                  decoration: const BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                      BorderRadius.only(
+                                                          topLeft: Radius
+                                                              .circular(
+                                                              20),
+                                                          topRight: Radius
+                                                              .circular(
+                                                              20))),
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                    crossAxisAlignment:
+                                                    CrossAxisAlignment
+                                                        .start,
+                                                    children: [
+                                                      Text(
+                                                        '${profile_controller.nannyModel.value.availability!.elementAt(index).date}        ',
+                                                        style: GoogleFonts.raleway(
+                                                            color: Theme.of(
+                                                                context)
+                                                                .primaryColor,
+                                                            fontWeight:
+                                                            FontWeight
+                                                                .bold,
+                                                            fontSize: 16),
+                                                      ),
+                                                      Text(
+                                                        'Selected time    ',
+                                                        style: GoogleFonts
+                                                            .raleway(
+                                                            color: Colors
+                                                                .grey
+                                                                .shade500,
+                                                            fontSize: 12),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                              Expanded(
+                                                child: Container(
+                                                  padding: const EdgeInsets.all(5),
+                                                  decoration: const BoxDecoration(
+                                                      color: Colors
+                                                          .transparent,
+                                                      borderRadius:
+                                                      BorderRadius.only(
+                                                          bottomLeft: Radius
+                                                              .circular(
+                                                              20),
+                                                          bottomRight: Radius
+                                                              .circular(
+                                                              20))),
+                                                  child: Column(
+                                                    children: [
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            '${profile_controller.nannyModel.value.availability!.elementAt(index).startTime}    ',
+                                                            style: GoogleFonts.raleway(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade600,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                                fontSize: 16),
+                                                          ),
+                                                          Icon(
+                                                            Icons
+                                                                .keyboard_arrow_down_sharp,
+                                                            color: Colors.grey
+                                                                .shade600,
+                                                          )
+                                                        ],
+                                                      ),
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                        children: [
+                                                          Text(
+                                                            '${profile_controller.nannyModel.value.availability!.elementAt(index).startTime}    ',
+                                                            style: GoogleFonts.raleway(
+                                                                color: Colors
+                                                                    .grey
+                                                                    .shade600,
+                                                                fontWeight:
+                                                                FontWeight
+                                                                    .bold,
+                                                                fontSize: 16),
+                                                          ),
+                                                          Icon(
+                                                            Icons
+                                                                .keyboard_arrow_down_sharp,
+                                                            color: Colors.grey
+                                                                .shade600,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              )
+                                            ],
+                                          )),
+                                      Positioned(
+                                        right: 0,
+                                        child: InkWell(
+                                          onTap:(){
+                                            setState((){
+                                              profile_controller.nannyModel.value.availability!.removeAt(index);
+                                            });
+                                          },
+                                          child: const Icon(
+                                            Icons.remove_circle,
+                                            size: 30,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  );
+                                }),
+                          )
+                              : Container(),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Container(
+                            child: ElevatedButton(
+                                onPressed: () async{
+                                  bool value = await injector.get<UpdateNannyProfileCubit>().updateNanny(context);
+                                  if (value == true) {
+                                    setState(() {
+                                      nanny_bottombar_viewState.selectedIndex = 3;
+                                      Navigator.of(context)
+                                          .pushReplacement(MaterialPageRoute(builder: (context) => const nanny_bottombar_view()));
+                                    });
+                                  }
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    primary: Theme.of(context).primaryColor,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(1000))),
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15.0, horizontal: 10),
+                                  child: Center(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Submit',
+                                          style: GoogleFonts.raleway(
+                                              color: Colors.white, fontSize: 20),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )),
+                          ),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                        ],
+                      )),
                 ),
               ),
-            ])));
+            ])),));
   }
 
   Future CheckEmailUpdate() async {

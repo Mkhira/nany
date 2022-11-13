@@ -21,6 +21,7 @@ import 'data/network/dio_factory.dart';
 import 'data/repository/repository.dart';
 import 'domain/config/setting_provider.dart';
 import 'domain/repository/repository.dart';
+import 'nany/nanny_profile/Controller/update_nanny_profile_cubit.dart';
 
 final injector = GetIt.instance;
 
@@ -62,4 +63,5 @@ Future<void> initAppModule() async {
   injector.registerLazySingleton<AddRemoveFavouriteUseCase>(() => AddRemoveFavouriteUseCase());
   injector.registerLazySingleton<SearchForNannyUseCase>(() => SearchForNannyUseCase());
   injector.registerLazySingleton<UpdateParentCubit>(() => UpdateParentCubit());
+  injector.registerLazySingleton<UpdateNannyProfileCubit>(() => UpdateNannyProfileCubit());
 }

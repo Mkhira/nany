@@ -7,8 +7,8 @@ class PostUpdateSisterProfileModel {
     this.image,
     this.fullName,
     this.userName,
-    required this.email,
-    required this.phone,
+     this.email,
+     this.phone,
     this.dob,
     this.cityId,
     this.gender,
@@ -28,29 +28,32 @@ class PostUpdateSisterProfileModel {
     this.maxPrice,
     this.noOfChildren,
   });
-  final String? fullName;
-  final String? userName;
-  final String email;
-  final String phone;
-  final String? dob;
-  final File? image;
-  final int? cityId;
-  final String? gender;
-  final String? lat;
-  final String? lng;
-  final String? address;
-  final String? courseName;
-  final String? universityName;
-  final int? educationCity;
-  final int? totalExperience;
-  final String? specialNeeds;
-  final String? idType;
-  final String? idNumber;
-  final int? minPrice;
-  final String? maxPrice;
-  final int? lessonsType;
-  final String? noOfChildren;
-  final String? sitterType;
+   String? fullName;
+   String? userName;
+   String? email;
+   String? phone;
+   String? dob;
+   File? image;
+   int? cityId;
+   String? gender;
+   String? lat;
+   String? lng;
+   String? address;
+   String? courseName;
+   String? universityName;
+   int? educationCity;
+   int? totalExperience;
+   String? specialNeeds;
+   String? idType;
+   String? idNumber;
+   String? minPrice;
+   String? maxPrice;
+   int? lessonsType;
+   String? noOfChildren;
+   String? sitterType;
 
-
+  @override
+  String toString() {
+    return 'PostUpdateSisterProfileModel{fullName: $fullName, userName: $userName, email: $email, phone: $phone, dob: $dob, image: $image, cityId: $cityId, gender: $gender, lat: $lat, lng: $lng, address: $address, courseName: $courseName, universityName: $universityName, educationCity: $educationCity, totalExperience: $totalExperience, specialNeeds: $specialNeeds, idType: $idType, idNumber: $idNumber, minPrice: $minPrice, maxPrice: $maxPrice, lessonsType: $lessonsType, noOfChildren: $noOfChildren, sitterType: $sitterType}';
+  }
 }

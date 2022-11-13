@@ -82,11 +82,11 @@ class _AppServiceClient implements AppServiceClient {
     address,
     course_name,
     university_name,
-    education_ity,
+    education_city,
     total_experience,
     special_needs,
-    id_type,
-    id_number,
+    ID_type,
+    ID_Number,
     min_price,
     max_price,
     lessons_type,
@@ -180,10 +180,10 @@ class _AppServiceClient implements AppServiceClient {
         university_name,
       ));
     }
-    if (education_ity != null) {
+    if (education_city != null) {
       _data.fields.add(MapEntry(
-        'education_ity',
-        education_ity.toString(),
+        'education_city',
+        education_city.toString(),
       ));
     }
     if (total_experience != null) {
@@ -198,22 +198,22 @@ class _AppServiceClient implements AppServiceClient {
         special_needs,
       ));
     }
-    if (id_type != null) {
+    if (ID_type != null) {
       _data.fields.add(MapEntry(
-        'id_type',
-        id_type,
+        'ID_type',
+        ID_type,
       ));
     }
-    if (id_number != null) {
+    if (ID_Number != null) {
       _data.fields.add(MapEntry(
-        'id_number',
-        id_number,
+        'ID_Number',
+        ID_Number,
       ));
     }
     if (min_price != null) {
       _data.fields.add(MapEntry(
         'min_price',
-        min_price.toString(),
+        min_price,
       ));
     }
     if (max_price != null) {

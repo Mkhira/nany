@@ -87,13 +87,15 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
 
   @override
   Future<LoginResponseModel> updateSister(PostUpdateSisterProfileModel postUpdateSisterProfileModel) {
-    return _appServiceClient.updateSister(token: 'Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}',
+    print('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}');
+    return _appServiceClient.updateSister(
+        token: 'Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}',
     address:postUpdateSisterProfileModel.address,city_id: postUpdateSisterProfileModel.cityId,course_name: postUpdateSisterProfileModel.courseName,
-    dob: postUpdateSisterProfileModel.dob,education_ity: postUpdateSisterProfileModel.educationCity,
+    dob: postUpdateSisterProfileModel.dob,education_city: postUpdateSisterProfileModel.educationCity,
       email: postUpdateSisterProfileModel.email,full_name: postUpdateSisterProfileModel.fullName,
       gender: postUpdateSisterProfileModel.gender,
-      id_number: postUpdateSisterProfileModel.idNumber,
-      id_type: postUpdateSisterProfileModel.idType,
+        ID_Number: postUpdateSisterProfileModel.idNumber,
+      ID_type: postUpdateSisterProfileModel.idType,
       image: postUpdateSisterProfileModel.image,
       lat: postUpdateSisterProfileModel.lat,
       lng: postUpdateSisterProfileModel.lng,

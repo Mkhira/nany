@@ -7,8 +7,10 @@ import 'package:intl/intl.dart';
 import 'package:nanny_co/common/role_selection_view.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
+import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
 import 'package:nanny_co/nany/nanny_drawer.dart/nanny_drawer_view.dart';
+import 'package:nanny_co/nany/nanny_profile/Controller/update_nanny_profile_cubit.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
 
 import '../auth_view/Controller/Auth_controller.dart';
@@ -140,6 +142,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                 child: ElevatedButton(
                                     onPressed: () {
                                       nanny_bottombar_viewState.selectedIndex = 4;
+                                      injector.get<UpdateNannyProfileCubit>().getCites();
                                       Navigator.of(context)
                                           .pushReplacement(MaterialPageRoute(builder: (context) => const nanny_bottombar_view()));
                                     },

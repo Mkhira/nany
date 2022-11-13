@@ -14,6 +14,7 @@ import 'package:nanny_co/splash/splash_view.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'instance.dart';
+import 'nany/nanny_profile/Controller/update_nanny_profile_cubit.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
   await Firebase.initializeApp();
@@ -86,6 +87,7 @@ void main() async {
             BlocProvider.value(value: injector.get<AuthCubit>()),
             BlocProvider.value(value: injector.get<SettingsHiveCubit>()),
             BlocProvider.value(value: injector.get<UpdateParentCubit>()),
+            BlocProvider.value(value: injector.get<UpdateNannyProfileCubit>()),
           ], child: const MyApp())),
       storage: storage);
 }
