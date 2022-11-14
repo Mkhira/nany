@@ -1,6 +1,8 @@
 import 'package:nanny_co/data/data_source/remote_data_source.dart';
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
+import 'package:nanny_co/data/model/dto_model/child/add_child.dart';
+import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
 import 'package:nanny_co/data/model/dto_model/cities_model.dart';
 import 'package:nanny_co/data/model/dto_model/cyhange_password.dart';
 import 'package:nanny_co/data/model/dto_model/favourit/add_favourite.dart';
@@ -74,5 +76,20 @@ class RepositoryImpl extends Repository {
   @override
   Future<SearchForNannyModel> searchForNanny(NannySearchFilterModel filterModel) {
     return _remoteDataSource.searchForNanny(filterModel);
+  }
+
+  @override
+  Future addChild(AddChildModel addChildModel) {
+     return _remoteDataSource.addChild(addChildModel);
+  }
+
+  @override
+  Future delete(String id) {
+   return _remoteDataSource.deleteChild(id);
+  }
+
+  @override
+  Future<ChildResponse> getChild() {
+    return _remoteDataSource.getChild();
   }
 }

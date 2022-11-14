@@ -1,5 +1,7 @@
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
+import 'package:nanny_co/data/model/dto_model/child/add_child.dart';
+import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
 import 'package:nanny_co/data/model/dto_model/cities_model.dart';
 import 'package:nanny_co/data/model/dto_model/cyhange_password.dart';
 import 'package:nanny_co/data/model/dto_model/favourit/add_favourite.dart';
@@ -30,6 +32,9 @@ abstract class RemoteDataSource {
   Future<FavouriteDto> getFavourite();
   Future<AddFavouriteResponse> addRemoveFavourite(AddFavoriteDto addFavoriteDto);
   Future<SearchForNannyModel> searchForNanny(NannySearchFilterModel filterModel);
+  Future<dynamic> addChild(AddChildModel addChildModel);
+  Future<dynamic> deleteChild(String id);
+  Future<ChildResponse> getChild();
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -135,5 +140,20 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
     });
 
     return _appServiceClient.searchForNanny('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', data);
+  }
+
+  @override
+  Future addChild(AddChildModel addChildModel) {
+       return _appServiceClient.addChild(token: 'Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', name: addChildModel.name, age: addChildModel.age, image: addChildModel.image, gender: addChildModel.gander, special_need: addChildModel.specialNeed,id: addChildModel.id);
+  }
+
+  @override
+  Future deleteChild(String id) {
+   return _appServiceClient.deleteChild('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', id);
+  }
+
+  @override
+  Future<ChildResponse> getChild() {
+     return _appServiceClient.getChild('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}');
   }
 }

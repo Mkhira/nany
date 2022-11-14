@@ -539,6 +539,117 @@ class _AppServiceClient implements AppServiceClient {
     return value;
   }
 
+  @override
+  Future<dynamic> addChild({
+    required token,
+    required name,
+    required age,
+    required image,
+    required gender,
+    required special_need,
+    id,
+  }) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    queryParameters.removeWhere((k, v) => v == null);
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = FormData();
+    _data.fields.add(MapEntry(
+      'name',
+      name,
+    ));
+    _data.fields.add(MapEntry(
+      'age',
+      age.toString(),
+    ));
+    _data.files.add(MapEntry(
+      'image',
+      MultipartFile.fromFileSync(
+        image.path,
+        filename: image.path.split(Platform.pathSeparator).last,
+      ),
+    ));
+    _data.fields.add(MapEntry(
+      'gender',
+      gender,
+    ));
+    _data.fields.add(MapEntry(
+      'special_need',
+      special_need,
+    ));
+    if (id != null) {
+      _data.fields.add(MapEntry(
+        'id',
+        id,
+      ));
+    }
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/nanny/add-child',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<dynamic> deleteChild(
+    token,
+    id,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{r'id': id.toJson()};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
+      method: 'DELETE',
+      headers: _headers,
+      extra: _extra,
+    )
+        .compose(
+          _dio.options,
+          '/nanny/delete-child/{id}',
+          queryParameters: queryParameters,
+          data: _data,
+        )
+        .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<ChildResponse> getChild(token) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<ChildResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/nanny/children',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = ChildResponse.fromJson(_result.data!);
+    return value;
+  }
+
   RequestOptions _setStreamType<T>(RequestOptions requestOptions) {
     if (T != dynamic &&
         !(requestOptions.responseType == ResponseType.bytes ||

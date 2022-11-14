@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
+import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
 import 'package:nanny_co/data/model/dto_model/cities_model.dart';
 import 'package:nanny_co/data/model/dto_model/cyhange_password.dart';
 import 'package:nanny_co/data/model/dto_model/favourit/add_favourite.dart';
@@ -89,4 +90,16 @@ abstract class AppServiceClient {
 
   @GET('/nanny/search')
   Future<SearchForNannyModel> searchForNanny(@Header('Authorization') token, @Queries() Map<String, dynamic> queries);
+
+
+
+  @POST('/nanny/add-child')
+  Future<dynamic> addChild({@Header('Authorization') required token, @Part() required String  name, @Part()required int age, @Part()required File image ,@Part()required String gender , @Part()required String special_need ,@Part() String? id});
+
+  @DELETE('/nanny/delete-child/{id}')
+  Future<dynamic> deleteChild(@Header('Authorization') token,@Query('id') id);
+  @GET('/nanny/children')
+  Future<ChildResponse> getChild(@Header('Authorization') token);
+
+
 }

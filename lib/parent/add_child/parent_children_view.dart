@@ -1,29 +1,23 @@
-import 'package:animated_snack_bar/animated_snack_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/parent/add_child/Controller/addChild_Controller.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/parent_bottombar_view.dart/parent_bottombar_view.dart';
 
-import '../auth_view/parent_signup_view.dart';
 import '../search_view/Controller/parentSearch_Controller.dart';
-import '../search_view/parent_search_view.dart';
-class parent_children_view extends StatefulWidget{
-  parent_children_view();
+class ParentChildrenView extends StatefulWidget{
+  const ParentChildrenView({Key? key}) : super(key: key);
 
   @override
-  State<parent_children_view> createState() => _parent_children_viewState();
+  State<ParentChildrenView> createState() => _ParentChildrenViewState();
 }
 
-class _parent_children_viewState extends State<parent_children_view> {
+class _ParentChildrenViewState extends State<ParentChildrenView> {
   var selectedIndex=0;
-  GlobalKey<ScaffoldState> scaffoldkey=new GlobalKey();
-  parentSearch_Controller search_controller=Get.put(parentSearch_Controller());
+  GlobalKey<ScaffoldState> scaffoldKey=GlobalKey();
+  parentSearch_Controller searchController=Get.put(parentSearch_Controller());
   @override
   void initState() {
     // TODO: implement initState
@@ -33,8 +27,14 @@ class _parent_children_viewState extends State<parent_children_view> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: scaffoldkey,
-      body: Container(
+      key: scaffoldKey,
+      floatingActionButton: FloatingActionButton(onPressed: (){
+        parent_bottombar_viewState.selectedIndex=10;
+        Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ParentAddChildView()));
+      },backgroundColor: Theme.of(context).primaryColor,
+        child: const Icon(Icons.add),
+    ),
+      body: SizedBox(
         height: sh,
         width: sw,
         child: Stack(
@@ -55,9 +55,9 @@ class _parent_children_viewState extends State<parent_children_view> {
                               InkWell(
                                 onTap: (){
                                   parent_bottombar_viewState.selectedIndex=0;
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_bottombar_view()));
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
                                 },
-                                child: Icon(Icons.arrow_back,size: 20,color: Colors.white,),
+                                child: const Icon(Icons.arrow_back,size: 20,color: Colors.white,),
                               ),
                             ],
                           ),
@@ -72,7 +72,7 @@ class _parent_children_viewState extends State<parent_children_view> {
                                     fontSize: 20
                                 ),
                               ),
-                              Image(image:AssetImage('assets/images/dots.png')),
+                              const Image(image:AssetImage('assets/images/dots.png')),
                             ],
                           )
                         ],
@@ -86,10 +86,10 @@ class _parent_children_viewState extends State<parent_children_view> {
               child: Container(
                 height: sh*0.71,
                 width: sw,
-                padding: EdgeInsets.only(left: 30,right: 30,top: 30),
+                padding: const EdgeInsets.only(left: 30,right: 30,top: 30),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
+                  borderRadius: const BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30)),
                 ),
                 child: SingleChildScrollView(
                   child: Column(
@@ -104,30 +104,30 @@ class _parent_children_viewState extends State<parent_children_view> {
                             fontSize: 20
                         ),
                       ),
-                      SizedBox(height: 20,),
-                      Container(height:sh*0.61,
+                      const SizedBox(height: 20,),
+                      SizedBox(height:sh*0.61,
                        child: GridView.builder(
                             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                                 maxCrossAxisExtent: 100,
                                 childAspectRatio:0.7,
                                 crossAxisSpacing: 10,
                                 mainAxisSpacing: 10),
-                            itemCount:search_controller.parentModel.value.children!=null?search_controller.parentModel.value.children!.length+1:1,
+                            itemCount:searchController.parentModel.value.children!=null?searchController.parentModel.value.children!.length+1:1,
                             itemBuilder: (BuildContext ctx, index) {
-                              return index<search_controller.parentModel.value.children!.length? search_controller.parentModel.value.children!.isNotEmpty ?
+                              return index<searchController.parentModel.value.children!.length? searchController.parentModel.value.children!.isNotEmpty ?
                               Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: Row(
                                   children: [
                                     Visibility(
-                                      visible:index<=search_controller.parentModel.value.children!.length,
+                                      visible:index<=searchController.parentModel.value.children!.length,
                                       child: Stack(
                                         children: [
                                           Column(
                                             children: [
-                                              SizedBox(height: 10,),
+                                              const SizedBox(height: 10,),
                                               Container(
-                                                padding: EdgeInsets.all(5),
+                                                padding: const EdgeInsets.all(5),
                                                 decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     color: Colors.white,  boxShadow: [
@@ -146,15 +146,15 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                       image: DecorationImage(
                                                           fit: BoxFit.fill,
                                                           image: NetworkImage(
-                                                              '${search_controller.parentModel.value.children!.elementAt(index).image}'
+                                                              '${searchController.parentModel.value.children!.elementAt(index).image}'
                                                           )
                                                       )
                                                   ),
                                                 ),
                                               ),
-                                              SizedBox(height: 5,),
+                                              const SizedBox(height: 5,),
                                               Obx(()=>Text(
-                                                '${search_controller.parentModel.value.children!.elementAt(index).name}',
+                                                '${searchController.parentModel.value.children!.elementAt(index).name}',
                                                 style: GoogleFonts.raleway(
                                                     color: Theme.of(context).primaryColor,
                                                     fontWeight: FontWeight.bold ,
@@ -162,7 +162,7 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                 ),)
                                               ),
                                               Obx(()=>  Text(
-                                                '${search_controller.parentModel.value.children!.elementAt(index).gender}',
+                                                '${searchController.parentModel.value.children!.elementAt(index).gender}',
                                                 style: GoogleFonts.raleway(
                                                     color:Colors.redAccent,
                                                     fontSize: 12
@@ -187,14 +187,14 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                             MainAxisAlignment
                                                                 .spaceBetween,
                                                             children: [
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 23,
                                                               ),
                                                               Row(
                                                                 mainAxisAlignment: MainAxisAlignment.center,
                                                                 children: [
                                                                   Container(
-                                                                    padding: EdgeInsets.all(5),
+                                                                    padding: const EdgeInsets.all(5),
                                                                     decoration: BoxDecoration(
                                                                         shape: BoxShape.circle,
                                                                         color: Colors.white,  boxShadow: [
@@ -213,18 +213,18 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                                           image: DecorationImage(
                                                                               fit: BoxFit.fill,
                                                                               image: NetworkImage(
-                                                                                  '${search_controller.parentModel.value.children!.elementAt(index).image}'
+                                                                                  '${searchController.parentModel.value.children!.elementAt(index).image}'
                                                                               )
                                                                           )
                                                                       ),
                                                                     ),
                                                                   ),
-                                                                  SizedBox(width: 5,),
+                                                                  const SizedBox(width: 5,),
                                                                   Column(
                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: [
                                                                       Obx(()=>Text(
-                                                                        '${search_controller.parentModel.value.children!.elementAt(index).name}',
+                                                                        '${searchController.parentModel.value.children!.elementAt(index).name}',
                                                                         style: GoogleFonts.raleway(
                                                                             color: Theme.of(context).primaryColor,
                                                                             fontWeight: FontWeight.bold ,
@@ -232,7 +232,7 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                                         ),)
                                                                       ),
                                                                       Obx(()=>  Text(
-                                                                        '${search_controller.parentModel.value.children!.elementAt(index).gender}',
+                                                                        '${searchController.parentModel.value.children!.elementAt(index).gender}',
                                                                         style: GoogleFonts.raleway(
                                                                             color:Colors.redAccent,
                                                                             fontSize: 12
@@ -242,7 +242,7 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                                   ),
                                                                 ],
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 10,
                                                               ),
                                                               Text(
@@ -253,7 +253,7 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                                     fontWeight:
                                                                     FontWeight.bold),
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 10,
                                                               ),
                                                               Text(
@@ -263,7 +263,7 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                                     fontWeight:
                                                                     FontWeight.w500),
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 15,
                                                               ),
                                                               Container(
@@ -288,13 +288,13 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                                           InkWell(
                                                                             onTap:(){
                                                                               setState(() {
-                                                                                parentChild_Controller().removeChild(search_controller.parentModel.value.children!.elementAt(index).toJson()).then((value)
+                                                                                parentChild_Controller().removeChild(searchController.parentModel.value.children!.elementAt(index).toJson()).then((value)
                                                                                 {
                                                                                   // search_controller.getProfileData();
                                                                                 });
                                                                               });
                                                                               parent_bottombar_viewState.selectedIndex=0;
-                                                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_bottombar_view()));
+                                                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
                                                                               },
                                                                             child: Center(
                                                                                 child: Text(
@@ -328,7 +328,7 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                                           CrossAxisAlignment
                                                                               .center,
                                                                           children: [
-                                                                            Icon(
+                                                                            const Icon(
                                                                               Icons.close,
                                                                               color: Colors.red,
                                                                               size: 20,
@@ -353,23 +353,24 @@ class _parent_children_viewState extends State<parent_children_view> {
                                                         ),
                                                       ));
                                                 });
-                                          },child: Icon(Icons.cancel,size: 30,color: Colors.redAccent,)),),
+                                          },child: const Icon(Icons.cancel,size: 30,color: Colors.redAccent,)),),
                                         ],
                                       ),
                                     ),
                                   ],
                                 ),
-                              ):InkWell(
+                              ):
+                              InkWell(
                                 onTap: (){
                                   parent_bottombar_viewState.selectedIndex=11;
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_bottombar_view()));
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
                                 },
                                 child: Column(
                                   children: [
                                     Container(
                                         height: 75,
                                         width: 75,
-                                        padding: EdgeInsets.all(5),
+                                        padding: const EdgeInsets.all(5),
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: Colors.white,
@@ -381,11 +382,11 @@ class _parent_children_viewState extends State<parent_children_view> {
                                               )
                                             ]
                                         ),
-                                        child: Center(
+                                        child: const Center(
                                           child: Icon(Icons.add,color: Colors.grey,),
                                         )
                                     ),
-                                    SizedBox(height: 5,),
+                                    const SizedBox(height: 5,),
                                     Text(
                                       'Add Child',
                                       style: GoogleFonts.raleway(
@@ -406,15 +407,15 @@ class _parent_children_viewState extends State<parent_children_view> {
                               ):InkWell(
                                 onTap: (){
                                   parent_bottombar_viewState.selectedIndex=10;
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_bottombar_view()));
+                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
                                 },
                                 child: Column(
                                   children: [
-                                    SizedBox(height: 10,),
+                                    const SizedBox(height: 10,),
                                     Container(
                                         height: 75,
                                         width: 75,
-                                        padding: EdgeInsets.all(5),
+                                        padding: const EdgeInsets.all(5),
                                         decoration: BoxDecoration(
                                             shape: BoxShape.circle,
                                             color: Colors.white,
@@ -426,11 +427,11 @@ class _parent_children_viewState extends State<parent_children_view> {
                                               )
                                             ]
                                         ),
-                                        child: Center(
+                                        child: const Center(
                                           child: Icon(Icons.add,color: Colors.grey,),
                                         )
                                     ),
-                                    SizedBox(height: 5,),
+                                    const SizedBox(height: 5,),
                                     Text(
                                       'Add Child',
                                       style: GoogleFonts.raleway(

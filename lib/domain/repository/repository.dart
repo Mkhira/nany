@@ -1,4 +1,6 @@
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
+import 'package:nanny_co/data/model/dto_model/child/add_child.dart';
+import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
 import 'package:nanny_co/data/model/dto_model/cities_model.dart';
 import 'package:nanny_co/data/model/dto_model/favourit/add_favourite.dart';
 import 'package:nanny_co/data/model/dto_model/favourit/add_favourite_response.dart';
@@ -29,4 +31,7 @@ abstract class Repository {
   Future<AddFavouriteResponse> addRemoveFavourite(AddFavoriteDto addFavoriteDto);
 
   Future<SearchForNannyModel> searchForNanny(NannySearchFilterModel filterModel);
+  Future<dynamic> addChild(AddChildModel addChildModel);
+  Future<dynamic> delete(String id);
+  Future<ChildResponse> getChild();
 }

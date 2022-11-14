@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
@@ -37,6 +38,8 @@ class _SplashViewState extends State<SplashView> {
     }
 
     SettingsProvider.current.saveTokens(deviceToken: deviceID, fireBaseToken: fireBaseToken);
+
+    log('Token:  ${SettingsProvider.userData.jwtToken}',);
   }
 
   @override

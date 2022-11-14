@@ -37,8 +37,8 @@ class parent_bottombar_viewState extends State<parent_bottombar_view> {
     parent_booking_confirmation_view(), //7
     parent_booking_confirmed_view(), //8
     parent_sitting_started_view(), //9
-    parent_add_child_view(), //10
-    parent_children_view(), //11
+    ParentAddChildView(), //10
+    ParentChildrenView(), //11
     parent_search_result(), //12
     parent_nany_detail_view(), //13
     parent_gallery_view() //14
