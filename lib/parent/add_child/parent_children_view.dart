@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/parent/add_child/Controller/addChild_Controller.dart';
+import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/parent_bottombar_view.dart/parent_bottombar_view.dart';
 
@@ -34,7 +37,7 @@ class _ParentChildrenViewState extends State<ParentChildrenView> {
       },backgroundColor: Theme.of(context).primaryColor,
         child: const Icon(Icons.add),
     ),
-      body: SizedBox(
+      body: BlocBuilder<AddChildCubit,AddChildState>(builder: (context,state)=> SizedBox(
         height: sh,
         width: sw,
         child: Stack(
@@ -106,21 +109,21 @@ class _ParentChildrenViewState extends State<ParentChildrenView> {
                       ),
                       const SizedBox(height: 20,),
                       SizedBox(height:sh*0.61,
-                       child: GridView.builder(
+                        child: GridView.builder(
                             gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
-                                maxCrossAxisExtent: 100,
+                                maxCrossAxisExtent: 120,
                                 childAspectRatio:0.7,
-                                crossAxisSpacing: 10,
-                                mainAxisSpacing: 10),
-                            itemCount:searchController.parentModel.value.children!=null?searchController.parentModel.value.children!.length+1:1,
+                                crossAxisSpacing: 0,
+                                mainAxisSpacing: 2),
+                            itemCount:injector.get<AddChildCubit>().childList.length,
                             itemBuilder: (BuildContext ctx, index) {
-                              return index<searchController.parentModel.value.children!.length? searchController.parentModel.value.children!.isNotEmpty ?
-                              Padding(
+
+                              return Padding(
                                 padding: const EdgeInsets.only(right: 8.0),
                                 child: Row(
                                   children: [
                                     Visibility(
-                                      visible:index<=searchController.parentModel.value.children!.length,
+                                      visible:index<=injector.get<AddChildCubit>().childList.length,
                                       child: Stack(
                                         children: [
                                           Column(
@@ -146,28 +149,28 @@ class _ParentChildrenViewState extends State<ParentChildrenView> {
                                                       image: DecorationImage(
                                                           fit: BoxFit.fill,
                                                           image: NetworkImage(
-                                                              '${searchController.parentModel.value.children!.elementAt(index).image}'
+                                                              injector.get<AddChildCubit>().childList[index].image??''
                                                           )
                                                       )
                                                   ),
                                                 ),
                                               ),
                                               const SizedBox(height: 5,),
-                                              Obx(()=>Text(
-                                                '${searchController.parentModel.value.children!.elementAt(index).name}',
-                                                style: GoogleFonts.raleway(
+                                              Text(
+                                                  injector.get<AddChildCubit>().childList[index].name??'',
+                                                  style: GoogleFonts.raleway(
                                                     color: Theme.of(context).primaryColor,
                                                     fontWeight: FontWeight.bold ,
                                                     fontSize: 14
-                                                ),)
+                                                    ,)
                                               ),
-                                              Obx(()=>  Text(
-                                                '${searchController.parentModel.value.children!.elementAt(index).gender}',
+                                              Text(
+                                                injector.get<AddChildCubit>().childList[index].gender,
                                                 style: GoogleFonts.raleway(
                                                     color:Colors.redAccent,
                                                     fontSize: 12
                                                 ),
-                                              )),
+                                              ),
                                             ],
                                           ),
                                           Positioned(right: 0,child: InkWell(onTap:(){
@@ -213,7 +216,7 @@ class _ParentChildrenViewState extends State<ParentChildrenView> {
                                                                           image: DecorationImage(
                                                                               fit: BoxFit.fill,
                                                                               image: NetworkImage(
-                                                                                  '${searchController.parentModel.value.children!.elementAt(index).image}'
+                                                                                  injector.get<AddChildCubit>().childList[index].image
                                                                               )
                                                                           )
                                                                       ),
@@ -223,21 +226,21 @@ class _ParentChildrenViewState extends State<ParentChildrenView> {
                                                                   Column(
                                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                                     children: [
-                                                                      Obx(()=>Text(
-                                                                        '${searchController.parentModel.value.children!.elementAt(index).name}',
-                                                                        style: GoogleFonts.raleway(
+                                                                      Text(
+                                                                          injector.get<AddChildCubit>().childList[index].name,
+                                                                          style: GoogleFonts.raleway(
                                                                             color: Theme.of(context).primaryColor,
                                                                             fontWeight: FontWeight.bold ,
                                                                             fontSize: 14
-                                                                        ),)
+                                                                            ,)
                                                                       ),
-                                                                      Obx(()=>  Text(
-                                                                        '${searchController.parentModel.value.children!.elementAt(index).gender}',
+                                                                      Text(
+                                                                        injector.get<AddChildCubit>().childList[index].gender,
                                                                         style: GoogleFonts.raleway(
                                                                             color:Colors.redAccent,
                                                                             fontSize: 12
                                                                         ),
-                                                                      )),
+                                                                      ),
                                                                     ],
                                                                   ),
                                                                 ],
@@ -286,16 +289,13 @@ class _ParentChildrenViewState extends State<ParentChildrenView> {
                                                                             .center,
                                                                         children: [
                                                                           InkWell(
-                                                                            onTap:(){
-                                                                              setState(() {
-                                                                                parentChild_Controller().removeChild(searchController.parentModel.value.children!.elementAt(index).toJson()).then((value)
-                                                                                {
-                                                                                  // search_controller.getProfileData();
-                                                                                });
-                                                                              });
-                                                                              parent_bottombar_viewState.selectedIndex=0;
-                                                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
-                                                                              },
+                                                                            onTap:()async{
+                                                                             bool value= await  injector.get<AddChildCubit>().deleteChild(   injector.get<AddChildCubit>().childList[index].id.toString());
+                                                                                if(value == true){
+                                                                                  Navigator.pop(context);
+                                                                                }
+
+                                                                            },
                                                                             child: Center(
                                                                                 child: Text(
                                                                                   "✔ yes",
@@ -359,96 +359,6 @@ class _ParentChildrenViewState extends State<ParentChildrenView> {
                                     ),
                                   ],
                                 ),
-                              ):
-                              InkWell(
-                                onTap: (){
-                                  parent_bottombar_viewState.selectedIndex=11;
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
-                                },
-                                child: Column(
-                                  children: [
-                                    Container(
-                                        height: 75,
-                                        width: 75,
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.grey.shade300,
-                                                  spreadRadius: 3,
-                                                  blurRadius: 5
-                                              )
-                                            ]
-                                        ),
-                                        child: const Center(
-                                          child: Icon(Icons.add,color: Colors.grey,),
-                                        )
-                                    ),
-                                    const SizedBox(height: 5,),
-                                    Text(
-                                      'Add Child',
-                                      style: GoogleFonts.raleway(
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.bold ,
-                                          fontSize: 14
-                                      ),
-                                    ),
-                                    Text(
-                                      '',
-                                      style: GoogleFonts.raleway(
-                                          color:Colors.redAccent,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ):InkWell(
-                                onTap: (){
-                                  parent_bottombar_viewState.selectedIndex=10;
-                                  Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
-                                },
-                                child: Column(
-                                  children: [
-                                    const SizedBox(height: 10,),
-                                    Container(
-                                        height: 75,
-                                        width: 75,
-                                        padding: const EdgeInsets.all(5),
-                                        decoration: BoxDecoration(
-                                            shape: BoxShape.circle,
-                                            color: Colors.white,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                  color: Colors.grey.shade300,
-                                                  spreadRadius: 3,
-                                                  blurRadius: 5
-                                              )
-                                            ]
-                                        ),
-                                        child: const Center(
-                                          child: Icon(Icons.add,color: Colors.grey,),
-                                        )
-                                    ),
-                                    const SizedBox(height: 5,),
-                                    Text(
-                                      'Add Child',
-                                      style: GoogleFonts.raleway(
-                                          color: Theme.of(context).primaryColor,
-                                          fontWeight: FontWeight.bold ,
-                                          fontSize: 14
-                                      ),
-                                    ),
-                                    Text(
-                                      '',
-                                      style: GoogleFonts.raleway(
-                                          color:Colors.redAccent,
-                                          fontSize: 12
-                                      ),
-                                    ),
-                                  ],
-                                ),
                               );
 
                             }),
@@ -460,7 +370,7 @@ class _ParentChildrenViewState extends State<ParentChildrenView> {
             ),
           ],
         ),
-      ),
+      ),),
     );
   }
 }

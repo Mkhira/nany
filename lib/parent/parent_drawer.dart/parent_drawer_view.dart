@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/common/privacy_policy_view.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/instance.dart';
+import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/parent_booking_history_view.dart';
 
@@ -121,6 +123,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                 Divider(),
                 InkWell(
                   onTap: (){
+                    injector.get<AddChildCubit>().getChildList();
                     parent_bottombar_viewState.selectedIndex=11;
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>parent_bottombar_view()));
                   },

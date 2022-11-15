@@ -606,7 +606,7 @@ class _AppServiceClient implements AppServiceClient {
     id,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'id': id.toJson()};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
     final _data = <String, dynamic>{};
@@ -617,7 +617,7 @@ class _AppServiceClient implements AppServiceClient {
     )
         .compose(
           _dio.options,
-          '/nanny/delete-child/{id}',
+          '/nanny/delete-child/$id',
           queryParameters: queryParameters,
           data: _data,
         )

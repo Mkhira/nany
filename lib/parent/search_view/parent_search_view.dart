@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/instance.dart';
+import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/add_child/parent_children_view.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
@@ -421,6 +423,7 @@ class _parent_search_viewState extends State<parent_search_view> {
                                                       horizontal: 10),
                                               child: InkWell(
                                                 onTap: () {
+                                                  injector.get<AddChildCubit>().getChildList();
                                                   parent_bottombar_viewState
                                                       .selectedIndex = 11;
                                                   Navigator.of(context)

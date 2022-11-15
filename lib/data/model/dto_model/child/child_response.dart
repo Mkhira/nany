@@ -43,6 +43,7 @@ class ChildItem {
    required this.age,
     required this.gender,
     required this.specialNeed,
+    required this.image,
   });
 
   final int id;
@@ -50,6 +51,7 @@ class ChildItem {
   final String age;
   final String gender;
   final String specialNeed;
+  final String image;
   factory ChildItem.fromJson(Map<String, dynamic> json) => _$ChildItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$ChildItemToJson(this);

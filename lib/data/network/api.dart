@@ -97,7 +97,7 @@ abstract class AppServiceClient {
   Future<dynamic> addChild({@Header('Authorization') required token, @Part() required String  name, @Part()required int age, @Part()required File image ,@Part()required String gender , @Part()required String special_need ,@Part() String? id});
 
   @DELETE('/nanny/delete-child/{id}')
-  Future<dynamic> deleteChild(@Header('Authorization') token,@Query('id') id);
+  Future<dynamic> deleteChild(@Header('Authorization') token,@Path('id') id);
   @GET('/nanny/children')
   Future<ChildResponse> getChild(@Header('Authorization') token);
 
