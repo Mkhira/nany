@@ -46,6 +46,7 @@ ChildItem _$ChildItemFromJson(Map<String, dynamic> json) => ChildItem(
       age: json['age'] as String,
       gender: json['gender'] as String,
       specialNeed: json['special_need'] as String,
+      image: json['image'] as String,
     );
 
 Map<String, dynamic> _$ChildItemToJson(ChildItem instance) => <String, dynamic>{
@@ -54,4 +55,5 @@ Map<String, dynamic> _$ChildItemToJson(ChildItem instance) => <String, dynamic>{
       'age': instance.age,
       'gender': instance.gender,
       'special_need': instance.specialNeed,
+      'image': instance.image,
     };
