@@ -9,6 +9,7 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 import 'package:nanny_co/parent/parent_profile/Controller/update_parent_cubit/update_parent_cubit.dart';
+import 'package:nanny_co/parent/search_view/Controller/search_nany_cubit.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 import 'package:nanny_co/shared_cubit/settings_hive/settings_cubit_hive.dart';
 import 'package:nanny_co/splash/splash_view.dart';
@@ -90,6 +91,7 @@ void main() async {
             BlocProvider.value(value: injector.get<UpdateParentCubit>()),
             BlocProvider.value(value: injector.get<UpdateNannyProfileCubit>()),
             BlocProvider.value(value: injector.get<AddChildCubit>()),
+            BlocProvider.value(value: injector.get<SearchNannyCubit>()),
           ], child: const MyApp())),
       storage: storage);
 }

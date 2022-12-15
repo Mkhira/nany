@@ -7,6 +7,7 @@ import 'package:glass/glass.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/common/paypal.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/widget/TextFeild.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/add_child/parent_children_view.dart';
@@ -17,6 +18,7 @@ import 'package:nanny_co/parent/parent_nanny_booking/Model/parentBookingModel.da
 import 'package:nanny_co/parent/parent_nanny_booking/parent_booking_confirmation_view.dart';
 
 import 'package:nanny_co/nany/auth_view/Model/nannyDataModel.dart';
+import 'package:nanny_co/parent/search_view/Controller/search_nany_cubit.dart';
 
 import '../../common/widget/ProgressPopUp.dart';
 import '../parent_bottombar_view.dart/parent_bottombar_view.dart';
@@ -55,10 +57,8 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
   var home = false;
   @override
   void initState() {
-    booking_controller
-        .availabilityIndex=1000000.obs;
-    booking_controller.currentnanny?.value
-.type == 'Goto Sitter'
+    booking_controller.availabilityIndex = 1000000.obs;
+    booking_controller.currentnanny?.value.type == 'Goto Sitter'
         ? goto = true
         : home = true;
     // TODO: implement initState
@@ -70,7 +70,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
     return Scaffold(
         key: scaffoldkey,
         drawer: parent_drawer_view(),
-        body: Container(
+        body: SizedBox(
             height: sh,
             width: sw,
             child: Stack(children: [
@@ -95,9 +95,9 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                parent_bottombar_view()));
+                                                const parent_bottombar_view()));
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.arrow_back,
                                     size: 20,
                                     color: Colors.white,
@@ -115,7 +115,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Image(
+                                const Image(
                                     image:
                                         AssetImage('assets/images/dots.png')),
                               ],
@@ -132,7 +132,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                   width: sw,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
                   ),
@@ -141,7 +141,8 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -165,13 +166,12 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                       Container(
                         height: 200,
                         width: sw,
-                        margin: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.fill,
                               image: NetworkImage(
-                                  '${booking_controller.currentnanny?.value
-.image}')),
+                                  '${injector.get<SearchNannyCubit>().nannyDetails?.data?.image}')),
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
@@ -185,9 +185,9 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               width: sw,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20))),
@@ -202,15 +202,14 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${booking_controller.currentnanny?.value
-.fullname}',
+                                        '${injector.get<SearchNannyCubit>().nannyDetails?.data?.nannyName}',
                                         style: GoogleFonts.raleway(
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
@@ -220,7 +219,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       RatingBar(
@@ -258,15 +257,14 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${booking_controller.currentnanny?.value
-.minRange} Riyal',
+                                        '${injector.get<SearchNannyCubit>().nannyDetails?.data?.price} Riyal',
                                         style: GoogleFonts.raleway(
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
@@ -284,7 +282,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                 blurX: 20,
                                 blurY: 20,
                                 tintColor: Colors.white,
-                                clipBorderRadius: BorderRadius.only(
+                                clipBorderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(20),
                                     bottomRight: Radius.circular(20))),
                           ],
@@ -295,7 +293,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            SizedBox(
+                            const SizedBox(
                               height: 30,
                             ),
                             Row(
@@ -311,11 +309,11 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 10,
                                           right: 20,
                                           bottom: 10,
@@ -335,7 +333,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                             color: Colors.grey.shade400,
                                             size: 20,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 10,
                                           ),
                                           Column(
@@ -351,7 +349,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                                             FontWeight.bold,
                                                         fontSize: 14),
                                                   )),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                               Obx(() => Text(
@@ -380,11 +378,11 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                           fontWeight: FontWeight.bold,
                                           fontSize: 14),
                                     ),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 10,
                                     ),
                                     Container(
-                                      padding: EdgeInsets.only(
+                                      padding: const EdgeInsets.only(
                                           left: 10,
                                           right: 20,
                                           bottom: 10,
@@ -404,7 +402,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                             color: Colors.grey.shade400,
                                             size: 20,
                                           ),
-                                          SizedBox(
+                                          const SizedBox(
                                             width: 10,
                                           ),
                                           Column(
@@ -420,7 +418,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                                             FontWeight.bold,
                                                         fontSize: 14),
                                                   )),
-                                              SizedBox(
+                                              const SizedBox(
                                                 height: 5,
                                               ),
                                               Obx(() => Text(
@@ -441,10 +439,10 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 20,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
@@ -461,219 +459,225 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                           ],
                         ),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      booking_controller.currentnanny?.value
-.availability != null
-                          ? Container(
-                              height: 150,
-                              padding: EdgeInsets.symmetric(horizontal: 10),
-                              child: ListView.builder(
-                                  itemCount: booking_controller
-                                     .currentnanny!.value.availability!.length,
-                                  scrollDirection: Axis.horizontal,
-                                  itemBuilder: (context, index) {
-                                    if(booking_controller
-                                        .currentnanny!.value.availability!.elementAt(index).booked==false) {
-                                      return Stack(
-                                        children: [
-                                          Container(
-                                              width: 150,
-                                              margin: EdgeInsets.all(10),
-                                              decoration: BoxDecoration(
-                                                  border: Border.all(
-                                                      color: Colors.grey,
-                                                      width: 1),
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          20)),
-                                              child: Column(
-                                                children: [
-                                                  Expanded(
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(10),
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  topLeft: Radius
-                                                                      .circular(
-                                                                          20),
-                                                                  topRight: Radius
-                                                                      .circular(
-                                                                          20))),
-                                                      child: Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Text(
-                                                            '${booking_controller.currentnanny?.value.availability!.elementAt(index).date}           ',
-                                                            style: GoogleFonts.raleway(
-                                                                color: Theme.of(
-                                                                        context)
-                                                                    .primaryColor,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                                fontSize: 16),
-                                                          ),
-                                                          Text(
-                                                            'Selected time    ',
-                                                            style: GoogleFonts
-                                                                .raleway(
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .shade500,
-                                                                    fontSize:
-                                                                        12),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Expanded(
-                                                    child: Container(
-                                                      padding:
-                                                          EdgeInsets.all(5),
-                                                      decoration: BoxDecoration(
-                                                          color: Colors
-                                                              .transparent,
-                                                          borderRadius:
-                                                              BorderRadius.only(
-                                                                  bottomLeft: Radius
-                                                                      .circular(
-                                                                          20),
-                                                                  bottomRight: Radius
-                                                                      .circular(
-                                                                          20))),
-                                                      child: Column(
-                                                        children: [
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                '${booking_controller.currentnanny?.value.availability!.elementAt(index).startTime}    ',
-                                                                style: GoogleFonts.raleway(
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .shade600,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        16),
-                                                              ),
-                                                              Icon(
-                                                                Icons
-                                                                    .keyboard_arrow_down_sharp,
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade600,
-                                                              )
-                                                            ],
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: [
-                                                              Text(
-                                                                '${booking_controller.currentnanny?.value.availability!.elementAt(index).startTime}    ',
-                                                                style: GoogleFonts.raleway(
-                                                                    color: Colors
-                                                                        .grey
-                                                                        .shade600,
-                                                                    fontWeight:
-                                                                        FontWeight
-                                                                            .bold,
-                                                                    fontSize:
-                                                                        16),
-                                                              ),
-                                                              Icon(
-                                                                Icons
-                                                                    .keyboard_arrow_down_sharp,
-                                                                color: Colors
-                                                                    .grey
-                                                                    .shade600,
-                                                              )
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  )
-                                                ],
-                                              )),
-                                          Positioned(
-                                              right: 0,
-                                              child: Container(
-                                                height: 30,
-                                                width: 30,
-                                                child: Column(
-                                                  children: [
-                                                    Visibility(
-                                                      visible: booking_controller
-                                                              .availabilityIndex
-                                                              ?.value ==
-                                                          index,
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            booking_controller
-                                                                    .availabilityIndex =
-                                                                0.obs;
-                                                          });
-                                                        },
-                                                        child: Icon(
-                                                          Icons.check_circle,
-                                                          color: Colors
-                                                              .green.shade600,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Visibility(
-                                                      visible: booking_controller
-                                                              .availabilityIndex
-                                                              ?.value !=
-                                                          index,
-                                                      child: InkWell(
-                                                        onTap: () {
-                                                          setState(() {
-                                                            booking_controller
-                                                                    .availabilityIndex =
-                                                                index.obs;
-                                                          });
-                                                        },
-                                                        child: Icon(
-                                                          Icons.circle_outlined,
-                                                          color: Colors
-                                                              .grey.shade600,
-                                                        ),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ))
-                                        ],
-                                      );
-                                    } else{
-                                      return index==0? Container(
-                                        width: sw,
-                                          child:Center(child:Text('${index==0?'Not Available':''}'))): Container();
-                                    }
-                                  }),
-                            )
-                          : Container(
-
-                      ),
+                      // injector.get<SearchNannyCubit>().nannyDetails?.data?.availability !=
+                      //         null
+                      //     ? Container(
+                      //         height: 150,
+                      //         padding:
+                      //             const EdgeInsets.symmetric(horizontal: 10),
+                      //         child: ListView.builder(
+                      //             itemCount: injector.get<SearchNannyCubit>().nannyDetails?.data?.availability!.length,
+                      //             scrollDirection: Axis.horizontal,
+                      //             itemBuilder: (context, index) {
+                      //               if (injector.get<SearchNannyCubit>().nannyDetails?.data?.availability!
+                      //                       .elementAt(index)
+                      //                       .booked ==
+                      //                   false) {
+                      //                 return Stack(
+                      //                   children: [
+                      //                     Container(
+                      //                         width: 150,
+                      //                         margin: const EdgeInsets.all(10),
+                      //                         decoration: BoxDecoration(
+                      //                             border: Border.all(
+                      //                                 color: Colors.grey,
+                      //                                 width: 1),
+                      //                             borderRadius:
+                      //                                 BorderRadius.circular(
+                      //                                     20)),
+                      //                         child: Column(
+                      //                           children: [
+                      //                             Expanded(
+                      //                               child: Container(
+                      //                                 padding:
+                      //                                     const EdgeInsets.all(
+                      //                                         10),
+                      //                                 decoration: const BoxDecoration(
+                      //                                     color: Colors.white,
+                      //                                     borderRadius:
+                      //                                         BorderRadius.only(
+                      //                                             topLeft: Radius
+                      //                                                 .circular(
+                      //                                                     20),
+                      //                                             topRight: Radius
+                      //                                                 .circular(
+                      //                                                     20))),
+                      //                                 child: Column(
+                      //                                   mainAxisAlignment:
+                      //                                       MainAxisAlignment
+                      //                                           .spaceBetween,
+                      //                                   crossAxisAlignment:
+                      //                                       CrossAxisAlignment
+                      //                                           .start,
+                      //                                   children: [
+                      //                                     Text(
+                      //                                       '${booking_controller.currentnanny?.value.availability!.elementAt(index).date}           ',
+                      //                                       style: GoogleFonts.raleway(
+                      //                                           color: Theme.of(
+                      //                                                   context)
+                      //                                               .primaryColor,
+                      //                                           fontWeight:
+                      //                                               FontWeight
+                      //                                                   .bold,
+                      //                                           fontSize: 16),
+                      //                                     ),
+                      //                                     Text(
+                      //                                       'Selected time    ',
+                      //                                       style: GoogleFonts
+                      //                                           .raleway(
+                      //                                               color: Colors
+                      //                                                   .grey
+                      //                                                   .shade500,
+                      //                                               fontSize:
+                      //                                                   12),
+                      //                                     ),
+                      //                                   ],
+                      //                                 ),
+                      //                               ),
+                      //                             ),
+                      //                             Expanded(
+                      //                               child: Container(
+                      //                                 padding:
+                      //                                     const EdgeInsets.all(
+                      //                                         5),
+                      //                                 decoration: const BoxDecoration(
+                      //                                     color: Colors
+                      //                                         .transparent,
+                      //                                     borderRadius:
+                      //                                         BorderRadius.only(
+                      //                                             bottomLeft: Radius
+                      //                                                 .circular(
+                      //                                                     20),
+                      //                                             bottomRight: Radius
+                      //                                                 .circular(
+                      //                                                     20))),
+                      //                                 child: Column(
+                      //                                   children: [
+                      //                                     Row(
+                      //                                       mainAxisAlignment:
+                      //                                           MainAxisAlignment
+                      //                                               .spaceBetween,
+                      //                                       children: [
+                      //                                         Text(
+                      //                                           '${booking_controller.currentnanny?.value.availability!.elementAt(index).startTime}    ',
+                      //                                           style: GoogleFonts.raleway(
+                      //                                               color: Colors
+                      //                                                   .grey
+                      //                                                   .shade600,
+                      //                                               fontWeight:
+                      //                                                   FontWeight
+                      //                                                       .bold,
+                      //                                               fontSize:
+                      //                                                   16),
+                      //                                         ),
+                      //                                         Icon(
+                      //                                           Icons
+                      //                                               .keyboard_arrow_down_sharp,
+                      //                                           color: Colors
+                      //                                               .grey
+                      //                                               .shade600,
+                      //                                         )
+                      //                                       ],
+                      //                                     ),
+                      //                                     Row(
+                      //                                       mainAxisAlignment:
+                      //                                           MainAxisAlignment
+                      //                                               .spaceBetween,
+                      //                                       children: [
+                      //                                         Text(
+                      //                                           '${booking_controller.currentnanny?.value.availability!.elementAt(index).startTime}    ',
+                      //                                           style: GoogleFonts.raleway(
+                      //                                               color: Colors
+                      //                                                   .grey
+                      //                                                   .shade600,
+                      //                                               fontWeight:
+                      //                                                   FontWeight
+                      //                                                       .bold,
+                      //                                               fontSize:
+                      //                                                   16),
+                      //                                         ),
+                      //                                         Icon(
+                      //                                           Icons
+                      //                                               .keyboard_arrow_down_sharp,
+                      //                                           color: Colors
+                      //                                               .grey
+                      //                                               .shade600,
+                      //                                         )
+                      //                                       ],
+                      //                                     ),
+                      //                                   ],
+                      //                                 ),
+                      //                               ),
+                      //                             )
+                      //                           ],
+                      //                         )),
+                      //                     Positioned(
+                      //                         right: 0,
+                      //                         child: SizedBox(
+                      //                           height: 30,
+                      //                           width: 30,
+                      //                           child: Column(
+                      //                             children: [
+                      //                               Visibility(
+                      //                                 visible: booking_controller
+                      //                                         .availabilityIndex
+                      //                                         ?.value ==
+                      //                                     index,
+                      //                                 child: InkWell(
+                      //                                   onTap: () {
+                      //                                     setState(() {
+                      //                                       booking_controller
+                      //                                               .availabilityIndex =
+                      //                                           0.obs;
+                      //                                     });
+                      //                                   },
+                      //                                   child: Icon(
+                      //                                     Icons.check_circle,
+                      //                                     color: Colors
+                      //                                         .green.shade600,
+                      //                                   ),
+                      //                                 ),
+                      //                               ),
+                      //                               Visibility(
+                      //                                 visible: booking_controller
+                      //                                         .availabilityIndex
+                      //                                         ?.value !=
+                      //                                     index,
+                      //                                 child: InkWell(
+                      //                                   onTap: () {
+                      //                                     setState(() {
+                      //                                       booking_controller
+                      //                                               .availabilityIndex =
+                      //                                           index.obs;
+                      //                                     });
+                      //                                   },
+                      //                                   child: Icon(
+                      //                                     Icons.circle_outlined,
+                      //                                     color: Colors
+                      //                                         .grey.shade600,
+                      //                                   ),
+                      //                                 ),
+                      //                               )
+                      //                             ],
+                      //                           ),
+                      //                         ))
+                      //                   ],
+                      //                 );
+                      //               } else {
+                      //                 return index == 0
+                      //                     ? SizedBox(
+                      //                         width: sw,
+                      //                         child: Center(
+                      //                             child: Text(
+                      //                                 '${index == 0 ? 'Not Available' : ''}')))
+                      //                     : Container();
+                      //               }
+                      //             }),
+                      //       )
+                      //     : Container(),
                       Padding(
                         padding: const EdgeInsets.symmetric(
                             horizontal: 20, vertical: 10),
@@ -702,8 +706,8 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                             Theme.of(context).primaryColor,
                                         onChanged: (value) {
                                           setState(() {
-                                            goto=value!;
-                                            home=!value;
+                                            goto = value!;
+                                            home = !value;
                                           });
                                         }),
                                     Text(
@@ -723,8 +727,8 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                         value: home,
                                         onChanged: (value) {
                                           setState(() {
-                                            home=value!;
-                                            goto=!value;
+                                            home = value!;
+                                            goto = !value;
                                           });
                                         }),
                                     Text(
@@ -755,8 +759,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                             Row(
                               children: [
                                 Text(
-                                  'Booking "Nanny ${booking_controller.currentnanny?.value
-.fullname}"',
+                                  'Booking "Nanny ${booking_controller.currentnanny?.value.fullname}"',
                                   style: GoogleFonts.raleway(
                                       color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold,
@@ -764,7 +767,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                 ),
                               ],
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
@@ -772,10 +775,10 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                               children: [
                                 Column(
                                   children: [
-                                    booking_controller.availabilityIndex!=1000000?Obx(() => Text(
-                                              '${booking_controller.currentnanny?.value
-.availability!.elementAt(booking_controller.availabilityIndex!.value).startTime} - ${booking_controller.currentnanny?.value
-.availability!.elementAt(booking_controller.availabilityIndex!.value).startTime}',
+                                    booking_controller.availabilityIndex !=
+                                            1000000
+                                        ? Obx(() => Text(
+                                              '${booking_controller.currentnanny?.value.availability!.elementAt(booking_controller.availabilityIndex!.value).startTime} - ${booking_controller.currentnanny?.value.availability!.elementAt(booking_controller.availabilityIndex!.value).startTime}',
                                               style: GoogleFonts.raleway(
                                                   color: Theme.of(context)
                                                       .primaryColor,
@@ -783,13 +786,13 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                                   fontSize: 14),
                                             ))
                                         : Container(),
-                                    SizedBox(
+                                    const SizedBox(
                                       height: 05,
                                     ),
-                                    booking_controller.availabilityIndex!=1000000
+                                    booking_controller.availabilityIndex !=
+                                            1000000
                                         ? Obx(() => Text(
-                                              '${booking_controller.availabilityIndex==1000000?'None':booking_controller.currentnanny?.value
-.availability?.elementAt(booking_controller.availabilityIndex!.value).date} from',
+                                              '${booking_controller.availabilityIndex == 1000000 ? 'None' : booking_controller.currentnanny?.value.availability?.elementAt(booking_controller.availabilityIndex!.value).date} from',
                                               style: GoogleFonts.raleway(
                                                   color: Theme.of(context)
                                                       .primaryColor,
@@ -809,8 +812,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                           fontSize: 14),
                                     ),
                                     Text(
-                                      '${booking_controller.currentnanny?.value
-.minRange} Riyal',
+                                      '${injector.get<SearchNannyCubit>().nannyDetails?.data?.price} Riyal',
                                       style: GoogleFonts.raleway(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.w900,
@@ -820,236 +822,267 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                 ),
                               ],
                             ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextField(
-                              decoration: InputDecoration(
-                                fillColor: Colors.white,
-                                filled: true,
-                                hintStyle: GoogleFonts.raleway(
-                                    color: Colors.grey.shade400,
-                                    fontWeight: FontWeight.w500,
-                                    fontSize: 16),
-                                hintText: 'Card No',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                disabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(100),
-                                  borderSide:
-                                      BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              width: sw,
-                              child: Row(
-                                children: [
-                                  Expanded(
-                                      child: TextField(
-                                    decoration: InputDecoration(
-                                      fillColor: Colors.white,
-                                      filled: true,
-                                      hintStyle: GoogleFonts.raleway(
-                                          color: Colors.grey.shade400,
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 16),
-                                      hintText: 'MM/YY',
-                                      border: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey),
-                                      ),
-                                      disabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey),
-                                      ),
-                                      focusedBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey),
-                                      ),
-                                      enabledBorder: OutlineInputBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(100),
-                                        borderSide: BorderSide(
-                                            width: 1, color: Colors.grey),
-                                      ),
-                                    ),
-                                  )),
-                                  SizedBox(
-                                    width: 20,
-                                  ),
-                                  Expanded(
-                                    child: TextField(
-                                      decoration: InputDecoration(
-                                        fillColor: Colors.white,
-                                        filled: true,
-                                        hintStyle: GoogleFonts.raleway(
-                                            color: Colors.grey.shade400,
-                                            fontWeight: FontWeight.w500,
-                                            fontSize: 16),
-                                        hintText: 'CVV',
-                                        border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          borderSide: BorderSide(
-                                              width: 1, color: Colors.grey),
-                                        ),
-                                        disabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          borderSide: BorderSide(
-                                              width: 1, color: Colors.grey),
-                                        ),
-                                        focusedBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          borderSide: BorderSide(
-                                              width: 1, color: Colors.grey),
-                                        ),
-                                        enabledBorder: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(100),
-                                          borderSide: BorderSide(
-                                              width: 1, color: Colors.grey),
-                                        ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                            SizedBox(
+                            // const SizedBox(
+                            //   height: 20,
+                            // ),
+                            // TextField(
+                            //   decoration: InputDecoration(
+                            //     fillColor: Colors.white,
+                            //     filled: true,
+                            //     hintStyle: GoogleFonts.raleway(
+                            //         color: Colors.grey.shade400,
+                            //         fontWeight: FontWeight.w500,
+                            //         fontSize: 16),
+                            //     hintText: 'Card No',
+                            //     border: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(100),
+                            //       borderSide: const BorderSide(
+                            //           width: 1, color: Colors.grey),
+                            //     ),
+                            //     disabledBorder: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(100),
+                            //       borderSide: const BorderSide(
+                            //           width: 1, color: Colors.grey),
+                            //     ),
+                            //     focusedBorder: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(100),
+                            //       borderSide: const BorderSide(
+                            //           width: 1, color: Colors.grey),
+                            //     ),
+                            //     enabledBorder: OutlineInputBorder(
+                            //       borderRadius: BorderRadius.circular(100),
+                            //       borderSide: const BorderSide(
+                            //           width: 1, color: Colors.grey),
+                            //     ),
+                            //   ),
+                            // ),
+                            // const SizedBox(
+                            //   height: 20,
+                            // ),
+                            // SizedBox(
+                            //   width: sw,
+                            //   child: Row(
+                            //     children: [
+                            //       Expanded(
+                            //           child: TextField(
+                            //         decoration: InputDecoration(
+                            //           fillColor: Colors.white,
+                            //           filled: true,
+                            //           hintStyle: GoogleFonts.raleway(
+                            //               color: Colors.grey.shade400,
+                            //               fontWeight: FontWeight.w500,
+                            //               fontSize: 16),
+                            //           hintText: 'MM/YY',
+                            //           border: OutlineInputBorder(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(100),
+                            //             borderSide: const BorderSide(
+                            //                 width: 1, color: Colors.grey),
+                            //           ),
+                            //           disabledBorder: OutlineInputBorder(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(100),
+                            //             borderSide: const BorderSide(
+                            //                 width: 1, color: Colors.grey),
+                            //           ),
+                            //           focusedBorder: OutlineInputBorder(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(100),
+                            //             borderSide: const BorderSide(
+                            //                 width: 1, color: Colors.grey),
+                            //           ),
+                            //           enabledBorder: OutlineInputBorder(
+                            //             borderRadius:
+                            //                 BorderRadius.circular(100),
+                            //             borderSide: const BorderSide(
+                            //                 width: 1, color: Colors.grey),
+                            //           ),
+                            //         ),
+                            //       )),
+                            //       const SizedBox(
+                            //         width: 20,
+                            //       ),
+                            //       Expanded(
+                            //         child: TextField(
+                            //           decoration: InputDecoration(
+                            //             fillColor: Colors.white,
+                            //             filled: true,
+                            //             hintStyle: GoogleFonts.raleway(
+                            //                 color: Colors.grey.shade400,
+                            //                 fontWeight: FontWeight.w500,
+                            //                 fontSize: 16),
+                            //             hintText: 'CVV',
+                            //             border: OutlineInputBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(100),
+                            //               borderSide: const BorderSide(
+                            //                   width: 1, color: Colors.grey),
+                            //             ),
+                            //             disabledBorder: OutlineInputBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(100),
+                            //               borderSide: const BorderSide(
+                            //                   width: 1, color: Colors.grey),
+                            //             ),
+                            //             focusedBorder: OutlineInputBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(100),
+                            //               borderSide: const BorderSide(
+                            //                   width: 1, color: Colors.grey),
+                            //             ),
+                            //             enabledBorder: OutlineInputBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(100),
+                            //               borderSide: const BorderSide(
+                            //                   width: 1, color: Colors.grey),
+                            //             ),
+                            //           ),
+                            //         ),
+                            //       )
+                            //     ],
+                            //   ),
+                            // ),
+                            // const SizedBox(
+                            //   height: 20,
+                            // ),
+                            // Container(
+                            //   child: ElevatedButton(
+                            //       onPressed: () {
+                            //         // parent_bottombar_viewState.selectedIndex =
+                            //         //     7;
+                            //         Navigator.of(context)
+                            //             .push(MaterialPageRoute(
+                            //                 builder: (context) => PaypalPayment(
+                            //                       onFinish: (number) async {
+                            //                         // payment done
+                            //                         print(
+                            //                             'order id: ' + number);
+                            //                       },
+                            //                     )));
+                            //       },
+                            //       style: ElevatedButton.styleFrom(
+                            //           primary: Theme.of(context).primaryColor,
+                            //           shape: RoundedRectangleBorder(
+                            //               borderRadius:
+                            //                   BorderRadius.circular(1000))),
+                            //       child: Padding(
+                            //         padding: const EdgeInsets.symmetric(
+                            //             vertical: 15.0, horizontal: 10),
+                            //         child: Center(
+                            //           child: Row(
+                            //             mainAxisAlignment:
+                            //                 MainAxisAlignment.center,
+                            //             children: [
+                            //               const Icon(
+                            //                 Icons.credit_card,
+                            //                 size: 25,
+                            //                 color: Colors.white,
+                            //               ),
+                            //               Text(
+                            //                 ' Pay & Finish ',
+                            //                 style: GoogleFonts.raleway(
+                            //                     color: Colors.white,
+                            //                     fontSize: 20),
+                            //               ),
+                            //             ],
+                            //           ),
+                            //         ),
+                            //       )),
+                            // ),
+                            // const SizedBox(
+                            //   height: 10,
+                            // ),
+                            // Row(
+                            //   mainAxisAlignment: MainAxisAlignment.center,
+                            //   children: [
+                            //     Text(
+                            //       'Or choose the option pay in cash',
+                            //       style: GoogleFonts.raleway(
+                            //           color: Theme.of(context).primaryColor,
+                            //           fontWeight: FontWeight.bold,
+                            //           fontSize: 14),
+                            //     ),
+                            //   ],
+                            // ),
+                            const SizedBox(
                               height: 20,
                             ),
                             Container(
                               child: ElevatedButton(
                                   onPressed: () {
-                                    // parent_bottombar_viewState.selectedIndex =
-                                    //     7;
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                PaypalPayment( onFinish: (number) async {
-                                        // payment done
-                                        print('order id: ' + number);
-                                        },)));
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      primary: Theme.of(context).primaryColor,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(1000))),
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 15.0, horizontal: 10),
-                                    child: Center(
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          Icon(
-                                            Icons.credit_card,
-                                            size: 25,
-                                            color: Colors.white,
-                                          ),
-                                          Text(
-                                            ' Pay & Finish ',
-                                            style: GoogleFonts.raleway(
-                                                color: Colors.white,
-                                                fontSize: 20),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  )),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Or choose the option pay in cash',
-                                  style: GoogleFonts.raleway(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            Container(
-                              child: ElevatedButton(
-                                  onPressed: () {
-                                    parentBookingModel bookingModel=new parentBookingModel();
+                                    parentBookingModel bookingModel =
+                                        new parentBookingModel();
 
-                                    print(booking_controller.currentnanny!.value.id);
-                                    if(booking_controller.availabilityIndex!=1000000){
+                                    print(booking_controller
+                                        .currentnanny!.value.id);
+                                    if (booking_controller.availabilityIndex !=
+                                        1000000) {
                                       ProgressPopup(context);
-                                      bookingModel.nannyId=booking_controller.currentnanny!.value.id;
-                                      bookingModel.PaymentMethod='Cash';
-                                      bookingModel.sitting=false;
-                                      bookingModel.sitting=false;
-                                      bookingModel.status=true;
-                                      bookingModel.availability=booking_controller
-                                        .currentnanny!.value.availability!.elementAt(booking_controller.availabilityIndex!.value);
-                                      bookingModel.city=search_controller.parentModel.value.address?.city;
-                                      bookingModel.price=booking_controller.currentnanny!.value.minRange.toString();
-                                      bookingModel.distance='1.7km';
-                                      bookingModel.parentImage=search_controller.parentModel.value.image;
-                                      bookingModel.nannyImage=booking_controller.currentnanny!.value.image;
-                                      bookingModel.canceledbynanny=false;
-                                      bookingModel.Type=goto==true?'Goto Sitter':'Home Sitter';
-                                      bookingModel.parentName=search_controller.parentModel.value.fullname;
-                                      bookingModel.nannyName=booking_controller.currentnanny!.value.fullname;
-                                      bookingModel.children=search_controller.parentModel.value.children;
-                                    booking_controller.addBooking(
-                                     bookingModel
-                                    ).then((value) => {
-                                      if(value!=false){
-                                       bookingId=value,
-                                        parent_bottombar_viewState.selectedIndex =
-                                        7,
-                                        Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                parent_bottombar_view())),
-                                      }else{
-                                        Navigator.pop(context),
-                                    AnimatedSnackBar.material(
-                                    'Booking Failed please try again',
-                                    type: AnimatedSnackBarType.error,
-                                    ).show(context)
-                                      }
-                                    });}else{ AnimatedSnackBar.material(
-                                    'Please select availability',
-                                    type: AnimatedSnackBarType.error,
-                                    ).show(context);
+                                      bookingModel.nannyId = booking_controller
+                                          .currentnanny!.value.id;
+                                      bookingModel.PaymentMethod = 'Cash';
+                                      bookingModel.sitting = false;
+                                      bookingModel.sitting = false;
+                                      bookingModel.status = true;
+                                      bookingModel.availability =
+                                          booking_controller
+                                              .currentnanny!.value.availability!
+                                              .elementAt(booking_controller
+                                                  .availabilityIndex!.value);
+                                      bookingModel.city = search_controller
+                                          .parentModel.value.address?.city;
+                                      bookingModel.price = booking_controller
+                                          .currentnanny!.value.minRange
+                                          .toString();
+                                      bookingModel.distance = '1.7km';
+                                      bookingModel.parentImage =
+                                          search_controller
+                                              .parentModel.value.image;
+                                      bookingModel.nannyImage =
+                                          booking_controller
+                                              .currentnanny!.value.image;
+                                      bookingModel.canceledbynanny = false;
+                                      bookingModel.Type = goto == true
+                                          ? 'Goto Sitter'
+                                          : 'Home Sitter';
+                                      bookingModel.parentName =
+                                          search_controller
+                                              .parentModel.value.fullname;
+                                      bookingModel.nannyName =
+                                          booking_controller
+                                              .currentnanny!.value.fullname;
+                                      bookingModel.children = search_controller
+                                          .parentModel.value.children;
+                                      booking_controller
+                                          .addBooking(bookingModel)
+                                          .then((value) => {
+                                                if (value != false)
+                                                  {
+                                                    bookingId = value,
+                                                    parent_bottombar_viewState
+                                                        .selectedIndex = 7,
+                                                    Navigator.of(context)
+                                                        .pushReplacement(
+                                                            MaterialPageRoute(
+                                                                builder:
+                                                                    (context) =>
+                                                                        const parent_bottombar_view())),
+                                                  }
+                                                else
+                                                  {
+                                                    Navigator.pop(context),
+                                                    AnimatedSnackBar.material(
+                                                      'Booking Failed please try again',
+                                                      type: AnimatedSnackBarType
+                                                          .error,
+                                                    ).show(context)
+                                                  }
+                                              });
+                                    } else {
+                                      AnimatedSnackBar.material(
+                                        'Please select availability',
+                                        type: AnimatedSnackBarType.error,
+                                      ).show(context);
                                     }
                                   },
                                   style: ElevatedButton.styleFrom(
@@ -1062,7 +1095,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                               color: Theme.of(context)
                                                   .primaryColor))),
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 15.0, horizontal: 10),
                                     child: Center(
                                       child: Row(
@@ -1087,7 +1120,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                     ),
                                   )),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                           ],

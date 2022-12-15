@@ -55,10 +55,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file('D:/componyProject/nany/android/app/keystore.jks')
-            storePassword "123456"
-            keyAlias "key0"
-            keyPassword "123456"
+//            storeFile file('D:/componyProject/nany/android/app/keystore.jks')
+//            storePassword "123456"
+//            keyAlias "key0"
+//            keyPassword "123456"
 
         }
     }

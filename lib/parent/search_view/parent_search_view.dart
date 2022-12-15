@@ -1,37 +1,41 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/instance.dart';
+import 'package:nanny_co/nany/nanny_profile/Controller/update_nanny_profile_cubit.dart';
 import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/add_child/parent_children_view.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
 import 'package:nanny_co/parent/parent_bottombar_view.dart/parent_bottombar_view.dart';
 import 'package:nanny_co/parent/search_view/Controller/parentSearch_Controller.dart';
+import 'package:nanny_co/parent/search_view/Controller/search_nany_cubit.dart';
 import 'package:nanny_co/parent/search_view/parent_search_result.dart';
 
 import '../auth_view/Controller/Auth_controller.dart';
 import '../parent_drawer.dart/parent_drawer_view.dart';
 
-class parent_search_view extends StatefulWidget {
-  parent_search_view();
+class ParentSearchNanny extends StatefulWidget {
+  ParentSearchNanny();
 
   @override
-  State<parent_search_view> createState() => _parent_search_viewState();
+  State<ParentSearchNanny> createState() => _ParentSearchNannyState();
 }
 
-class _parent_search_viewState extends State<parent_search_view> {
-  final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
+class _ParentSearchNannyState extends State<ParentSearchNanny> {
+  final GlobalKey<ScaffoldState> scaffoldkey = GlobalKey<ScaffoldState>();
 
-  parentSearch_Controller search_controller =
-      Get.put(parentSearch_Controller());
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
+    injector.get<UpdateNannyProfileCubit>().getCites();
+    injector.get<AddChildCubit>().getChildList();
+
     // search_controller.getProfileData();
   }
 
@@ -40,7 +44,7 @@ class _parent_search_viewState extends State<parent_search_view> {
     return Scaffold(
       key: scaffoldkey,
       drawer: parent_drawer_view(),
-      body: Container(
+      body: SizedBox(
         height: sh,
         width: sw,
         child: Stack(
@@ -63,7 +67,7 @@ class _parent_search_viewState extends State<parent_search_view> {
                                 onTap: () {
                                   scaffoldkey.currentState!.openDrawer();
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.menu,
                                   size: 20,
                                   color: Colors.white,
@@ -75,9 +79,9 @@ class _parent_search_viewState extends State<parent_search_view> {
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              ParentSignInView()));
+                                              const ParentSignInView()));
                                 },
-                                child: Icon(
+                                child: const Icon(
                                   Icons.logout,
                                   size: 20,
                                   color: Colors.white,
@@ -95,7 +99,7 @@ class _parent_search_viewState extends State<parent_search_view> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 20),
                               ),
-                              Image(
+                              const Image(
                                   image: AssetImage('assets/images/dots.png')),
                             ],
                           )
@@ -109,10 +113,10 @@ class _parent_search_viewState extends State<parent_search_view> {
               child: Container(
                 height: sh * 0.71,
                 width: sw,
-                padding: EdgeInsets.only(left: 30, right: 30, top: 30),
+                padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
                 decoration: BoxDecoration(
                   color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.only(
+                  borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(30),
                       topRight: Radius.circular(30)),
                 ),
@@ -128,50 +132,37 @@ class _parent_search_viewState extends State<parent_search_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 10,
                       ),
-                      TextFormField(
-                        controller: search_controller.search,
-                        onFieldSubmitted: (value) {
-                        },
-                        decoration: InputDecoration(
-                          fillColor: Colors.white,
-                          filled: true,
-                          hintText: 'Search...',
-                          suffixIcon: Icon(
-                            CupertinoIcons.search,
-                            color: Colors.grey.shade400,
-                            size: 20,
-                          ),
-                          prefixIcon: Icon(
-                            CupertinoIcons.location_solid,
-                            color: Colors.grey.shade400,
-                            size: 20,
-                          ),
-                          hintStyle: GoogleFonts.raleway(
-                              color: Colors.grey.shade400, fontSize: 14),
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 20),
-                          border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor)),
-                          focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor)),
-                          enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor)),
-                          disabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(10),
-                              borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor)),
-                        ),
-                      ),
-                      SizedBox(
+                      BlocBuilder<UpdateNannyProfileCubit,
+                              UpdateNannyProfileState>(
+                          builder: (context, state) => (injector
+                                  .get<UpdateNannyProfileCubit>()
+                                  .cites
+                                  .isNotEmpty)
+                              ? DropdownButton(
+                                  value: injector
+                                      .get<UpdateNannyProfileCubit>()
+                                      .cityIdValue,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      injector
+                                          .get<UpdateNannyProfileCubit>()
+                                          .changeDropDownButton(
+                                              int.parse(value.toString()));
+                                    });
+                                  },
+                                  items: injector
+                                      .get<UpdateNannyProfileCubit>()
+                                      .cites
+                                      .map((city) {
+                                    return DropdownMenuItem(
+                                        value: city.id, child: Text(city.name));
+                                  }).toList(),
+                                )
+                              : SizedBox()),
+                      const SizedBox(
                         height: 20,
                       ),
                       Row(
@@ -187,19 +178,31 @@ class _parent_search_viewState extends State<parent_search_view> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               InkWell(
-                                onTap:()async{
-                                  TimeOfDay? data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
-                                  search_controller.start.value=data!.format(context).toString();
-                                  var date=await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000),
-                                    lastDate: DateTime(2035),);
-                                  search_controller.startdate.value=DateFormat('MMM,dd,yyyy').format(date!);
+                                onTap: () async {
+                                  TimeOfDay? data = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  );
+                                  injector.get<SearchNannyCubit>().start =
+                                      data!.format(context).toString();
+                                  var date = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2035),
+                                  );
+                                  injector.get<SearchNannyCubit>().startdate =
+                                      DateFormat('MMM,dd,yyyy').format(date!);
+                                  setState(() {
+
+                                  });
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 10, right: 20, bottom: 10, top: 10),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
@@ -215,31 +218,34 @@ class _parent_search_viewState extends State<parent_search_view> {
                                         color: Colors.grey.shade400,
                                         size: 20,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                         Obx(()=> Text(
-                                            '${search_controller.start.value}',
+                                          Text(
+                                            injector
+                                                .get<SearchNannyCubit>()
+                                                .start,
                                             style: GoogleFonts.raleway(
                                                 color: Theme.of(context)
                                                     .primaryColor,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
-                                          )),
-                                          SizedBox(
+                                          ),
+                                          const SizedBox(
                                             height: 5,
                                           ),
-                                          Obx(()=>Text(
-                                            '${search_controller.startdate.value}',
+                                          Text(
+                                            injector
+                                                .get<SearchNannyCubit>()
+                                                .startdate,
                                             style: GoogleFonts.raleway(
                                                 color: Colors.grey.shade400,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12),
-                                          )
                                           ),
                                         ],
                                       )
@@ -259,19 +265,31 @@ class _parent_search_viewState extends State<parent_search_view> {
                                     fontWeight: FontWeight.bold,
                                     fontSize: 14),
                               ),
-                              SizedBox(
+                              const SizedBox(
                                 height: 10,
                               ),
                               InkWell(
-                                onTap:()async{
-                                  TimeOfDay? data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
-                                  search_controller.end.value=data!.format(context).toString();
-                                  var date=await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000),
-                                    lastDate: DateTime(2035),);
-                                  search_controller.enddate.value=DateFormat('MMM,dd,yyyy').format(date!);
+                                onTap: () async {
+                                  TimeOfDay? data = await showTimePicker(
+                                    context: context,
+                                    initialTime: TimeOfDay.now(),
+                                  );
+                                  injector.get<SearchNannyCubit>().end =
+                                      data!.format(context).toString();
+                                  var date = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2035),
+                                  );
+                                  injector.get<SearchNannyCubit>().enddate =
+                                      DateFormat('MMM,dd,yyyy').format(date!);
+                                  setState(() {
+
+                                  });
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.only(
+                                  padding: const EdgeInsets.only(
                                       left: 10, right: 20, bottom: 10, top: 10),
                                   decoration: BoxDecoration(
                                     color: Colors.white,
@@ -287,31 +305,34 @@ class _parent_search_viewState extends State<parent_search_view> {
                                         color: Colors.grey.shade400,
                                         size: 20,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         width: 10,
                                       ),
                                       Column(
                                         crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Obx(()=> Text(
-                                            '${search_controller.end.value}',
+                                          Text(
+                                            injector
+                                                .get<SearchNannyCubit>()
+                                                .end,
                                             style: GoogleFonts.raleway(
                                                 color: Theme.of(context)
                                                     .primaryColor,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 14),
-                                          )),
-                                          SizedBox(
+                                          ),
+                                          const SizedBox(
                                             height: 5,
                                           ),
-                                          Obx(()=>Text(
-                                            '${search_controller.enddate.value}',
+                                          Text(
+                                            injector
+                                                .get<SearchNannyCubit>()
+                                                .enddate,
                                             style: GoogleFonts.raleway(
                                                 color: Colors.grey.shade400,
                                                 fontWeight: FontWeight.bold,
                                                 fontSize: 12),
-                                          )
                                           ),
                                         ],
                                       )
@@ -323,7 +344,7 @@ class _parent_search_viewState extends State<parent_search_view> {
                           ),
                         ],
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 20,
                       ),
                       Text(
@@ -333,20 +354,20 @@ class _parent_search_viewState extends State<parent_search_view> {
                             fontWeight: FontWeight.bold,
                             fontSize: 14),
                       ),
-                      Visibility(
-                        visible: search_controller.parentModel != null,
-                        child: Container(
-                          height: 150,
-                          child: Obx(() => search_controller
-                                  .parentModel.value.children!.isNotEmpty
-                              ? ListView.builder(
-                                  itemCount: search_controller
-                                              .parentModel.value.children !=
-                                          null
-                                      ? search_controller
-                                          .parentModel.value.children!.length
-                                      : 1,
-                                  padding: EdgeInsets.symmetric(
+                      BlocBuilder<AddChildCubit, AddChildState>(
+                        builder: (context, state) => Visibility(
+                          visible: injector
+                              .get<AddChildCubit>()
+                              .childList
+                              .isNotEmpty,
+                          child: SizedBox(
+                              height: 150,
+                              child: ListView.builder(
+                                  itemCount: injector
+                                      .get<AddChildCubit>()
+                                      .childList
+                                      .length,
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 5, vertical: 10),
                                   scrollDirection: Axis.horizontal,
                                   itemBuilder: (context, index) {
@@ -357,12 +378,15 @@ class _parent_search_viewState extends State<parent_search_view> {
                                         children: [
                                           Visibility(
                                             visible: index <=
-                                                search_controller.parentModel
-                                                    .value.children!.length,
+                                                injector
+                                                    .get<AddChildCubit>()
+                                                    .childList
+                                                    .length,
                                             child: Column(
                                               children: [
                                                 Container(
-                                                  padding: EdgeInsets.all(5),
+                                                  padding:
+                                                      const EdgeInsets.all(5),
                                                   decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                       color: Colors.white,
@@ -381,40 +405,48 @@ class _parent_search_viewState extends State<parent_search_view> {
                                                         image: DecorationImage(
                                                             fit: BoxFit.fill,
                                                             image: NetworkImage(
-                                                                '${search_controller.parentModel.value.children!.elementAt(index).image}'))),
+                                                                injector
+                                                                    .get<
+                                                                        AddChildCubit>()
+                                                                    .childList
+                                                                    .elementAt(
+                                                                        index)
+                                                                    .image))),
                                                   ),
                                                 ),
-                                                SizedBox(
+                                                const SizedBox(
                                                   height: 5,
                                                 ),
-                                                Obx(() => Text(
-                                                      '${search_controller.parentModel.value.children!.elementAt(index).name}',
-                                                      style:
-                                                          GoogleFonts.raleway(
-                                                              color: Theme.of(
-                                                                      context)
-                                                                  .primaryColor,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 14),
-                                                    )),
-                                                Obx(() => Text(
-                                                      '${search_controller.parentModel.value.children!.elementAt(index).gender}',
-                                                      style:
-                                                          GoogleFonts.raleway(
-                                                              color: Colors
-                                                                  .redAccent,
-                                                              fontSize: 12),
-                                                    )),
+                                                Text(
+                                                  injector
+                                                      .get<AddChildCubit>()
+                                                      .childList
+                                                      .elementAt(index)
+                                                      .name,
+                                                  style: GoogleFonts.raleway(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      fontSize: 14),
+                                                ),
+                                                Text(
+                                                  injector
+                                                      .get<AddChildCubit>()
+                                                      .childList
+                                                      .elementAt(index)
+                                                      .gender,
+                                                  style: GoogleFonts.raleway(
+                                                      color: Colors.redAccent,
+                                                      fontSize: 12),
+                                                ),
                                               ],
                                             ),
                                           ),
                                           Visibility(
-                                            visible: search_controller
-                                                    .parentModel
-                                                    .value
-                                                    .children!
+                                            visible: injector
+                                                    .get<AddChildCubit>()
+                                                    .childList
                                                     .length ==
                                                 index + 1,
                                             child: Padding(
@@ -423,14 +455,16 @@ class _parent_search_viewState extends State<parent_search_view> {
                                                       horizontal: 10),
                                               child: InkWell(
                                                 onTap: () {
-                                                  injector.get<AddChildCubit>().getChildList();
+                                                  injector
+                                                      .get<AddChildCubit>()
+                                                      .getChildList();
                                                   parent_bottombar_viewState
                                                       .selectedIndex = 11;
                                                   Navigator.of(context)
                                                       .pushReplacement(
                                                           MaterialPageRoute(
                                                               builder: (context) =>
-                                                                  parent_bottombar_view()));
+                                                                  const parent_bottombar_view()));
                                                 },
                                                 child: Column(
                                                   children: [
@@ -438,7 +472,8 @@ class _parent_search_viewState extends State<parent_search_view> {
                                                         height: 75,
                                                         width: 75,
                                                         padding:
-                                                            EdgeInsets.all(5),
+                                                            const EdgeInsets
+                                                                .all(5),
                                                         decoration:
                                                             BoxDecoration(
                                                                 shape: BoxShape
@@ -454,13 +489,13 @@ class _parent_search_viewState extends State<parent_search_view> {
                                                                       3,
                                                                   blurRadius: 5)
                                                             ]),
-                                                        child: Center(
+                                                        child: const Center(
                                                           child: Icon(
                                                             Icons.add,
                                                             color: Colors.grey,
                                                           ),
                                                         )),
-                                                    SizedBox(
+                                                    const SizedBox(
                                                       height: 5,
                                                     ),
                                                     Text(
@@ -491,79 +526,29 @@ class _parent_search_viewState extends State<parent_search_view> {
                                         ],
                                       ),
                                     );
-                                  })
-                              : InkWell(
-                                  onTap: () {
-                                    parent_bottombar_viewState.selectedIndex =
-                                        11;
-                                    Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                parent_bottombar_view()));
-                                  },
-                                  child: Column(
-                                    children: [
-                                      Container(
-                                          height: 75,
-                                          width: 75,
-                                          margin: EdgeInsets.all(10),
-                                          padding: EdgeInsets.all(5),
-                                          decoration: BoxDecoration(
-                                              shape: BoxShape.circle,
-                                              color: Colors.white,
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: Colors.grey.shade300,
-                                                    spreadRadius: 3,
-                                                    blurRadius: 5)
-                                              ]),
-                                          child: Center(
-                                            child: Icon(
-                                              Icons.add,
-                                              color: Colors.grey,
-                                            ),
-                                          )),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        'Add Child',
-                                        style: GoogleFonts.raleway(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 14),
-                                      ),
-                                      Text(
-                                        '',
-                                        style: GoogleFonts.raleway(
-                                            color: Colors.redAccent,
-                                            fontSize: 12),
-                                      ),
-                                    ],
-                                  ),
-                                )),
+                                  })),
                         ),
                       ),
                       SizedBox(
                         height: sh * 0.1,
                       ),
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: ()async {
+                              await injector.get<SearchNannyCubit>().searchNanny();
                               parent_bottombar_viewState.selectedIndex = 12;
                               Navigator.of(context).pushReplacement(
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          parent_bottombar_view()));
+                                          const parent_bottombar_view()));
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: Theme.of(context).primaryColor,
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(1000))),
                             child: Padding(
-                              padding: EdgeInsets.symmetric(
+                              padding: const EdgeInsets.symmetric(
                                   vertical: 15.0, horizontal: 10),
                               child: Center(
                                 child: Text(

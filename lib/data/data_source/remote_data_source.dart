@@ -1,4 +1,6 @@
+import 'package:nanny_co/data/model/dto_model/apointments.dart';
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
+import 'package:nanny_co/data/model/dto_model/book/book_post_model.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
 import 'package:nanny_co/data/model/dto_model/child/add_child.dart';
 import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
@@ -8,7 +10,9 @@ import 'package:nanny_co/data/model/dto_model/favourit/add_favourite.dart';
 import 'package:nanny_co/data/model/dto_model/favourit/add_favourite_response.dart';
 import 'package:nanny_co/data/model/dto_model/favourit/get_favourite_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
+import 'package:nanny_co/data/model/dto_model/nany/nanny_details.dart';
 import 'package:nanny_co/data/model/dto_model/nany/nanny_search_model.dart';
+import 'package:nanny_co/data/model/dto_model/nany/post_appointment_data.dart';
 import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
@@ -35,6 +39,10 @@ abstract class RemoteDataSource {
   Future<dynamic> addChild(AddChildModel addChildModel);
   Future<dynamic> deleteChild(String id);
   Future<ChildResponse> getChild();
+  Future<NannyDetails> getNannyDetails(String id);
+  Future<Appointments> getAppointments();
+  Future<dynamic> postAppointments(PostAppointment postAppointment);
+  Future<dynamic> confirmBook(BookPostModel bookPostModel);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -155,5 +163,26 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   @override
   Future<ChildResponse> getChild() {
      return _appServiceClient.getChild('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}');
+  }
+
+  @override
+  Future<NannyDetails> getNannyDetails(String id) {
+    return _appServiceClient.getNannyDetails('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', id);
+  }
+
+  @override
+  Future<Appointments> getAppointments() {
+    return _appServiceClient.getAppointments('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}');
+  }
+
+  @override
+  Future postAppointments(PostAppointment postAppointment) {
+    return _appServiceClient.addAppointmentNanny('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', postAppointment);
+  }
+
+  @override
+  Future confirmBook(BookPostModel bookPostModel) {
+    return _appServiceClient.confirmBook('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', bookPostModel);
+
   }
 }

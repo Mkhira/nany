@@ -1,5 +1,7 @@
 import 'package:nanny_co/data/data_source/remote_data_source.dart';
+import 'package:nanny_co/data/model/dto_model/apointments.dart';
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
+import 'package:nanny_co/data/model/dto_model/book/book_post_model.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
 import 'package:nanny_co/data/model/dto_model/child/add_child.dart';
 import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
@@ -10,7 +12,9 @@ import 'package:nanny_co/data/model/dto_model/favourit/add_favourite_response.da
 import 'package:nanny_co/data/model/dto_model/favourit/get_favourite_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
+import 'package:nanny_co/data/model/dto_model/nany/nanny_details.dart';
 import 'package:nanny_co/data/model/dto_model/nany/nanny_search_model.dart';
+import 'package:nanny_co/data/model/dto_model/nany/post_appointment_data.dart';
 import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
@@ -91,5 +95,25 @@ class RepositoryImpl extends Repository {
   @override
   Future<ChildResponse> getChild() {
     return _remoteDataSource.getChild();
+  }
+
+  @override
+  Future<NannyDetails> getNanny(String id) {
+    return _remoteDataSource.getNannyDetails(id);
+  }
+
+  @override
+  Future<Appointments> getAppointments() {
+   return _remoteDataSource.getAppointments();
+  }
+
+  @override
+  Future postAppointment(PostAppointment postAppointment) {
+   return _remoteDataSource.postAppointments(postAppointment);
+  }
+
+  @override
+  Future confirmBook(BookPostModel bookPostModel) {
+    return _remoteDataSource.confirmBook(bookPostModel);
   }
 }

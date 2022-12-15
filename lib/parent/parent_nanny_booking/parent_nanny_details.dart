@@ -5,6 +5,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:glass/glass.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/add_child/parent_children_view.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
@@ -13,6 +14,7 @@ import 'package:nanny_co/parent/parent_drawer.dart/parent_drawer_view.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/parent_book_nanny.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/parent_sitting_started_view.dart';
 import 'package:nanny_co/parent/search_view/Controller/parentSearch_Controller.dart';
+import 'package:nanny_co/parent/search_view/Controller/search_nany_cubit.dart';
 
 import '../parent_bottombar_view.dart/parent_bottombar_view.dart';
 import 'package:get/get.dart';
@@ -20,15 +22,15 @@ import 'package:get/get.dart';
 import '../parent_profile/Controller/parentProfile_Controller.dart';
 import 'Controller/parentBooking_Controller.dart';
 
-class parent_nany_detail_view extends StatelessWidget {
-  parent_nany_detail_view();
+class ParentNannyDetails extends StatelessWidget {
+  ParentNannyDetails();
   final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
   List images = [
     'https://images.pexels.com/photos/1556691/pexels-photo-1556691.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
     'https://images.ctfassets.net/hrltx12pl8hq/5GaLeZJlLyOiQC4gOA0qUM/a0398c237e9744ade8b072f99349e07a/shutterstock_152461202_thumb.jpg?fit=fill&w=480&h=270'
   ];
-  parentBooking_Controller booking_controller =
-      Get.put(parentBooking_Controller());
+  // parentBooking_Controller booking_controller =
+  //     Get.put(parentBooking_Controller());
   parentSearch_Controller search_controller =
       Get.put(parentSearch_Controller());
   parentProfile_Controller profile_controller =
@@ -39,7 +41,7 @@ class parent_nany_detail_view extends StatelessWidget {
     return Scaffold(
         key: scaffoldkey,
         drawer: parent_drawer_view(),
-        body: Container(
+        body: SizedBox(
             height: sh,
             width: sw,
             child: Stack(children: [
@@ -64,9 +66,9 @@ class parent_nany_detail_view extends StatelessWidget {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                parent_bottombar_view()));
+                                                const parent_bottombar_view()));
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.arrow_back,
                                     size: 20,
                                     color: Colors.white,
@@ -78,8 +80,7 @@ class parent_nany_detail_view extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 InkWell(
-                                  onTap: (){
-                                  },
+                                  onTap: () {},
                                   child: Text(
                                     'Nanny Detail ',
                                     style: GoogleFonts.raleway(
@@ -88,7 +89,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                         fontSize: 20),
                                   ),
                                 ),
-                                Image(
+                                const Image(
                                     image:
                                         AssetImage('assets/images/dots.png')),
                               ],
@@ -105,7 +106,7 @@ class parent_nany_detail_view extends StatelessWidget {
                   width: sw,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
                   ),
@@ -113,38 +114,37 @@ class parent_nany_detail_view extends StatelessWidget {
                       child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 20),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Obx(() => Text(
-                                  '${search_controller.startdate}',
-                                  style: GoogleFonts.raleway(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18),
-                                )),
-                            Obx(() => Text(
-                                  '${search_controller.start} - ${search_controller.end} ${profile_controller.parentModel.value.address?.city}',
-                                  style: GoogleFonts.raleway(
-                                      color: Theme.of(context).primaryColor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
-                                )),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
+                      //   child: Column(
+                      //     crossAxisAlignment: CrossAxisAlignment.start,
+                      //     children: [
+                      //       Obx(() => Text(
+                      //             '${search_controller.startdate}',
+                      //             style: GoogleFonts.raleway(
+                      //                 color: Theme.of(context).primaryColor,
+                      //                 fontWeight: FontWeight.bold,
+                      //                 fontSize: 18),
+                      //           )),
+                      //       Obx(() => Text(
+                      //             '${search_controller.start} - ${search_controller.end} ${profile_controller.parentModel.value.address?.city}',
+                      //             style: GoogleFonts.raleway(
+                      //                 color: Theme.of(context).primaryColor,
+                      //                 fontWeight: FontWeight.bold,
+                      //                 fontSize: 14),
+                      //           )),
+                      //     ],
+                      //   ),
+                      // ),
                       Container(
                         height: 200,
                         width: sw,
-                        margin: EdgeInsets.all(20),
+                        margin: const EdgeInsets.all(20),
                         decoration: BoxDecoration(
                           image: DecorationImage(
                               fit: BoxFit.fill,
                               image: NetworkImage(
-                                  '${booking_controller.currentnanny?.value
-.image}')),
+                                  '${injector.get<SearchNannyCubit>().nannyDetails?.data?.image}')),
                           color: Colors.white,
                           boxShadow: [
                             BoxShadow(
@@ -158,9 +158,9 @@ class parent_nany_detail_view extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             Container(
-                              padding: EdgeInsets.all(5),
+                              padding: const EdgeInsets.all(5),
                               width: sw,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                   borderRadius: BorderRadius.only(
                                       bottomLeft: Radius.circular(20),
                                       bottomRight: Radius.circular(20))),
@@ -175,15 +175,14 @@ class parent_nany_detail_view extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${booking_controller.currentnanny?.value
-.fullname}',
+                                        '${injector.get<SearchNannyCubit>().nannyDetails?.data?.nannyName}',
                                         style: GoogleFonts.raleway(
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
@@ -193,7 +192,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 12),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       RatingBar(
@@ -231,15 +230,14 @@ class parent_nany_detail_view extends StatelessWidget {
                                         MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        '${booking_controller.currentnanny?.value
-.minRange} Riyal',
+                                        '${injector.get<SearchNannyCubit>().nannyDetails?.data?.price} Riyal',
                                         style: GoogleFonts.raleway(
                                             color:
                                                 Theme.of(context).primaryColor,
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5,
                                       ),
                                       Text(
@@ -257,7 +255,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                 blurX: 20,
                                 blurY: 20,
                                 tintColor: Colors.white,
-                                clipBorderRadius: BorderRadius.only(
+                                clipBorderRadius: const BorderRadius.only(
                                     bottomLeft: Radius.circular(20),
                                     bottomRight: Radius.circular(20))),
                           ],
@@ -269,20 +267,19 @@ class parent_nany_detail_view extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'About ${booking_controller.currentnanny?.value
-.fullname}!',
+                              'About ${injector.get<SearchNannyCubit>().nannyDetails?.data?.nannyName}!',
                               style: GoogleFonts.raleway(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Container(
+                                SizedBox(
                                   width: sw * 0.4,
                                   child: Column(
                                     crossAxisAlignment:
@@ -295,13 +292,11 @@ class parent_nany_detail_view extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                       Text(
-                                        '${booking_controller.currentnanny?.value
-.education!.course} from ${booking_controller.currentnanny?.value
-.education!.university}',
+                                        '${injector.get<SearchNannyCubit>().nannyDetails?.data?.universityName}',
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
@@ -315,7 +310,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                   width: 1,
                                   color: Colors.grey,
                                 ),
-                                Container(
+                                SizedBox(
                                   width: sw * 0.4,
                                   child: Column(
                                     crossAxisAlignment:
@@ -329,12 +324,11 @@ class parent_nany_detail_view extends StatelessWidget {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 16),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 10,
                                       ),
                                       Text(
-                                        '${booking_controller.currentnanny?.value
-.experience}\n',
+                                        '${injector.get<SearchNannyCubit>().nannyDetails?.data?.totalExperience}\n',
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.w400,
@@ -350,7 +344,7 @@ class parent_nany_detail_view extends StatelessWidget {
                               width: sw,
                               color: Colors.grey,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
@@ -360,7 +354,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
@@ -370,7 +364,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
@@ -378,7 +372,7 @@ class parent_nany_detail_view extends StatelessWidget {
                               width: sw,
                               color: Colors.grey,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
@@ -388,7 +382,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(
@@ -398,26 +392,25 @@ class parent_nany_detail_view extends StatelessWidget {
                                   fontWeight: FontWeight.w400,
                                   fontSize: 14),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
-                            Text(
-                              '${booking_controller.currentnanny?.value
-.children} Children',
-                              style: GoogleFonts.raleway(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w400,
-                                  fontSize: 16),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
+                            // Text(
+                            //   '${injector.get<SearchNannyCubit>().nannyDetails?.data?.} Children',
+                            //   style: GoogleFonts.raleway(
+                            //       color: Colors.black,
+                            //       fontWeight: FontWeight.w400,
+                            //       fontSize: 16),
+                            // ),
+                            // const SizedBox(
+                            //   height: 10,
+                            // ),
                             Container(
                               height: 1,
                               width: sw,
                               color: Colors.grey,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
@@ -427,18 +420,17 @@ class parent_nany_detail_view extends StatelessWidget {
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Text(
-                              '${booking_controller.currentnanny?.value
-.special == true ? 'Yes' : 'No'}',
+                              '${injector.get<SearchNannyCubit>().nannyDetails?.data?.specialNeeds}',
                               style: GoogleFonts.raleway(
                                   color: Colors.black,
                                   fontWeight: FontWeight.w400,
                                   fontSize: 16),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Container(
@@ -446,7 +438,7 @@ class parent_nany_detail_view extends StatelessWidget {
                               width: sw,
                               color: Colors.grey,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 10,
                             ),
                             Row(
@@ -461,11 +453,12 @@ class parent_nany_detail_view extends StatelessWidget {
                                 ),
                                 InkWell(
                                     onTap: () {
-                                      parent_bottombar_viewState.selectedIndex=14;
+                                      parent_bottombar_viewState.selectedIndex =
+                                          14;
                                       Navigator.of(context).pushReplacement(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  parent_bottombar_view()));
+                                                  const parent_bottombar_view()));
                                     },
                                     child: Icon(
                                       Icons.arrow_forward_outlined,
@@ -474,18 +467,17 @@ class parent_nany_detail_view extends StatelessWidget {
                                     ))
                               ],
                             ),
-                            Container(
+                            SizedBox(
                                 height: sh * 0.2,
                                 width: sw,
                                 child: GridView.builder(
-                                  itemCount: booking_controller
-                                     .currentnanny!.value.gallery?.length,
+                                  itemCount: injector.get<SearchNannyCubit>().nannyDetails?.data?.sitterGallery?.length,
                                   gridDelegate:
-                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
                                           crossAxisCount: 3,
                                           crossAxisSpacing: 10.0,
                                           mainAxisSpacing: 10.0),
-                                  padding: EdgeInsets.symmetric(
+                                  padding: const EdgeInsets.symmetric(
                                       horizontal: 10, vertical: 10),
                                   itemBuilder:
                                       (BuildContext context, int index) {
@@ -507,7 +499,8 @@ class parent_nany_detail_view extends StatelessWidget {
                                   },
                                 )),
                             Container(
-                              padding: EdgeInsets.symmetric(horizontal: 20),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
                               child: ElevatedButton(
                                   onPressed: () {
                                     parent_bottombar_viewState.selectedIndex =
@@ -515,7 +508,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                parent_bottombar_view()));
+                                                const parent_bottombar_view()));
                                   },
                                   style: ElevatedButton.styleFrom(
                                       primary: Theme.of(context).primaryColor,
@@ -523,7 +516,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                           borderRadius:
                                               BorderRadius.circular(1000))),
                                   child: Padding(
-                                    padding: EdgeInsets.symmetric(
+                                    padding: const EdgeInsets.symmetric(
                                         vertical: 15.0, horizontal: 10),
                                     child: Center(
                                       child: Text(
@@ -534,7 +527,7 @@ class parent_nany_detail_view extends StatelessWidget {
                                     ),
                                   )),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               height: 50,
                             ),
                           ],
