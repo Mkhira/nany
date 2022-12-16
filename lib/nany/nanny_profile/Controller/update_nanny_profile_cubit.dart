@@ -5,9 +5,13 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:meta/meta.dart';
 import 'package:nanny_co/business_layer/use_case/get_cities_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/nanny/nanny_details_usecase.dart';
+import 'package:nanny_co/business_layer/use_case/nanny/post_appointment.dart';
 import 'package:nanny_co/business_layer/use_case/update_use_case/sister_update_use_case.dart';
 import 'package:nanny_co/data/model/dto_model/cities_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
+import 'package:nanny_co/data/model/dto_model/nany/nanny_details.dart';
+import 'package:nanny_co/data/model/dto_model/nany/post_appointment_data.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/instance.dart';
@@ -100,6 +104,19 @@ class UpdateNannyProfileCubit extends Cubit<UpdateNannyProfileState> {
 
       return false;
     }
+  }
+
+  NannyDetails ? nannyDetails;
+
+  getNannyDetails(String id)async{
+    nannyDetails = await injector.get<NannyDetailsUseCase>().execute(id);
+    emit(UpdateNannyProfileChange());
+
+  }
+
+  addAppointment(PostAppointment postAppointment)async{
+   await injector.get<NannyPostAppointment>().execute(postAppointment);
+   await getNannyDetails(SettingsProvider.userData.id.toString());
   }
 
 }

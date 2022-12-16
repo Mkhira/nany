@@ -14,6 +14,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/common/widget/ProgressPopUp.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/data/model/dto_model/nany/post_appointment_data.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/Model/nannyDataModel.dart';
@@ -76,6 +77,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
   void initState() {
     // TODO: implement initState
     injector.get<UpdateNannyProfileCubit>().initialValue();
+    injector.get<UpdateNannyProfileCubit>().getNannyDetails(SettingsProvider.userData.id.toString());
     super.initState();
   }
 
@@ -1469,12 +1471,13 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                   onTap: () async{
                                                     var data=await showDatePicker(context: context, initialDate: DateTime.now(), firstDate: DateTime(2000),
                                                       lastDate: DateTime(2035),);
-                                                    date.text=DateFormat('MMM,dd,yyyy').format(data!);
+                                                    date.text=DateFormat('yyyy-MM-dd').format(data!);
                                                   },
                                                   child: SizedBox(
                                                     height: 50,
                                                     child: InkWell(
                                                       child: TextField(
+                                                        controller: date,
                                                         decoration: InputDecoration(
                                                           fillColor: Colors.white,
                                                           filled: true,
@@ -1541,12 +1544,13 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                 InkWell(
                                                   onTap: () async{
                                                     TimeOfDay? data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
-                                                    entry.text=data!.format(context).toString();
+                                                    entry.text= '${data!.hour.toString().padLeft(2, '0')}:${data!.minute.toString().padLeft(2, '0')}';
                                                   },
                                                   child: SizedBox(
                                                     height: 50,
                                                     child: InkWell(
                                                       child: TextField(
+                                                        controller: entry,
                                                         decoration: InputDecoration(
                                                           fillColor: Colors.white,
                                                           filled: true,
@@ -1613,12 +1617,13 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                 InkWell(
                                                   onTap: () async{
                                                     var data=await showTimePicker(context: context, initialTime: TimeOfDay.now(),);
-                                                    exit.text=data!.format(context).toString();
+                                                    exit.text= '${data!.hour.toString().padLeft(2, '0')}:${data!.minute.toString().padLeft(2, '0')}';
                                                   },
                                                   child: SizedBox(
                                                     height: 50,
                                                     child: InkWell(
                                                       child: TextField(
+                                                        controller: exit,
                                                         decoration: InputDecoration(
                                                           fillColor: Colors.white,
                                                           filled: true,
@@ -1677,7 +1682,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                 ),
                                                 ElevatedButton(
                                                     onPressed: () {
-                                                      setState(() {
+                                                      setState(() async{
                                                         if (date.text.isNotEmpty &&
                                                             entry.text.isNotEmpty &&
                                                             exit.text.isNotEmpty) {
@@ -1688,11 +1693,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                             endTime: exit.text,
                                                             startTime: entry.text,
                                                           );
-                                                          profile_controller
-                                                              .nannyModel
-                                                              .value
-                                                              .availability!
-                                                              .add(availability);
+                                                          await injector.get<UpdateNannyProfileCubit>().addAppointment(PostAppointment(date: date.text, timeFrom: entry.text, timeTo: exit.text));
                                                           Navigator.pop(context);
                                                         } else {
                                                           AnimatedSnackBar.material(
@@ -1795,18 +1796,18 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                           const SizedBox(
                             height: 20,
                           ),
-                          profile_controller.nannyModel.value.availability != null
+                          injector.get<UpdateNannyProfileCubit>().nannyDetails?.data?.availability != null
                               ? SizedBox(
                             height: 150,
                             child: ListView.builder(
-                                itemCount: profile_controller
-                                    .nannyModel.value.availability!.length,
+                                itemCount: injector.get<UpdateNannyProfileCubit>().nannyDetails?.data?.availability!.length,
                                 scrollDirection: Axis.horizontal,
                                 itemBuilder: (context, index) {
                                   return Stack(
                                     children: [
                                       Container(
                                           width: 150,
+
                                           margin: const EdgeInsets.all(10),
                                           decoration: BoxDecoration(
                                               border: Border.all(
@@ -1838,7 +1839,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                         .start,
                                                     children: [
                                                       Text(
-                                                        '${profile_controller.nannyModel.value.availability!.elementAt(index).date}        ',
+                                                        '${    injector.get<UpdateNannyProfileCubit>().nannyDetails?.data?.availability!.elementAt(index).date}        ',
                                                         style: GoogleFonts.raleway(
                                                             color: Theme.of(
                                                                 context)
@@ -1883,7 +1884,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                             .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            '${profile_controller.nannyModel.value.availability!.elementAt(index).startTime}    ',
+                                                            '${    injector.get<UpdateNannyProfileCubit>().nannyDetails?.data?.availability!.elementAt(index).timeFrom}    ',
                                                             style: GoogleFonts.raleway(
                                                                 color: Colors
                                                                     .grey
@@ -1907,7 +1908,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                             .spaceBetween,
                                                         children: [
                                                           Text(
-                                                            '${profile_controller.nannyModel.value.availability!.elementAt(index).startTime}    ',
+                                                            '${    injector.get<UpdateNannyProfileCubit>().nannyDetails?.data?.availability!.elementAt(index).timeTo}    ',
                                                             style: GoogleFonts.raleway(
                                                                 color: Colors
                                                                     .grey

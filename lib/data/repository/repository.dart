@@ -2,6 +2,7 @@ import 'package:nanny_co/data/data_source/remote_data_source.dart';
 import 'package:nanny_co/data/model/dto_model/apointments.dart';
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
 import 'package:nanny_co/data/model/dto_model/book/book_post_model.dart';
+import 'package:nanny_co/data/model/dto_model/book/parent_booking.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
 import 'package:nanny_co/data/model/dto_model/child/add_child.dart';
 import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
@@ -115,5 +116,10 @@ class RepositoryImpl extends Repository {
   @override
   Future confirmBook(BookPostModel bookPostModel) {
     return _remoteDataSource.confirmBook(bookPostModel);
+  }
+
+  @override
+  Future<Bookings> getParentBooking() {
+     return _remoteDataSource.getParentBooking();
   }
 }

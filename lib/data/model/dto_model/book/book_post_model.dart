@@ -24,13 +24,13 @@ class BookPostModel {
     required this.childIds,
   });
 
-  String appointmentId;
-  String date;
-  String totalCost;
-  String sitterType;
-  String sitterId;
-  String paymentMode;
-  List<dynamic> childIds;
+  String? appointmentId;
+  String ?date;
+  String? totalCost;
+  String ?sitterType;
+  String? sitterId;
+  String? paymentMode;
+  String childIds;
 
   factory BookPostModel.fromJson(Map<String, dynamic> json) => BookPostModel(
     appointmentId: json["appointment_id"],
@@ -39,7 +39,7 @@ class BookPostModel {
     sitterType: json["sitter_type"],
     sitterId: json["sitter_id"],
     paymentMode: json["payment_mode"],
-    childIds: List<dynamic>.from(json["child_ids"].map((x) => x)),
+    childIds: json['child_ids']
   );
 
   Map<String, dynamic> toJson() => {
@@ -49,6 +49,6 @@ class BookPostModel {
     "sitter_type": sitterType,
     "sitter_id": sitterId,
     "payment_mode": paymentMode,
-    "child_ids": List<dynamic>.from(childIds.map((x) => x)),
+    "child_ids": childIds,
   };
 }

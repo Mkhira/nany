@@ -17,6 +17,7 @@ import 'package:nanny_co/parent/search_view/Controller/search_nany_cubit.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 import 'package:nanny_co/shared_cubit/settings_hive/settings_cubit_hive.dart';
 
+import 'business_layer/use_case/booking_history_usecase.dart';
 import 'business_layer/use_case/change_password_use_case.dart';
 import 'business_layer/use_case/check_email_use_case.dart';
 import 'business_layer/use_case/child/add_child_use_case.dart';
@@ -82,4 +83,5 @@ Future<void> initAppModule() async {
   injector.registerLazySingleton<GetAppointments>(() => GetAppointments());
   injector.registerLazySingleton<NannyPostAppointment>(() => NannyPostAppointment());
   injector.registerLazySingleton<ConfirmBookUseCase>(() => ConfirmBookUseCase());
+  injector.registerLazySingleton<BookingHistoryUseCase>(() => BookingHistoryUseCase());
 }

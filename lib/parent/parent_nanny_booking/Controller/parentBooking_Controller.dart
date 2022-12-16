@@ -13,7 +13,7 @@ String bookingId='';
 class parentBooking_Controller extends GetxController{
   Rx<nannyDataModel> ?currentnanny=nannyDataModel().obs;
   Rx<parentDataModel> ?parent=parentDataModel().obs;
-  Rx<int> ?availabilityIndex=0.obs;
+  Rx<int> availabilityIndex=0.obs;
   Rx<Availability>? availability;
   StreamController<parentBookingModel> Controller=StreamController<parentBookingModel>.broadcast();
   Stream<parentBookingModel> GetBookingDetails(){

@@ -40,7 +40,6 @@ class AddChildCubit extends Cubit<AddChildState> {
 
    getChildList()async{
      childList =await _getChild.execute(null);
-     print(childList);
      emit(AddChildGetImage());
 
    }   Future<bool> deleteChild(String id)async{

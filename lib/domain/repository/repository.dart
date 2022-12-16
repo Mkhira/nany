@@ -1,5 +1,6 @@
 import 'package:nanny_co/data/model/dto_model/apointments.dart';
 import 'package:nanny_co/data/model/dto_model/book/book_post_model.dart';
+import 'package:nanny_co/data/model/dto_model/book/parent_booking.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
 import 'package:nanny_co/data/model/dto_model/child/add_child.dart';
 import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
@@ -42,4 +43,5 @@ abstract class Repository {
   Future<dynamic> postAppointment(PostAppointment postAppointment);
   Future<Appointments> getAppointments();
   Future<dynamic> confirmBook(BookPostModel bookPostModel);
+  Future<Bookings> getParentBooking();
 }

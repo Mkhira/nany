@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:nanny_co/data/model/dto_model/apointments.dart';
 import 'package:nanny_co/data/model/dto_model/basic_response.dart';
+import 'package:nanny_co/data/model/dto_model/book/parent_booking.dart';
 import 'package:nanny_co/data/model/dto_model/check_email_model.dart';
 import 'package:nanny_co/data/model/dto_model/child/child_response.dart';
 import 'package:nanny_co/data/model/dto_model/cities_model.dart';
@@ -108,12 +109,14 @@ abstract class AppServiceClient {
 
   @GET('/nanny/details?id={id}')
   Future<NannyDetails> getNannyDetails(@Header('Authorization') token,@Path('id') id);
-  @GET('/api/nanny/appointment')
+  @GET('/nanny/appointment')
   Future<Appointments> getAppointments(@Header('Authorization') token);
+  @GET('/bookings?flag=3')
+  Future<Bookings> getParentBooking(@Header('Authorization') token);
 
   @POST('/nanny/appointment/add')
   Future<dynamic> addAppointmentNanny(@Header('Authorization') token,@Body() PostAppointment appointment);
-  @POST('/api/confirm-booking')
+  @POST('/confirm-booking')
   Future<dynamic> confirmBook(@Header('Authorization') token,@Body() BookPostModel bookPostModel);
 
 
