@@ -19,6 +19,7 @@ import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
 import 'package:nanny_co/data/model/updae_parent_model.dart';
+import 'package:nanny_co/data/model/verfiy_model.dart';
 import 'package:nanny_co/data/network/api.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 
@@ -31,7 +32,7 @@ abstract class RemoteDataSource {
   Future<LoginResponseModel> updateParent(ParentUpdateModel parentUpdateModel);
   Future<LoginResponseModel> updateSister(PostUpdateSisterProfileModel postUpdateSisterProfileModel);
   Future<BasicResponseModel> checkEmail(CheckEmailModel checkEmailModel);
-  Future<LoginResponseModel> verifyCode(VerifyCodeModel verifyCodeModel);
+  Future<VerfiyModel> verifyCode(VerifyCodeModel verifyCodeModel);
   Future<BasicResponseModel> changPassword(ChangePassword changePassword);
   Future<CitiesModel> getCities();
   Future<FavouriteDto> getFavourite();
@@ -73,7 +74,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<LoginResponseModel> verifyCode(VerifyCodeModel verifyCodeModel) {
+  Future<VerfiyModel> verifyCode(VerifyCodeModel verifyCodeModel) {
     return _appServiceClient.verifyCode(verifyCodeModel);
   }
 

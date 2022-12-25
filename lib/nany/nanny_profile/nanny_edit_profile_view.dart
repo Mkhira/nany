@@ -321,7 +321,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                               decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 filled: true,
-                                hintText: DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!) ?? "",
+                                hintText: DateFormat('yyyy-MM-dd').format( SettingsProvider.userData.dob!= null && SettingsProvider.userData.dob !=''? DateTime.parse(SettingsProvider.userData.dob!):DateTime.now()) ?? "",
                                 hintStyle: GoogleFonts.raleway(
                                     color: Colors.grey.shade400,
                                     fontWeight: FontWeight.w500,

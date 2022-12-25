@@ -42,7 +42,7 @@ class AuthDataResponse {
   final String? phone;
   final String? jwtToken;
   final String? appType;
-  final DateTime? dob;
+  final String? dob;
   final int? cityId;
   final String? gender;
   final String? lat;

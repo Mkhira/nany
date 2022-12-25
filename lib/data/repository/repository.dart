@@ -21,6 +21,7 @@ import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
 import 'package:nanny_co/data/model/updae_parent_model.dart';
+import 'package:nanny_co/data/model/verfiy_model.dart';
 import 'package:nanny_co/domain/repository/repository.dart';
 
 class RepositoryImpl extends Repository {
@@ -49,7 +50,7 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<LoginResponseModel> verifyCode(VerifyCodeModel verifyCodeModel) {
+  Future<VerfiyModel> verifyCode(VerifyCodeModel verifyCodeModel) {
     return _remoteDataSource.verifyCode(verifyCodeModel);
   }
 

@@ -250,7 +250,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                       Text(
-                                        DateFormat('MM/dd/yyyy').format(SettingsProvider.userData.dob!) ?? '',
+                                        DateFormat('yyyy-MM-dd').format( SettingsProvider.userData.dob!= null && SettingsProvider.userData.dob !=""? DateTime.parse(SettingsProvider.userData.dob!):DateTime.now())?? '',
                                         style: GoogleFonts.raleway(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                     ],

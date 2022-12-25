@@ -25,11 +25,10 @@ class UpdateNannyProfileCubit extends Cubit<UpdateNannyProfileState> {
   PostUpdateSisterProfileModel postUpdateSisterProfileModel = PostUpdateSisterProfileModel();
 
   initialValue() {
-    print(DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!));
     postUpdateSisterProfileModel.fullName = SettingsProvider.userData.fullName;
     postUpdateSisterProfileModel.userName = SettingsProvider.userData.userName;
     postUpdateSisterProfileModel.userName = SettingsProvider.userData.userName;
-    postUpdateSisterProfileModel.dob = DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!);
+    postUpdateSisterProfileModel.dob = DateFormat('yyyy-MM-dd').format( SettingsProvider.userData.dob!= null && SettingsProvider.userData.dob !=''? DateTime.parse(SettingsProvider.userData.dob!):DateTime.now());
     postUpdateSisterProfileModel.address = SettingsProvider.userData.address;
     postUpdateSisterProfileModel.gender = SettingsProvider.userData.gender;
     postUpdateSisterProfileModel.email = SettingsProvider.userData.email;

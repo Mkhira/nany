@@ -6,6 +6,7 @@ import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/nany_signup_view.dart';
 import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
+import 'package:nanny_co/parent/auth_view/verify.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 
 class nany_signin_view extends StatefulWidget {
@@ -25,6 +26,10 @@ class _nany_signin_viewState extends State<nany_signin_view> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 0,
+      ),
       body: SizedBox(
         height: sh,
         width: sw,
@@ -171,13 +176,16 @@ class _nany_signin_viewState extends State<nany_signin_view> {
                                 if (formkey.currentState!.validate()) {
                                   ProgressPopup(context);
                                   injector.get<AuthCubit>().signInWithEmailAndPassword(email.text, password.text, context).then((value) {
-                                    if (value == true) {
+                                    if (value == 200) {
                                       setState(() {
                                         Navigator.of(context).pushAndRemoveUntil(
                                           MaterialPageRoute(builder: (context) => const nanny_bottombar_view()),
                                           (route) => false,
                                         );
                                       });
+                                    }else if(value ==405){
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>  VerifyAccount()));
+
                                     } else {
                                       Navigator.pop(context);
                                     }

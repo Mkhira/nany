@@ -18,6 +18,7 @@ import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
+import 'package:nanny_co/data/model/verfiy_model.dart';
 import 'package:retrofit/retrofit.dart';
 
 import '../../app/constant.dart';
@@ -78,7 +79,7 @@ abstract class AppServiceClient {
     @Part() String? address,
   });
   @POST('/verify-code')
-  Future<LoginResponseModel> verifyCode(@Body() VerifyCodeModel verifyCodeModel);
+  Future<VerfiyModel> verifyCode(@Body() VerifyCodeModel verifyCodeModel);
   @POST('/check-email')
   Future<BasicResponseModel> checkEmail(@Body() CheckEmailModel checkEmailModel);
   @POST('/change-forget-password')

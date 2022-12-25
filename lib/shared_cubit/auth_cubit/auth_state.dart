@@ -4,3 +4,4 @@ part of '../../../shared_cubit/auth_cubit/auth_cubit.dart';
 abstract class AuthState {}
 
 class AuthInitial extends AuthState {}
+class AuthInitialCode extends AuthState {}

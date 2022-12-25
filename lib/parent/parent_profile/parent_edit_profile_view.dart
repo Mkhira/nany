@@ -211,7 +211,7 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                               decoration: InputDecoration(
                                 fillColor: Colors.white,
                                 filled: true,
-                                hintText: DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!) ?? "",
+                                hintText: DateFormat('yyyy-MM-dd').format( SettingsProvider.userData.dob!= null && SettingsProvider.userData.dob !=''? DateTime.parse(SettingsProvider.userData.dob!):DateTime.now()) ?? "",
                                 hintStyle: GoogleFonts.raleway(color: Colors.grey.shade400, fontWeight: FontWeight.w500, fontSize: 16),
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(100),

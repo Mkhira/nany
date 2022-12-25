@@ -4,6 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/parent/auth_view/parent_signup_view.dart';
+import 'package:nanny_co/parent/auth_view/verify.dart';
 import 'package:nanny_co/parent/parent_bottombar_view.dart/parent_bottombar_view.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 
@@ -26,6 +27,10 @@ class _ParentSignInViewState extends State<ParentSignInView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: SizedBox(
           height: sh,
@@ -174,14 +179,17 @@ class _ParentSignInViewState extends State<ParentSignInView> {
                                     ProgressPopup(context);
                                     injector.get<AuthCubit>().signInWithEmailAndPassword(email.text, password.text, context).then((value) {
                                       print(value);
-                                      if (value == true) {
+                                      if (value == 200) {
                                         setState(() {
                                           Navigator.of(context).pushAndRemoveUntil(
                                             MaterialPageRoute(builder: (context) => const parent_bottombar_view()),
                                             (route) => false,
                                           );
                                         });
-                                      } else {
+                                      }else if(value ==405){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>  VerifyAccount()));
+
+                                      }  else {
                                         Navigator.pop(context);
                                       }
                                     });

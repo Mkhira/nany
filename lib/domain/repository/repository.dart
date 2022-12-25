@@ -18,6 +18,7 @@ import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
 import 'package:nanny_co/data/model/updae_parent_model.dart';
+import 'package:nanny_co/data/model/verfiy_model.dart';
 
 import '../../data/model/dto_model/basic_response.dart';
 import '../../data/model/dto_model/cyhange_password.dart';
@@ -29,7 +30,7 @@ abstract class Repository {
   Future<LoginResponseModel> updateParent(ParentUpdateModel parentUpdateModel);
   Future<LoginResponseModel> updateSister(PostUpdateSisterProfileModel postUpdateSisterProfileModel);
   Future<BasicResponseModel> checkEmail(CheckEmailModel checkEmailModel);
-  Future<LoginResponseModel> verifyCode(VerifyCodeModel verifyCodeModel);
+  Future<VerfiyModel> verifyCode(VerifyCodeModel verifyCodeModel);
   Future<BasicResponseModel> changPassword(ChangePassword changePassword);
   Future<CitiesModel> getCites();
   Future<FavouriteDto> getFavourite();

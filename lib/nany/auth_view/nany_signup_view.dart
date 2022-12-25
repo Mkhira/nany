@@ -35,6 +35,10 @@ class _NannySignupViewState extends State<NannySignupView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Theme.of(context).primaryColor,
+        elevation: 0,
+      ),
       body: SingleChildScrollView(
         child: SizedBox(
           height: sh,

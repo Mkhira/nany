@@ -249,8 +249,8 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                        Text(
-                                        DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!),
-                                            style: GoogleFonts.raleway(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
+                                           DateFormat('yyyy-MM-dd').format( SettingsProvider.userData.dob!= null && SettingsProvider.userData.dob !=''? DateTime.parse(SettingsProvider.userData.dob!):DateTime.now()),
+                                         style: GoogleFonts.raleway(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
                                           ),
                                     ],
                                   ),

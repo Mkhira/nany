@@ -158,12 +158,12 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                             onPressed: () {
                               ProgressPopup(context);
 
-                              injector.get<AuthCubit>().verifyCode(email: widget.email, otp: otp.text, context: context).then((value) {
-                                value == true
-                                    ? Navigator.of(context).pushReplacement(
-                                        MaterialPageRoute(builder: (context) => ChangePasswordView(email: widget.email, role: widget.role)))
-                                    : Navigator.pop(context);
-                              });
+                              // injector.get<AuthCubit>().verifyCode(email: widget.email, otp: otp.text, context: context).then((value) {
+                              //   value == true
+                              //       ? Navigator.of(context).pushReplacement(
+                              //           MaterialPageRoute(builder: (context) => ChangePasswordView(email: widget.email, role: widget.role)))
+                              //       : Navigator.pop(context);
+                              // });
                             },
                             style: ElevatedButton.styleFrom(
                                 primary: Theme.of(context).primaryColor,

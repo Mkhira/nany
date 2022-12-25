@@ -35,11 +35,11 @@ class UpdateParentCubit extends Cubit<UpdateParentState> {
   PostUpdateParentModel postUpdateParentModel = PostUpdateParentModel();
 
   initialValue() {
-    print(DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!));
+
     postUpdateParentModel.fullName = SettingsProvider.userData.fullName;
     postUpdateParentModel.userName = SettingsProvider.userData.userName;
     postUpdateParentModel.userName = SettingsProvider.userData.userName;
-    postUpdateParentModel.dob = DateFormat('yyyy-MM-dd').format(SettingsProvider.userData.dob!);
+    postUpdateParentModel.dob = DateFormat('yyyy-MM-dd').format( SettingsProvider.userData.dob!= null && SettingsProvider.userData.dob !=""? DateTime.parse(SettingsProvider.userData.dob!):DateTime.now());
     postUpdateParentModel.address = SettingsProvider.userData.address;
     postUpdateParentModel.gender = SettingsProvider.userData.gender;
     postUpdateParentModel.email = SettingsProvider.userData.email;
