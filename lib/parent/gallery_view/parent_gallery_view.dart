@@ -5,6 +5,9 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/data/model/dto_model/auth_data_response.dart';
+import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
+import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/add_child/parent_children_view.dart';
 import 'package:nanny_co/parent/auth_view/Controller/Auth_controller.dart';
@@ -55,9 +58,9 @@ class parent_gallery_view extends StatelessWidget {
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    parent_bottombar_view()));
+                                                    const parent_bottombar_view()));
                                       },
-                                      child: Icon(
+                                      child: const Icon(
                                         Icons.arrow_back,
                                         size: 20,
                                         color: Colors.white,
@@ -67,13 +70,14 @@ class parent_gallery_view extends StatelessWidget {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    parentFirebaseAuthController().signOut();
+                                    SettingsProvider.current.saveLogin(false);
+                                    SettingsProvider.current.saveUser(AuthDataResponse());
                                     Navigator.of(context).pushReplacement(
                                         MaterialPageRoute(
                                             builder: (context) =>
-                                                ParentSignInView()));
+                                                const ParentSignInView()));
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.logout,
                                     size: 20,
                                     color: Colors.white,
@@ -91,7 +95,7 @@ class parent_gallery_view extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Image(
+                                const Image(
                                     image:
                                     AssetImage('assets/images/dots.png')),
                               ],
@@ -108,7 +112,7 @@ class parent_gallery_view extends StatelessWidget {
                   width: sw,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
                   ),
@@ -117,7 +121,7 @@ class parent_gallery_view extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                             child: Text(
                               'Gallery',
                               style: GoogleFonts.raleway(
@@ -131,12 +135,12 @@ class parent_gallery_view extends StatelessWidget {
                               width: sw,
                               child:Obx(()=> booking_controller.currentnanny!.value.gallery!=null?GridView.builder(
                                 itemCount: booking_controller.currentnanny!.value.gallery?.length,
-                                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                                     crossAxisCount: 3,
                                     crossAxisSpacing: 5.0,
                                     mainAxisSpacing: 5.0
                                 ),
-                                padding: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
+                                padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 10),
                                 itemBuilder: (BuildContext context, int index){
                                   return InkWell(
                                     onTap: (){
@@ -148,7 +152,7 @@ class parent_gallery_view extends StatelessWidget {
                                     child: Container(
                                         height: 50,
                                         width: 50,
-                                        margin: EdgeInsets.all(10),
+                                        margin: const EdgeInsets.all(10),
                                         decoration: BoxDecoration(
                                           color: Colors.white,
                                           borderRadius: BorderRadius.circular(15),

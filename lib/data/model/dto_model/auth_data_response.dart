@@ -5,14 +5,14 @@ part 'auth_data_response.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class AuthDataResponse {
   AuthDataResponse({
-    required this.id,
+     this.id,
     this.image,
     this.fullName,
     this.userName,
-    required this.email,
-    required this.phone,
-    required this.jwtToken,
-    required this.appType,
+     this.email,
+     this.phone,
+     this.jwtToken,
+     this.appType,
     this.dob,
     this.cityId,
     this.gender,
@@ -34,14 +34,14 @@ class AuthDataResponse {
     this.noOfChildren,
   });
 
-  final int id;
+  final int? id;
   final String? image;
   final String? fullName;
   final String? userName;
-  final String email;
-  final String phone;
-  final String jwtToken;
-  final String appType;
+  final String? email;
+  final String? phone;
+  final String? jwtToken;
+  final String? appType;
   final DateTime? dob;
   final int? cityId;
   final String? gender;

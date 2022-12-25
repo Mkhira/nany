@@ -6,6 +6,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nanny_co/common/role_selection_view.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/data/model/dto_model/auth_data_response.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
@@ -66,6 +67,8 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                 ),
                                 InkWell(
                                   onTap: () {
+                                    SettingsProvider.current.saveLogin(false);
+                                    SettingsProvider.current.saveUser(AuthDataResponse());
                                     NanyAuthController().signOut();
                                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const role_selection_view()));
                                   },
@@ -711,7 +714,8 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                       ),
                       InkWell(
                         onTap: () {
-                          NanyAuthController().signOut();
+                          SettingsProvider.current.saveLogin(false);
+                          SettingsProvider.current.saveUser(AuthDataResponse());
                           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ParentSignInView()));
                         },
                         child: Container(

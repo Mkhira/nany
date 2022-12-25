@@ -16,6 +16,7 @@ import 'package:nanny_co/data/model/dto_model/verify_code.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/widget/alerts.dart';
+import 'package:nanny_co/parent/auth_view/verify.dart';
 
 part 'auth_state.dart';
 
@@ -38,7 +39,7 @@ class AuthCubit extends Cubit<AuthState> {
       print(loginResponseModel.status!);
       if (loginResponseModel.status! == 200) {
         return true;
-      } else {
+      }else {
         Alerts.showSnackBar(context: context, message: loginResponseModel.message ?? '');
 
         return false;

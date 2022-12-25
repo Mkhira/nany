@@ -39,7 +39,6 @@ class _SplashViewState extends State<SplashView> {
 
     SettingsProvider.current.saveTokens(deviceToken: deviceID, fireBaseToken: fireBaseToken);
 
-    log('Token:  ${SettingsProvider.userData.jwtToken}',);
   }
 
   @override

@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/data/model/dto_model/auth_data_response.dart';
+import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/nanny_profile/Controller/update_nanny_profile_cubit.dart';
 import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
@@ -75,7 +77,8 @@ class _ParentSearchNannyState extends State<ParentSearchNanny> {
                               ),
                               InkWell(
                                 onTap: () {
-                                  parentFirebaseAuthController().signOut();
+                                  SettingsProvider.current.saveLogin(false);
+                                  SettingsProvider.current.saveUser(AuthDataResponse());
                                   Navigator.of(context).pushReplacement(
                                       MaterialPageRoute(
                                           builder: (context) =>

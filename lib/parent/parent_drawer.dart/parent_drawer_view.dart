@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/common/privacy_policy_view.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/data/model/dto_model/auth_data_response.dart';
+import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
@@ -213,6 +215,9 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                 Divider(),
                 InkWell(
                   onTap: (){
+                    SettingsProvider.current.saveLogin(false);
+                    SettingsProvider.current.saveUser(AuthDataResponse());
+
                     Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>ParentSignInView()));
                   },
                   child: Padding(

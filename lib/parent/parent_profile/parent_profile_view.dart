@@ -3,6 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/data/model/dto_model/auth_data_response.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
@@ -63,7 +64,10 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    parentFirebaseAuthController().signOut();
+
+                                    SettingsProvider.current.saveLogin(false);
+                                    SettingsProvider.current.saveUser(AuthDataResponse());
+
                                     Navigator.of(context)
                                         .pushReplacement(MaterialPageRoute(builder: (context) => const ParentSignInView()));
                                   },
@@ -355,6 +359,10 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                       ),
                       InkWell(
                         onTap: () {
+                          SettingsProvider.current.saveLogin(false);
+                          SettingsProvider.current.saveUser(AuthDataResponse());
+
+
                           Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context) => const ParentSignInView()));
                         },
                         child: Container(

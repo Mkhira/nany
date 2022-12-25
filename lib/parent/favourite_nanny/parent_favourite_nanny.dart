@@ -8,6 +8,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/data/model/dto_model/auth_data_response.dart';
+import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/add_child/parent_children_view.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
@@ -78,7 +80,9 @@ class _parent_favourite_nannyState extends State<parent_favourite_nanny> {
                                     ),
                                     InkWell(
                                       onTap: () {
-                                        parentFirebaseAuthController().signOut();
+                                        SettingsProvider.current.saveLogin(false);
+                                        SettingsProvider.current.saveUser(AuthDataResponse());
+
                                         Navigator.of(context).pushReplacement(
                                             MaterialPageRoute(
                                                 builder: (context) =>
