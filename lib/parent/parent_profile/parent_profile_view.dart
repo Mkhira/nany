@@ -162,7 +162,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                                               size: 12,
                                             ),
                                             Text(
-                                              ' Edit Profile',
+                                              ' Edit Profile'.translate(),
                                               style: GoogleFonts.raleway(color: Colors.white, fontSize: 12),
                                             ),
                                           ],
@@ -206,7 +206,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Phone',
+                                        'Phone'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                       Text(SettingsProvider.userData.phone ?? '',
@@ -227,7 +227,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Email',
+                                        'Email'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                       Text(
@@ -246,7 +246,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Birthday',
+                                        'Birthday'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                       Text(
@@ -265,7 +265,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Gender',
+                                        'Gender'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                       Text(
@@ -305,7 +305,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Address',
+                              'Address'.translate(),
                               style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                             const SizedBox(
@@ -346,7 +346,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Booking History',
+                                'Booking History'.translate(),
                                 maxLines: 10,
                                 style: GoogleFonts.raleway(color: Colors.black, fontWeight: FontWeight.bold, fontSize: 14),
                               ),
@@ -387,7 +387,7 @@ class _ParentProfileViewScreenState extends State<ParentProfileViewScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Logout',
+                                'Logout'.translate(),
                                 maxLines: 10,
                                 style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                               ),

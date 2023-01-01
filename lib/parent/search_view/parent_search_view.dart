@@ -96,7 +96,7 @@ class _ParentSearchNannyState extends State<ParentSearchNanny> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Search Nanny ',
+                                'Search Nanny'.translate(),
                                 style: GoogleFonts.raleway(
                                     color: Colors.white,
                                     fontWeight: FontWeight.bold,
@@ -129,7 +129,7 @@ class _ParentSearchNannyState extends State<ParentSearchNanny> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Search',
+                        'Search'.translate(),
                         style: GoogleFonts.raleway(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
@@ -175,7 +175,7 @@ class _ParentSearchNannyState extends State<ParentSearchNanny> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Entry Time',
+                                'Entry Time'.translate(),
                                 style: GoogleFonts.raleway(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
@@ -262,7 +262,7 @@ class _ParentSearchNannyState extends State<ParentSearchNanny> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Exit Time',
+                                'Exit Time'.translate(),
                                 style: GoogleFonts.raleway(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
@@ -351,7 +351,7 @@ class _ParentSearchNannyState extends State<ParentSearchNanny> {
                         height: 20,
                       ),
                       Text(
-                        'Select Child',
+                        'Select Child'.translate(),
                         style: GoogleFonts.raleway(
                             color: Theme.of(context).primaryColor,
                             fontWeight: FontWeight.bold,
@@ -502,7 +502,7 @@ class _ParentSearchNannyState extends State<ParentSearchNanny> {
                                                       height: 5,
                                                     ),
                                                     Text(
-                                                      'Add Child',
+                                                      'Add Child'.translate(),
                                                       style:
                                                           GoogleFonts.raleway(
                                                               color: Theme.of(
@@ -555,7 +555,7 @@ class _ParentSearchNannyState extends State<ParentSearchNanny> {
                                   vertical: 15.0, horizontal: 10),
                               child: Center(
                                 child: Text(
-                                  'Search Nanny ',
+                                  'Search Nanny'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white, fontSize: 20),
                                 ),

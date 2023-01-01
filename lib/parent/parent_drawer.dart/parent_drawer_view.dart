@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,7 @@ import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/parent_booking_history_view.dart';
+import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 
 import '../parent_bottombar_view.dart/parent_bottombar_view.dart';
 
@@ -94,7 +96,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'Home',
+                      'Home'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -113,7 +115,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'My Profile',
+                      'My Profile'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -132,7 +134,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'My Child',
+                      'My Child'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -150,7 +152,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'Booking History',
+                      'Booking History'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -163,7 +165,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical:5),
                   child: Text(
-                    'About Us',
+                    'About Us'.translate(),
                     style: GoogleFonts.raleway(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold ,
@@ -179,7 +181,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'Privacy Policy',
+                      'Privacy Policy'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -192,7 +194,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical:5),
                   child: Text(
-                    'Terms & Conditions',
+                    'Terms & Conditions'.translate(),
                     style: GoogleFonts.raleway(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold ,
@@ -204,11 +206,28 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical:5),
                   child: Text(
-                    'FAQ',
+                    'FAQ'.translate(),
                     style: GoogleFonts.raleway(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold ,
                         fontSize: 14
+                    ),
+                  ),
+                ),
+                Divider(),
+                InkWell(
+                  onTap: (){
+                    injector.get<AuthCubit>().changeLanguage(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical:5),
+                    child: Text(
+                      EasyLocalization.of(context)!.currentLocale == const Locale('en','EN')?'العربيه':'English',
+                      style: GoogleFonts.raleway(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold ,
+                          fontSize: 14
+                      ),
                     ),
                   ),
                 ),
@@ -223,7 +242,7 @@ class _parent_drawer_viewState extends State<parent_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'Logout',
+                      'Logout'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,

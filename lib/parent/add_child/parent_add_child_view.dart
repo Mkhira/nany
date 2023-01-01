@@ -77,7 +77,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Add Child ',
+                                'Add Child'.translate(),
                                 style: GoogleFonts.raleway(
                                     color:Colors.white,
                                     fontWeight: FontWeight.bold ,
@@ -114,7 +114,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Child Information',
+                                  'Child Information'.translate(),
                                   style: GoogleFonts.raleway(
                                       color:Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold ,
@@ -132,7 +132,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                             child: Row(
                               children: [
                                 Text(
-                                  'Child Name',
+                                  'Child Name'.translate(),
                                   style: GoogleFonts.raleway(
                                       color:Colors.grey,
                                       fontSize: 12
@@ -147,7 +147,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                               controller:                                         injector.get<AddChildCubit>().name,
                               validator: (String? value) {
                                 if (value == '') {
-                                  return 'Please fillout this field';
+                                  return 'Please fill out this field'.translate();
                                 } else {
                                   return null;
                                 }
@@ -218,7 +218,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                             child: Row(
                               children: [
                                 Text(
-                                  'Child\'s Age',
+                                  'Childs Age'.translate(),
                                   style: GoogleFonts.raleway(
                                       color:Colors.grey,
                                       fontSize: 12
@@ -233,7 +233,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                               controller:                                         injector.get<AddChildCubit>().age,
                               validator: (String? value) {
                                 if (value == '') {
-                                  return 'Please fillout this field';
+                                  return 'Please fill out this field'.translate();
                                 } else {
                                   return null;
                                 }
@@ -271,7 +271,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                             child: Row(
                               children: [
                                 Text(
-                                  'Special Child',
+                                  'Special Child'.translate(),
                                   style: GoogleFonts.raleway(
                                       color:Colors.grey,
                                       fontSize: 12
@@ -305,7 +305,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Text(
-                                            'Yes',
+                                            'Yes'.translate(),
                                             style: GoogleFonts.raleway(
                                                 color:special?Colors.white:Theme.of(context).primaryColor,
                                                 fontSize: 14
@@ -335,7 +335,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [Text(
-                                          'No',
+                                          'No'.translate(),
                                           style: GoogleFonts.raleway(
                                               color:!special?Colors.white:Theme.of(context).primaryColor,
                                               fontSize: 14
@@ -355,7 +355,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                             child: Row(
                               children: [
                                 Text(
-                                  'Gender',
+                                  'Gender'.translate(),
                                   style: GoogleFonts.raleway(
                                       color:Colors.grey,
                                       fontSize: 12
@@ -388,7 +388,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Text(
-                                            'Male',
+                                            'Male'.translate(),
                                             style: GoogleFonts.raleway(
                                                 color:gender=='Male'?Colors.white:Theme.of(context).primaryColor,
                                                 fontSize: 14
@@ -418,7 +418,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                                       child: Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                         children: [Text(
-                                          'Female',
+                                          'Female'.translate(),
                                           style: GoogleFonts.raleway(
                                               color:gender=='Female'?Colors.white:Theme.of(context).primaryColor,
                                               fontSize: 14
@@ -455,7 +455,7 @@ class _ParentAddChildViewState extends State<ParentAddChildView> {
                                   padding: const EdgeInsets.symmetric(vertical: 15.0,horizontal: 10),
                                   child: Center(
                                     child: Text(
-                                      'Save Child',
+                                      'Save Child'.translate(),
                                       style: GoogleFonts.raleway(
                                           color:Colors.white,
                                           fontSize: 20

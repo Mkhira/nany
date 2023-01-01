@@ -84,7 +84,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Profile ',
+                                  'Profile'.translate(),
                                   style: GoogleFonts.raleway(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
                                 ),
                                 const Image(image: AssetImage('assets/images/dots.png')),
@@ -163,7 +163,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                               size: 12,
                                             ),
                                             Text(
-                                              ' Edit Profile',
+                                              'Edit Profile'.translate(),
                                               style: GoogleFonts.raleway(color: Colors.white, fontSize: 12),
                                             ),
                                           ],
@@ -207,7 +207,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Phone',
+                                        'Phone'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                        Text(
@@ -226,7 +226,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Email',
+                                        'Email'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                        Text(
@@ -245,7 +245,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Birthday',
+                                        'Birthday'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                        Text(
@@ -264,7 +264,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Gender',
+                                        'Gender'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                        Text(
@@ -283,7 +283,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Max Price',
+                                        'Max Price'.translate(),
                                         style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                                       ),
                                      Text(
@@ -342,7 +342,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Address',
+                              'Address'.translate(),
                               style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                             const SizedBox(
@@ -357,7 +357,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                               thickness: 2,
                             ),
                             Text(
-                              'Education',
+                              'Education'.translate(),
                               style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                             const SizedBox(
@@ -372,7 +372,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                               thickness: 2,
                             ),
                             Text(
-                              'Experience',
+                              'Experience'.translate(),
                               style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                             const SizedBox(
@@ -400,7 +400,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                               thickness: 2,
                             ),
                             Text(
-                              'No. of Children Willing to care',
+                              'No. of Children Willing to care'.translate(),
                               style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                             const SizedBox(
@@ -430,7 +430,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                               thickness: 2,
                             ),
                             Text(
-                              'Sitter Type',
+                              'Sitter Type'.translate(),
                               style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                             ),
                             const SizedBox(
@@ -600,7 +600,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                       Row(
                         children: [
                           Text(
-                            'Availability',
+                            'Availability'.translate(),
                             style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                         ],
@@ -654,7 +654,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                       //                             child: Container(
                       //                               padding: const EdgeInsets.all(5),
                       //                               decoration: const BoxDecoration(
-                      //                                   color: Colors.transparent,
+                      //                                   color: Colors.translate()ansparent,
                       //                                   borderRadius: BorderRadius.only(
                       //                                       bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
                       //                               child: Column(
@@ -740,7 +740,7 @@ class _NannyProfileViewState extends State<NannyProfileView> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Text(
-                                'Logout',
+                                'Logout'.translate(),
                                 maxLines: 10,
                                 style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                               ),

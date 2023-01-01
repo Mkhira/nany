@@ -52,21 +52,21 @@ class ForgotPasswordView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Forgot Password',
+                          'Forgot Password'.translate(),
                           style: GoogleFonts.nanumGothic(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 24),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
                         Text(
-                          'Please enter details to continue.',
+                          'Please enter details to continue.'.translate(),
                           style: GoogleFonts.nanumGothic(color: Colors.grey.shade400, fontSize: 14),
                         ),
                         const SizedBox(
                           height: 30,
                         ),
                         TextFieldNany(
-                          hintText: 'Email Address',
+                          hintText: 'Email Address'.translate(),
                           controller: email,
                           suffixIcon: InkWell(
                               onTap: () {},
@@ -103,7 +103,7 @@ class ForgotPasswordView extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
                                       Text(
-                                        'Submit',
+                                        'Submit'.translate(),
                                         style: GoogleFonts.nanumGothic(
                                           color: Colors.white,
                                           fontSize: 14,
@@ -146,7 +146,7 @@ class ForgotPasswordView extends StatelessWidget {
                                         size: 20,
                                       ),
                                       Text(
-                                        'Back to Login',
+                                        'Back to Login'.translate(),
                                         style: GoogleFonts.nanumGothic(
                                           color: Theme.of(context).primaryColor,
                                           fontSize: 12,

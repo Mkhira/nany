@@ -150,7 +150,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Profile ',
+                                  'Profile'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -183,7 +183,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Nanny Information',
+                            'Nanny Information'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
@@ -193,7 +193,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 20,
                           ),
                           Text(
-                            'Full Name',
+                            'Full Name'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -243,7 +243,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 10,
                           ),
                           Text(
-                            'Upload Photo',
+                            'Upload Photo'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -304,7 +304,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 10,
                           ),
                           Text(
-                            'Date of Birth',
+                            'Date of Birth'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -353,7 +353,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 10,
                           ),
                           Text(
-                            'Gender',
+                            'Gender'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -426,7 +426,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                     MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
-                                        'Female',
+                                        'Female'.translate(),
                                         style: GoogleFonts.raleway(
                                             color:  injector.get<UpdateNannyProfileCubit>().postUpdateSisterProfileModel.gender ==
                                                 "Female"
@@ -528,7 +528,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 10,
                           ),
                           Text(
-                            'Sitter Type',
+                            'Sitter Type'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -553,7 +553,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                       decoration: InputDecoration(
                                         fillColor: Colors.white,
                                         filled: true,
-                                        hintText: 'Home Sitter',
+                                        hintText: 'Home Sitter'.translate(),
                                         enabled: false,
                                         contentPadding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 10),
@@ -640,7 +640,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                         enabled: false,
                                         fillColor: Colors.white,
                                         filled: true,
-                                        hintText: 'Goto Sitter',
+                                        hintText: 'Goto Sitter'.translate(),
                                         contentPadding: const EdgeInsets.symmetric(
                                             vertical: 5, horizontal: 10),
                                         prefixIcon: InkWell(
@@ -716,7 +716,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 20,
                           ),
                           Text(
-                            'Address',
+                            'Address'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
@@ -726,7 +726,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 20,
                           ),
                           Text(
-                            'Address',
+                            'Address'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -774,7 +774,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 10,
                           ),
                           Text(
-                            'City',
+                            'City'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -797,7 +797,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 20,
                           ),
                           Text(
-                            'Education',
+                            'Education'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
@@ -903,7 +903,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 10,
                           ),
                           Text(
-                            'City Education',
+                            'City Education'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -926,16 +926,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text(
-                            'Phone / Email',
-                            style: GoogleFonts.raleway(
-                                color: Theme.of(context).primaryColor,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
+
                           Text(
                             'Phone Number',
                             style: GoogleFonts.raleway(
@@ -988,7 +979,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 10,
                           ),
                           Text(
-                            'Email',
+                            'Email'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -1046,7 +1037,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 20,
                           ),
                           Text(
-                            'Total Experience',
+                            'Total Experience'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -1118,7 +1109,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                   fillColor: Colors.white,
                                   filled: true,
                                   enabled: false,
-                                  hintText: 'Specialize in special needs',
+                                  hintText: 'Specialize in special needs'.translate(),
                                   contentPadding: const EdgeInsets.symmetric(
                                       vertical: 5, horizontal: 10),
                                   prefixIcon: Container(
@@ -1181,7 +1172,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             height: 10,
                           ),
                           Text(
-                            'No. of Children Willing to care',
+                            'No. of Children Willing to care'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,
                                 fontWeight: FontWeight.bold,
@@ -1423,7 +1414,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Text(
-                                'Availability',
+                                'Availability'.translate(),
                                 style: GoogleFonts.raleway(
                                     color: Theme.of(context).primaryColor,
                                     fontWeight: FontWeight.bold,
@@ -1447,7 +1438,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                   MainAxisAlignment.center,
                                                   children: [
                                                     Text(
-                                                      'Add Availability',
+                                                      'Add Availability'.translate(),
                                                       style: GoogleFonts.raleway(
                                                           color: Theme.of(context)
                                                               .primaryColor,
@@ -1723,7 +1714,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                                               .center,
                                                           children: [
                                                             Text(
-                                                              'Submit',
+                                                              'Submit'.translate(),
                                                               style: GoogleFonts
                                                                   .raleway(
                                                                   color: Colors
@@ -1979,7 +1970,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                       mainAxisAlignment: MainAxisAlignment.center,
                                       children: [
                                         Text(
-                                          'Submit',
+                                          'Submit'.translate(),
                                           style: GoogleFonts.raleway(
                                               color: Colors.white, fontSize: 20),
                                         ),

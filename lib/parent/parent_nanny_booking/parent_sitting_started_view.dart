@@ -131,7 +131,7 @@ class _parent_sitting_started_viewState extends State<parent_sitting_started_vie
                                     Column(
                                       children: [
                                         Text(
-                                          'Entry Time',
+                                          'Entry Time'.translate(),
                                           style: GoogleFonts.raleway(
                                               color: Theme.of(context).primaryColor,
                                               fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class _parent_sitting_started_viewState extends State<parent_sitting_started_vie
                                     Column(
                                       children: [
                                         Text(
-                                          'Exit Time',
+                                          'Exit Time'.translate(),
                                           style: GoogleFonts.raleway(
                                               color: Theme.of(context).primaryColor,
                                               fontWeight: FontWeight.bold,

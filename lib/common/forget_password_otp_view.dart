@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
@@ -81,7 +82,7 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Forgot Password',
+                        'Forgot Password'.translate(),
                         style: GoogleFonts.nanumGothic(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 24),
                       ),
                       const SizedBox(
@@ -89,7 +90,7 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                       ),
                       Text(
                         '''Please enter the OTP which we sent you on 
-                 your registered number''',
+                 your registered number'''.translate(),
                         style: GoogleFonts.nanumGothic(color: Colors.grey.shade400, fontSize: 14),
                       ),
                       SizedBox(
@@ -144,7 +145,7 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                       TextButton(
                         onPressed: () {},
                         child: Text(
-                          '''Resend OTP''',
+                          '''Resend OTP'''.translate(),
                           style: GoogleFonts.nanumGothic(color: Colors.white, fontSize: 14),
                         ),
                         style: TextButton.styleFrom(backgroundColor: resend ? Theme.of(context).primaryColor : Colors.grey),
@@ -175,7 +176,7 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Submit',
+                                      'Submit'.translate(),
                                       style: GoogleFonts.nanumGothic(
                                         color: Colors.white,
                                         fontSize: 14,
@@ -218,7 +219,7 @@ class _ForgotPasswordOtpViewState extends State<ForgotPasswordOtpView> {
                                       size: 20,
                                     ),
                                     Text(
-                                      'Back to Login',
+                                      'Back to Login'.translate(),
                                       style: GoogleFonts.nanumGothic(
                                         color: Theme.of(context).primaryColor,
                                         fontSize: 12,

@@ -1,5 +1,6 @@
 import 'package:animated_snack_bar/animated_snack_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -72,14 +73,14 @@ class _NannySignupViewState extends State<NannySignupView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'Register Now for Nanny',
+                            'Register Now for Nanny'.translate(),
                             style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 24),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           Text(
-                            'Please enter details to continue.',
+                            'Please enter details to continue.'.translate(),
                             style: GoogleFonts.raleway(color: Colors.grey.shade400, fontSize: 14),
                           ),
                           const SizedBox(
@@ -88,10 +89,10 @@ class _NannySignupViewState extends State<NannySignupView> {
                           TextFieldNany(
                             height: height,
                             controller: fullName,
-                            hintText: 'Full Name',
+                            hintText: 'Full Name'.translate(),
                             validation: (String? value) {
                               if (value == '') {
-                                return 'Please fillout this field';
+                                return 'Please fill out this field'.translate();
                               } else {
                                 return null;
                               }
@@ -107,10 +108,10 @@ class _NannySignupViewState extends State<NannySignupView> {
                           ),
                           TextFieldNany(
                             height: height,
-                            hintText: 'Enter Username',
+                            hintText: 'Enter Username'.translate(),
                             validation: (String? value) {
                               if (value == '') {
-                                return 'Please fillout this field';
+                                return 'Please fill out this field'.translate();
                               } else {
                                 return null;
                               }
@@ -127,12 +128,12 @@ class _NannySignupViewState extends State<NannySignupView> {
                           ),
                           TextFieldNany(
                             height: height,
-                            hintText: 'Password',
+                            hintText: 'Password'.translate(),
                             obsecure: obscure,
                             controller: password,
                             validation: (String? value) {
                               if (value == '') {
-                                return 'Please fillout this field';
+                                return 'Please fill out this field'.translate();
                               } else {
                                 return null;
                               }
@@ -154,14 +155,14 @@ class _NannySignupViewState extends State<NannySignupView> {
                           ),
                           TextFieldNany(
                             height: height,
-                            hintText: 'Confirm Password',
+                            hintText: 'Confirm Password'.translate(),
                             controller: confirmPassword,
                             obsecure: obscure,
                             validation: (String? value) {
                               if (value == '') {
-                                return 'Please fillout this field';
+                                return 'Please fill out this field'.translate();
                               } else if (value != password.text) {
-                                return 'Password doen\'t match';
+                                return 'Password dont match'.translate();
                               } else {
                                 return null;
                               }
@@ -185,12 +186,12 @@ class _NannySignupViewState extends State<NannySignupView> {
                               height: height,
                               validation: (String? value) {
                                 if (value == '') {
-                                  return 'Please fillout this field';
+                                  return 'Please fill out this field'.translate();
                                 } else {
                                   return null;
                                 }
                               },
-                              hintText: 'Mobile Number',
+                              hintText: 'Password dont match'.translate(),
                               controller: phone,
                               suffixIcon: Icon(
                                 Icons.phone_android,
@@ -202,13 +203,13 @@ class _NannySignupViewState extends State<NannySignupView> {
                           ),
                           TextFieldNany(
                             height: height,
-                            hintText: 'Email Address',
+                            hintText: 'Email Address'.translate(),
                             controller: email,
                             validation: (String? value) {
                               if (value == '') {
-                                return 'Please fillout this field';
+                                return 'Please fill out this field'.translate();
                               } else if (!value!.contains('@')) {
-                                return 'Please enter valid email adress';
+                                return 'Please enter valid email address';
                               } else {
                                 return null;
                               }
@@ -244,7 +245,7 @@ class _NannySignupViewState extends State<NannySignupView> {
                                   ),
                                 ),
                                 Text(
-                                  '   Terms & Conditions',
+                                  'Terms & Conditions'.translate(),
                                   style: GoogleFonts.raleway(color: Colors.grey.shade400, fontSize: 14),
                                 )
                               ],
@@ -303,7 +304,7 @@ class _NannySignupViewState extends State<NannySignupView> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Submit',
+                                          'Submit'.translate(),
                                           style: GoogleFonts.raleway(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -344,7 +345,7 @@ class _NannySignupViewState extends State<NannySignupView> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Already registered Sign In here',
+                                          'Already registered Sign In here'.translate(),
                                           style: GoogleFonts.raleway(
                                             color: Theme.of(context).primaryColor,
                                             fontSize: 12,

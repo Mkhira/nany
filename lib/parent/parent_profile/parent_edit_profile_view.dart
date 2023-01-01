@@ -105,14 +105,14 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Personal Information',
+                          'Personal Information'.translate(),
                           style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         Text(
-                          'Full Name',
+                          'Full Name'.translate(),
                           style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         SizedBox(
@@ -149,7 +149,7 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                           height: 10,
                         ),
                         Text(
-                          'Upload Photo',
+                          'Upload Photo'.translate(),
                           style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         SizedBox(
@@ -169,7 +169,7 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                                   fillColor: Colors.white,
                                   filled: true,
                                   enabled: false,
-                                  hintText: "image",
+                                  hintText: "image".translate(),
                                   suffixIcon: const Icon(
                                     Icons.upload_outlined,
                                     color: Colors.grey,
@@ -198,7 +198,7 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                           height: 10,
                         ),
                         Text(
-                          'Date of Birth',
+                          'Date of Birth'.translate(),
                           style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         SizedBox(
@@ -236,7 +236,7 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                           height: 10,
                         ),
                         Text(
-                          'Gender',
+                          'Gender'.translate(),
                           style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         Row(
@@ -262,7 +262,7 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
-                                        'Male',
+                                        'Male'.translate(),
                                         style: GoogleFonts.raleway(
                                             color: injector.get<UpdateParentCubit>().postUpdateParentModel.gender == "Male"
                                                 ? Colors.white
@@ -292,7 +292,7 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                     children: [
                                       Text(
-                                        'Female',
+                                        'Female'.translate(),
                                         style: GoogleFonts.raleway(
                                             color: injector.get<UpdateParentCubit>().postUpdateParentModel.gender == "Female"
                                                 ? Colors.white
@@ -308,14 +308,14 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                           height: 20,
                         ),
                         Text(
-                          'Address',
+                          'Address'.translate(),
                           style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 20),
                         ),
                         const SizedBox(
                           height: 20,
                         ),
                         Text(
-                          'Address',
+                          'Address'.translate(),
                           style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         SizedBox(
@@ -352,7 +352,7 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                           height: 10,
                         ),
                         Text(
-                          'City',
+                          'City'.translate(),
                           style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         if (injector.get<UpdateParentCubit>().cites.isNotEmpty) ...[
@@ -395,18 +395,12 @@ class _ParentEditProfileViewState extends State<ParentEditProfileView> {
                         //     ),
                         //   )),
                         // ),
+
                         const SizedBox(
                           height: 20,
                         ),
                         Text(
-                          'Phone / Email',
-                          style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 20),
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Text(
-                          'Phone Number',
+                          'Phone'.translate(),
                           style: GoogleFonts.raleway(color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14),
                         ),
                         SizedBox(

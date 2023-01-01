@@ -82,7 +82,7 @@ class ParentNannyDetails extends StatelessWidget {
                                 InkWell(
                                   onTap: () {},
                                   child: Text(
-                                    'Nanny Detail ',
+                                    'Nanny Detail'.translate(),
                                     style: GoogleFonts.raleway(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -267,7 +267,7 @@ class ParentNannyDetails extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'About ${injector.get<SearchNannyCubit>().nannyDetails?.data?.nannyName}!',
+                              ' ${injector.get<SearchNannyCubit>().nannyDetails?.data?.nannyName}!',
                               style: GoogleFonts.raleway(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -286,7 +286,7 @@ class ParentNannyDetails extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Education',
+                                        'Education'.translate(),
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -318,7 +318,7 @@ class ParentNannyDetails extends StatelessWidget {
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Experience',
+                                        'Experience'.translate(),
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -348,7 +348,7 @@ class ParentNannyDetails extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              'Take Care of:',
+                              'Take Care of:'.translate(),
                               style: GoogleFonts.raleway(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -376,7 +376,7 @@ class ParentNannyDetails extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              'No. of Children Willing to care:',
+                              'No. of Children Willing to care'.translate(),
                               style: GoogleFonts.raleway(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -414,7 +414,7 @@ class ParentNannyDetails extends StatelessWidget {
                               height: 10,
                             ),
                             Text(
-                              'Qualified for special needs:',
+                              'Qualified for special needs:'.translate(),
                               style: GoogleFonts.raleway(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -520,7 +520,7 @@ class ParentNannyDetails extends StatelessWidget {
                                         vertical: 15.0, horizontal: 10),
                                     child: Center(
                                       child: Text(
-                                        'Book Nanny ',
+                                        'Book Nanny'.translate(),
                                         style: GoogleFonts.raleway(
                                             color: Colors.white, fontSize: 20),
                                       ),

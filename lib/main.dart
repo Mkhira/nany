@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:intl/intl_standalone.dart';
 import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 import 'package:nanny_co/parent/parent_profile/Controller/update_parent_cubit/update_parent_cubit.dart';
 import 'package:nanny_co/parent/search_view/Controller/search_nany_cubit.dart';
@@ -14,6 +16,7 @@ import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 import 'package:nanny_co/shared_cubit/settings_hive/settings_cubit_hive.dart';
 import 'package:nanny_co/splash/splash_view.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 import 'instance.dart';
 import 'nany/nanny_profile/Controller/update_nanny_profile_cubit.dart';
@@ -76,14 +79,20 @@ FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNo
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initAppModule();
+  await EasyLocalization.ensureInitialized();
+
   Directory storageDirectory = (await getApplicationDocumentsDirectory());
 
   final storage = await HydratedStorage.build(storageDirectory: storageDirectory);
+
 
   await Firebase.initializeApp();
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
 
   await Firebase.initializeApp();
+ // await initializeDateFormatting('en-US');
+  await findSystemLocale();
+
   HydratedBlocOverrides.runZoned(
       () => runApp(MultiBlocProvider(providers: [
             BlocProvider.value(value: injector.get<AuthCubit>()),
@@ -92,7 +101,12 @@ void main() async {
             BlocProvider.value(value: injector.get<UpdateNannyProfileCubit>()),
             BlocProvider.value(value: injector.get<AddChildCubit>()),
             BlocProvider.value(value: injector.get<SearchNannyCubit>()),
-          ], child: const MyApp())),
+          ], child: EasyLocalization(
+          supportedLocales: [Locale('en', 'EN'), Locale('ar', 'AR')],
+          path: 'assets/lang', // <-
+          saveLocale: true,
+          startLocale: Locale('ar', 'AR'),
+          child:  MyApp()))),
       storage: storage);
 }
 
@@ -116,7 +130,12 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+     findSystemLocale();
+
     return MaterialApp(
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(primaryColor: Color(0xff35034C)),

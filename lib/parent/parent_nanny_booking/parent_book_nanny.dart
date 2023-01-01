@@ -115,7 +115,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Booking Nanny ',
+                                  'Booking Nanny'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -309,7 +309,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Entry Time',
+                                          'Entry Time'.translate(),
                                           style: GoogleFonts.raleway(
                                               color: Theme.of(context).primaryColor,
                                               fontWeight: FontWeight.bold,
@@ -378,7 +378,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Exit Time',
+                                          'Exit Time'.translate(),
                                           style: GoogleFonts.raleway(
                                               color: Theme.of(context).primaryColor,
                                               fontWeight: FontWeight.bold,
@@ -454,7 +454,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Availability',
+                                      'Availability'.translate(),
                                       style: GoogleFonts.raleway(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.bold,
@@ -687,7 +687,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Sitter Type',
+                                      'Sitter Type'.translate(),
                                       style: GoogleFonts.raleway(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.bold,
@@ -713,7 +713,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                               });
                                             }),
                                         Text(
-                                          'Go to Sitter',
+                                          'Go to Sitter'.translate(),
                                           style: GoogleFonts.raleway(
                                               color: Theme.of(context).primaryColor,
                                               fontWeight: FontWeight.bold,
@@ -761,7 +761,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                 Row(
                                   children: [
                                     Text(
-                                      'Booking "Nanny ${booking_controller.currentnanny?.value.fullname}"',
+                                      ' ${booking_controller.currentnanny?.value.fullname??''}',
                                       style: GoogleFonts.raleway(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.bold,
@@ -1127,7 +1127,7 @@ class _parent_book_nany_viewState extends State<parent_book_nany_view> {
                                               Theme.of(context).primaryColor,
                                             ),
                                             Text(
-                                              '  Pay in Cash ',
+                                              'Pay in Cash'.translate(),
                                               style: GoogleFonts.raleway(
                                                   color: Theme.of(context)
                                                       .primaryColor,

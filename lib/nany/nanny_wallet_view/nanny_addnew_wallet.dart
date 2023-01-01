@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -50,7 +51,7 @@ class nanny_addnew_wallet_view extends StatelessWidget{
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Text(
-                                      'Add New Account ',
+                                      'Add New Account'.translate(),
                                       style: GoogleFonts.raleway(
                                           color:Colors.white,
                                           fontWeight: FontWeight.bold ,
@@ -81,7 +82,7 @@ class nanny_addnew_wallet_view extends StatelessWidget{
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Registered Name',
+                                'Registered Name'.translate(),
                                 style: GoogleFonts.raleway(
                                     color:Colors.grey,
                                     fontWeight: FontWeight.bold ,
@@ -113,7 +114,7 @@ class nanny_addnew_wallet_view extends StatelessWidget{
                               ),
                               SizedBox(height: 10,),
                               Text(
-                                'Account Number',
+                                'Account Number'.translate(),
                                 style: GoogleFonts.raleway(
                                     color:Colors.grey,
                                     fontWeight: FontWeight.bold ,
@@ -145,7 +146,7 @@ class nanny_addnew_wallet_view extends StatelessWidget{
                               ),
                               SizedBox(height: 10,),
                               Text(
-                                'Confirm Account Number',
+                                'Confirm Account Number'.translate(),
                                 style: GoogleFonts.raleway(
                                     color:Colors.grey,
                                     fontWeight: FontWeight.bold ,
@@ -177,7 +178,7 @@ class nanny_addnew_wallet_view extends StatelessWidget{
                               ),
                               SizedBox(height: 10,),
                              Text(
-                                'IRFC Code',
+                                'IRFC Code'.translate(),
                                 style: GoogleFonts.raleway(
                                     color:Colors.grey,
                                     fontWeight: FontWeight.bold ,
@@ -223,7 +224,7 @@ class nanny_addnew_wallet_view extends StatelessWidget{
                                           mainAxisAlignment: MainAxisAlignment.center,
                                           children: [
                                             Text(
-                                              'Submit',
+                                              'Submit'.translate(),
                                               style: GoogleFonts.raleway(
                                                   color:Colors.white,
                                                   fontSize: 20

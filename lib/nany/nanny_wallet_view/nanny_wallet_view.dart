@@ -1,9 +1,11 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/domain/config/setting_provider.dart';
 import 'package:nanny_co/nany/nanny_notification_view/nanny_notifications_view.dart';
 import 'package:nanny_co/nany/nanny_wallet_view/nanny_addnew_wallet.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
@@ -89,7 +91,7 @@ class nanny_wallet_view extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Wallet ',
+                                  'Wallet'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -143,7 +145,7 @@ class nanny_wallet_view extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Total Earnings',
+                                        'Total Earnings'.translate(),
                                         style: GoogleFonts.raleway(
                                             color: Colors.white,
                                             fontSize: 12),
@@ -163,7 +165,7 @@ class nanny_wallet_view extends StatelessWidget {
                                   Row(
                                     children: [
                                       Text(
-                                        'Withdraw Request',
+                                        'Withdraw Request'.translate(),
                                         style: GoogleFonts.raleway(
                                             color: Colors.white,
                                             fontSize: 12),
@@ -176,7 +178,7 @@ class nanny_wallet_view extends StatelessWidget {
                             ),
                           ),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 20),child:  Text(
-                            'Save Account',
+                            'Save Account'.translate(),
                             style: GoogleFonts.raleway(
                                 color:Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,
@@ -205,7 +207,7 @@ class nanny_wallet_view extends StatelessWidget {
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Shieannee Bennet ',
+                                        SettingsProvider.userData.userName??'',
                                         style: GoogleFonts.raleway(
                                             color: Colors.black,
                                             fontWeight: FontWeight.bold,
@@ -240,7 +242,7 @@ class nanny_wallet_view extends StatelessWidget {
                                     children: [
                                       Icon(Icons.add,size: 20,color: Colors.blue.shade700,),
                                       Text(
-                                      ' Add new account',
+                                      ' Add new account'.translate(),
                                       style: GoogleFonts.raleway(
                                           color:Colors.blue.shade700,
                                           fontSize: 14),
@@ -252,7 +254,7 @@ class nanny_wallet_view extends StatelessWidget {
                             ),),
                           SizedBox(height: 10,),
                           Padding(padding: EdgeInsets.symmetric(horizontal: 20),child:  Text(
-                            'View Transaction History',
+                            'View Transaction History'.translate(),
                             style: GoogleFonts.raleway(
                                 color:Theme.of(context).primaryColor,
                                 fontWeight: FontWeight.bold,

@@ -114,7 +114,7 @@ class _privacy_policy_viewState extends State<privacy_policy_view> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Privacy Policy ',
+                                'Privacy Policy'.translate(),
                                 style: GoogleFonts.raleway(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
                               ),
                               Image(image: AssetImage('assets/images/dots.png')),
@@ -144,7 +144,7 @@ class _privacy_policy_viewState extends State<privacy_policy_view> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'Privacy Policy',
+                            'Privacy Policy'.translate(),
                             style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 20),
                           ),
                         ],

@@ -2,20 +2,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get.dart' as getDart;
 import 'package:glass/glass.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/nany/nanny_booking_view/Controller/nannyBooking_Controller.dart';
-import 'package:nanny_co/nany/widget/TextFeild.dart';
-import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
-import 'package:nanny_co/parent/add_child/parent_children_view.dart';
-import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
-import 'package:nanny_co/parent/gallery_view/parent_gallery_view.dart';
+
 import 'package:nanny_co/parent/parent_drawer.dart/parent_drawer_view.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/Model/parentBookingModel.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/parent_confirmed_booking_view.dart';
+
 
 class nanny_booking_detail_view extends StatefulWidget {
   nanny_booking_detail_view();
@@ -27,7 +23,7 @@ class nanny_booking_detail_view extends StatefulWidget {
 class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
   final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
   RangeValues _currentRangeValues = const RangeValues(0, 100);
-  nannyBooking_Controller booking_controller=Get.put(nannyBooking_Controller());
+  nannyBooking_Controller booking_controller=getDart.Get.put(nannyBooking_Controller());
   List images = [
     'https://images.pexels.com/photos/1556691/pexels-photo-1556691.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
     'https://images.ctfassets.net/hrltx12pl8hq/5GaLeZJlLyOiQC4gOA0qUM/a0398c237e9744ade8b072f99349e07a/shutterstock_152461202_thumb.jpg?fit=fill&w=480&h=270'
@@ -77,7 +73,7 @@ class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Booking Confirm ',
+                                  'Booking Confirm'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -118,7 +114,7 @@ class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      'Visit Schedule',
+                                      'Visit Schedule'.translate(),
                                       style: GoogleFonts.raleway(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.bold,
@@ -138,7 +134,7 @@ class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
                                         Column(
                                           children: [
                                             Text(
-                                              'Entry Time',
+                                              'Entry Time'.translate(),
                                               style: GoogleFonts.raleway(
                                                   color: Theme.of(context).primaryColor,
                                                   fontWeight: FontWeight.bold,
@@ -155,7 +151,7 @@ class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
                                         Column(
                                           children: [
                                             Text(
-                                              'Exit Time',
+                                              'Exit Time'.translate(),
                                               style: GoogleFonts.raleway(
                                                   color: Theme.of(context).primaryColor,
                                                   fontWeight: FontWeight.bold,
@@ -241,7 +237,7 @@ class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
                                                 height: 5,
                                               ),
                                               Text(
-                                                'Status: Approved',
+                                                'Status: Approved'.translate(),
                                                 style: GoogleFonts.raleway(
                                                     color: Colors.grey.shade800,
                                                     fontWeight: FontWeight.bold,
@@ -256,7 +252,7 @@ class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
                                             MainAxisAlignment.spaceBetween,
                                             children: [
                                               Text(
-                                                'Sitter Type',
+                                                'Sitter Type'.translate(),
                                                 style: GoogleFonts.raleway(
                                                     color:
                                                     Colors.black,
@@ -267,7 +263,7 @@ class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
                                                 height: 5,
                                               ),
                                               Text(
-                                                'Home Sitter',
+                                                'Home Sitter'.translate(),
                                                 style: GoogleFonts.raleway(
                                                     color: Colors.grey.shade800,
                                                     fontWeight: FontWeight.bold,
@@ -295,7 +291,7 @@ class _nanny_booking_detail_viewState extends State<nanny_booking_detail_view> {
                                   children: [
                                     SizedBox(height:20,),
                                     Text(
-                                      'Children\'s Detail',
+                                      'Childrens Detail',
                                       style: GoogleFonts.raleway(
                                           color: Theme.of(context).primaryColor,
                                           fontWeight: FontWeight.bold ,

@@ -57,14 +57,14 @@ class _ParentSignInViewState extends State<ParentSignInView> {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           Text(
-                            'Login As Parent',
+                            'Login as Parent.'.translate(),
                             style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 24),
                           ),
                           const SizedBox(
                             height: 10,
                           ),
                           Text(
-                            'Please enter details to continue.',
+                            'Please enter details to continue.'.translate(),
                             style: GoogleFonts.raleway(color: Colors.grey.shade400, fontSize: 14),
                           ),
                           const SizedBox(
@@ -76,16 +76,16 @@ class _ParentSignInViewState extends State<ParentSignInView> {
                             child: TextFormField(
                               validator: (String? value) {
                                 if (value == '') {
-                                  return 'Please fillout this field';
+                                  return 'Please fill out this field'.translate();
                                 } else if (!value!.contains('@')) {
-                                  return 'Please enter valid email adress';
+                                  return 'Please enter valid email address'.translate();
                                 } else {
                                   return null;
                                 }
                               },
                               controller: email,
                               decoration: InputDecoration(
-                                hintText: 'Enter Username',
+                                hintText: 'Enter Username'.translate(),
                                 suffixIcon: Icon(
                                   Icons.person,
                                   color: Colors.grey.shade400,
@@ -114,13 +114,13 @@ class _ParentSignInViewState extends State<ParentSignInView> {
                               obscureText: obscure,
                               validator: (String? value) {
                                 if (value == '') {
-                                  return 'Please fillout this field';
+                                  return 'Please fill out this field'.translate();
                                 } else {
                                   return null;
                                 }
                               },
                               decoration: InputDecoration(
-                                hintText: 'Password',
+                                hintText: 'Password'.translate(),
                                 suffixIcon: InkWell(
                                     onTap: () {
                                       setState(() {
@@ -160,7 +160,7 @@ class _ParentSignInViewState extends State<ParentSignInView> {
                                             )));
                                   },
                                   child: Text(
-                                    ' Forgot Password?',
+                                    'Forgot Password'.translate(),
                                     style: GoogleFonts.raleway(
                                         color: Theme.of(context).primaryColor, fontSize: 12, fontWeight: FontWeight.bold),
                                   ),
@@ -209,7 +209,7 @@ class _ParentSignInViewState extends State<ParentSignInView> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          'Login',
+                                          'Login'.translate(),
                                           style: GoogleFonts.raleway(
                                             color: Colors.white,
                                             fontSize: 14,
@@ -250,7 +250,7 @@ class _ParentSignInViewState extends State<ParentSignInView> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          ' to Nanny App Sign Up here',
+                                          'to Nanny App Sign Up here'.translate(),
                                           style: GoogleFonts.raleway(
                                             color: Theme.of(context).primaryColor,
                                             fontSize: 12,

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -52,7 +53,7 @@ class nanny_notifications_view extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Notifications ',
+                                  'Notifications'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -86,7 +87,7 @@ class nanny_notifications_view extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: Text(
-                          'New Bookings',
+                          'New Bookings'.translate(),
                           style: GoogleFonts.raleway(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.bold,
@@ -146,7 +147,7 @@ class nanny_notifications_view extends StatelessWidget {
                                                             .spaceBetween,
                                                     children: [
                                                       Text(
-                                                        'Aliyah Wang',
+                                                        'Aliyah Wang'.translate(),
                                                         style:
                                                             GoogleFonts.raleway(
                                                                 color: Colors
@@ -211,7 +212,7 @@ class nanny_notifications_view extends StatelessWidget {
                                                         height: 5,
                                                       ),
                                                       Text(
-                                                        'Per Hour\n',
+                                                        'Per Hour'.translate(),
                                                         style:
                                                             GoogleFonts.raleway(
                                                                 color: Colors
@@ -235,7 +236,7 @@ class nanny_notifications_view extends StatelessWidget {
                                                         .spaceBetween,
                                                 children: [
                                                   Text(
-                                                    'Type:Home Sitter',
+                                                    'Type:Home Sitter'.translate(),
                                                     style: GoogleFonts.raleway(
                                                         color: Colors.red,
                                                         fontWeight:
@@ -243,7 +244,7 @@ class nanny_notifications_view extends StatelessWidget {
                                                         fontSize: 12),
                                                   ),
                                                   Text(
-                                                    'Payment Mode:Online',
+                                                    'Payment Mode:Online'.translate(),
                                                     style: GoogleFonts.raleway(
                                                         color: Colors.green,
                                                         fontWeight:
@@ -268,7 +269,7 @@ class nanny_notifications_view extends StatelessWidget {
                                                             .start,
                                                     children: [
                                                       Text(
-                                                        'Entry Time',
+                                                        'Entry Time'.translate(),
                                                         style:
                                                             GoogleFonts.raleway(
                                                                 color: Theme.of(
@@ -295,7 +296,7 @@ class nanny_notifications_view extends StatelessWidget {
                                                         CrossAxisAlignment.end,
                                                     children: [
                                                       Text(
-                                                        'Exit Time',
+                                                        'Exit Time'.translate(),
                                                         style:
                                                             GoogleFonts.raleway(
                                                                 color: Theme.of(

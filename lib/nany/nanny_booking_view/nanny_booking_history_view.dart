@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart'as getv;
 import 'package:google_fonts/google_fonts.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/instance.dart';
@@ -17,7 +18,6 @@ import '../../parent/parent_nanny_booking/Model/parentBookingModel.dart';
 import '../nanny_bottombar_view/nanny_bottombar_view.dart';
 import '../nanny_drawer.dart/nanny_drawer_view.dart';
 import 'Controller/nannyBooking_Controller.dart';
-import 'package:get/get.dart';
 
 class nanny_booking_history_view extends StatefulWidget {
   nanny_booking_history_view();
@@ -32,7 +32,7 @@ class _nanny_booking_history_viewState
   final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
 
   nannyBooking_Controller booking_controller =
-      Get.put(nannyBooking_Controller());
+  getv.Get.put(nannyBooking_Controller());
   @override
   void initState() {
     // TODO: implement initState
@@ -119,7 +119,7 @@ class _nanny_booking_history_viewState
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Booking History ',
+                                  'Booking History'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -153,7 +153,7 @@ class _nanny_booking_history_viewState
                       Padding(
                         padding: EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: Text(
-                          'Booking History',
+                          'Booking History'.translate(),
                           style: GoogleFonts.raleway(
                               color: Theme.of(context).primaryColor,
                               fontWeight: FontWeight.bold,
@@ -369,7 +369,7 @@ class _nanny_booking_history_viewState
                                                                             .start,
                                                                     children: [
                                                                       Text(
-                                                                        'Entry Time',
+                                                                        'Entry Time'.translate(),
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Theme.of(context).primaryColor,
@@ -391,7 +391,7 @@ class _nanny_booking_history_viewState
                                                                             .end,
                                                                     children: [
                                                                       Text(
-                                                                        'Exit Time',
+                                                                        'Exit Time'.translate(),
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Theme.of(context).primaryColor,

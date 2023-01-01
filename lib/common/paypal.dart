@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
 import 'package:nanny_co/common/paymentServices.dart';
+import 'package:nanny_co/constants.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class PaypalPayment extends StatefulWidget {
@@ -51,7 +52,7 @@ class PaypalPaymentState extends State<PaypalPayment> {
         print('exception: '+e.toString());
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           backgroundColor: Theme.of(context).primaryColor,
-          content: Text("Close", style: TextStyle(color: Colors.black),),
+          content: Text("Close".translate(), style: TextStyle(color: Colors.black),),
         ));
       }
     });

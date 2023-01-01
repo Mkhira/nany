@@ -2,7 +2,6 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:meta/meta.dart';
 import 'package:nanny_co/business_layer/use_case/booking_history_usecase.dart';
 import 'package:nanny_co/business_layer/use_case/confirm_book_useusecase.dart';
 import 'package:nanny_co/business_layer/use_case/nanny/nanny_details_usecase.dart';
@@ -17,14 +16,15 @@ import 'package:nanny_co/nany/nanny_profile/Controller/update_nanny_profile_cubi
 import 'package:nanny_co/nany/widget/alerts.dart';
 import 'package:nanny_co/parent/add_child/Controller/add_child_cubit.dart';
 
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:intl/intl.dart';
 part 'search_nany_state.dart';
-
 class SearchNannyCubit extends Cubit<SearchNanyState> {
   SearchNannyCubit() : super(SearchNanyInitial());
-  var start = DateFormat('hh:mm a').format(DateTime.now());
-  var end = DateFormat('hh:mm a').format(DateTime.now());
-  var startdate = DateFormat('MMM,dd,yyyy').format(DateTime.now());
-  var enddate = DateFormat('MMM,dd,yyyy').format(DateTime.now());
+  String start = '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}';
+  String end = '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}';
+  String startdate ='${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}';
+  String enddate = '${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}';
 
   SearchForNannyModel? searchForNannyModel;
   searchNanny() async {

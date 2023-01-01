@@ -45,7 +45,7 @@ class _role_selection_viewState extends State<role_selection_view> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Login As',
+                      'Login As'.translate(),
                       style: GoogleFonts.raleway(
                           color: Theme.of(context).primaryColor,
                           fontWeight: FontWeight.bold  ,
@@ -54,7 +54,7 @@ class _role_selection_viewState extends State<role_selection_view> {
                     ),
                     SizedBox(height: 10,),
                     Text(
-                      'Please select one option.',
+                      'Please select one option.'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey.shade400,
                           fontSize: 14
@@ -79,7 +79,7 @@ class _role_selection_viewState extends State<role_selection_view> {
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
                                 Text(
-                                  'Login as Parent.',
+                                  'Login as Parent.'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.grey.shade400,
                                       fontSize: 14
@@ -103,7 +103,7 @@ class _role_selection_viewState extends State<role_selection_view> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [Text(
-                                  'Login as Sitter',
+                                  'Login as Sitter'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.grey.shade400,
                                       fontSize: 14

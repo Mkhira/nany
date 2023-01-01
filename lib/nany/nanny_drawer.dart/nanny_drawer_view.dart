@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -5,10 +6,12 @@ import 'package:nanny_co/common/privacy_policy_view.dart';
 import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/data/model/dto_model/auth_data_response.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
+import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/nanny_booking_view/nanny_booking_history_view.dart';
 import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/parent_booking_history_view.dart';
+import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 
 class nanny_drawer_view extends StatefulWidget {
  nanny_drawer_view({Key,key}) : super(key: key);
@@ -63,15 +66,15 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                   )
               ),
             ),
-                    SizedBox(width: 10,),
-                    Text(
-                      'Hi Shieanne,',
-                      style: GoogleFonts.raleway(
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold ,
-                          fontSize: 20
-                      ),
-                    ),
+                    // SizedBox(width: 10,),
+                    // Text(
+                    //   'Hi Shieanne,',
+                    //   style: GoogleFonts.raleway(
+                    //       color: Colors.white,
+                    //       fontWeight: FontWeight.bold ,
+                    //       fontSize: 20
+                    //   ),
+                    // ),
         ],
                 ),
                 SizedBox(height: 25,),
@@ -92,7 +95,7 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'Home',
+                      'Home'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -110,7 +113,7 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'My Profile',
+                      'My Profile'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -128,7 +131,7 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'Booking History',
+                      'Booking History'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -146,7 +149,7 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'My Wallet',
+                      'My Wallet'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -159,7 +162,7 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical:5),
                   child: Text(
-                    'About Us',
+                    'About Us'.translate(),
                     style: GoogleFonts.raleway(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold ,
@@ -175,7 +178,7 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'Privacy Policy',
+                      'Privacy Policy'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,
@@ -188,7 +191,7 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical:5),
                   child: Text(
-                    'Terms & Conditions',
+                    'Terms & Conditions'.translate(),
                     style: GoogleFonts.raleway(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold ,
@@ -200,11 +203,28 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical:5),
                   child: Text(
-                    'FAQ',
+                    'FAQ'.translate(),
                     style: GoogleFonts.raleway(
                         color: Colors.grey,
                         fontWeight: FontWeight.bold ,
                         fontSize: 14
+                    ),
+                  ),
+                ),
+                   Divider(),
+                InkWell(
+                  onTap: (){
+                    injector.get<AuthCubit>().changeLanguage(context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical:5),
+                    child: Text(
+                      EasyLocalization.of(context)!.currentLocale == const Locale('en','EN')?'العربيه':'English',
+                      style: GoogleFonts.raleway(
+                          color: Colors.grey,
+                          fontWeight: FontWeight.bold ,
+                          fontSize: 14
+                      ),
                     ),
                   ),
                 ),
@@ -218,7 +238,7 @@ class _nanny_drawer_viewState extends State<nanny_drawer_view> {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical:5),
                     child: Text(
-                      'Logout',
+                      'Logout'.translate(),
                       style: GoogleFonts.raleway(
                           color: Colors.grey,
                           fontWeight: FontWeight.bold ,

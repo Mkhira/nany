@@ -34,7 +34,7 @@ class TextFieldNany extends StatelessWidget {
         validator: validation ??
             (String? value) {
               if (value == '') {
-                return 'Please fillout this field';
+                return 'Please fill out this field'.translate();
               } else {
                 return null;
               }

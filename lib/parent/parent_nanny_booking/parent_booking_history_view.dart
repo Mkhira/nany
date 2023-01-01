@@ -75,7 +75,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Booking History ',
+                                  'Booking History'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -109,7 +109,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                           Padding(
                             padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                             child: Text(
-                              'Booking History',
+                              'Booking History'.translate(),
                               style: GoogleFonts.raleway(
                                   color: Theme.of(context).primaryColor,
                                   fontWeight: FontWeight.bold,
@@ -253,7 +253,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                         crossAxisAlignment: CrossAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            'Entry Time',
+                                                            'Entry Time'.translate(),
                                                             style: GoogleFonts.raleway(
                                                                 color: Theme.of(context).primaryColor,
                                                                 fontSize: 12),
@@ -270,7 +270,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                         crossAxisAlignment: CrossAxisAlignment.end,
                                                         children: [
                                                           Text(
-                                                            'Exit Time',
+                                                            'Exit Time'.translate(),
                                                             style: GoogleFonts.raleway(
                                                                 color: Theme.of(context).primaryColor,
                                                                 fontSize: 12),

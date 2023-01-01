@@ -32,16 +32,16 @@ class VerifyAccount extends StatelessWidget {
                   child: TextFormField(
                     validator: (String? value) {
                       if (value == '') {
-                        return 'Please fillout this field';
+                        return 'Please fill out this field'.translate();
                       } else if (!value!.contains('@')) {
-                        return 'Please enter valid email adress';
+                        return 'Please enter valid email address'.translate();
                       } else {
                         return null;
                       }
                     },
                     controller: injector.get<AuthCubit>().emailController,
                     decoration: InputDecoration(
-                      hintText: 'E-mail',
+                      hintText: 'E-mail'.translate(),
 
                       hintStyle: GoogleFonts.raleway(
                           color: Colors.grey.shade400, fontSize: 14),

@@ -179,7 +179,7 @@ class _parent_booking_confirmed_viewState
                                     Column(
                                       children: [
                                         Text(
-                                          'Exit Time',
+                                          'Exit Time'.translate(),
                                           style: GoogleFonts.raleway(
                                               color: Theme.of(context).primaryColor,
                                               fontWeight: FontWeight.bold,

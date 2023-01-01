@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:nanny_co/constants.dart';
 
 import '../parent_bottombar_view.dart/parent_bottombar_view.dart';
 import 'Controller/parentSearch_Controller.dart';
@@ -544,7 +545,7 @@ class _parent_search_filter_viewState extends State<parent_search_filter_view> {
                             color: Colors.grey,
                           ),
                           Text(
-                            '  Sitter Type',
+                            'Sitter Type'.translate(),
                             style: GoogleFonts.raleway(
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
@@ -558,7 +559,7 @@ class _parent_search_filter_viewState extends State<parent_search_filter_view> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              '  Home Sitter',
+                              'Home Sitter'.translate(),
                               style: GoogleFonts.raleway(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,

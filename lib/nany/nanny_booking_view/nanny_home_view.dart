@@ -100,7 +100,7 @@ class nanny_home_view extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Upcoming Booking ',
+                                  'Upcoming Booking'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Colors.white,
                                       fontWeight: FontWeight.bold,
@@ -137,7 +137,7 @@ class nanny_home_view extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  'Upcoming Bookings',
+                                  'Upcoming Bookings'.translate(),
                                   style: GoogleFonts.raleway(
                                       color: Theme.of(context).primaryColor,
                                       fontWeight: FontWeight.bold,
@@ -256,7 +256,7 @@ class nanny_home_view extends StatelessWidget {
                                                                   height: 5,
                                                                 ),
                                                                 Text(
-                                                                  'Per Hour\n',
+                                                                  'Per Hour'.translate(),
                                                                   style: GoogleFonts.raleway(
                                                                       color: Colors.grey.shade800,
                                                                       fontWeight: FontWeight.bold,
@@ -299,7 +299,7 @@ class nanny_home_view extends StatelessWidget {
                                                               crossAxisAlignment: CrossAxisAlignment.start,
                                                               children: [
                                                                 Text(
-                                                                  'Entry Time',
+                                                                  'Entry Time'.translate(),
                                                                   style: GoogleFonts.raleway(
                                                                       color: Theme.of(context).primaryColor,
                                                                       fontSize: 12),
@@ -316,7 +316,7 @@ class nanny_home_view extends StatelessWidget {
                                                               crossAxisAlignment: CrossAxisAlignment.end,
                                                               children: [
                                                                 Text(
-                                                                  'Exit Time',
+                                                                  'Exit Time'.translate(),
                                                                   style: GoogleFonts.raleway(
                                                                       color: Theme.of(context).primaryColor,
                                                                       fontSize: 12),

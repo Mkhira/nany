@@ -88,7 +88,7 @@ class _parent_search_resultState extends State<parent_search_result> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Search Result ',
+                                  'Search Result'.translate(),
                                   style: GoogleFonts.raleway(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20),
                                 ),
                                 const Image(image: AssetImage('assets/images/dots.png')),

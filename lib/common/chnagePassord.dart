@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_countdown_timer/countdown_timer_controller.dart';
@@ -63,14 +64,14 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        'Forgot Password',
+                        'Forgot Password'.translate(),
                         style: GoogleFonts.nanumGothic(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 24),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
-                        '''Please enter the New password ''',
+                        '''Please enter the New password'''.translate(),
                         style: GoogleFonts.nanumGothic(color: Colors.grey.shade400, fontSize: 14),
                       ),
                       SizedBox(
@@ -126,7 +127,7 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
-                                      'Submit',
+                                      'Submit'.translate(),
                                       style: GoogleFonts.nanumGothic(
                                         color: Colors.white,
                                         fontSize: 14,
