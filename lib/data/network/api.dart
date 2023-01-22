@@ -16,6 +16,7 @@ import 'package:nanny_co/data/model/dto_model/nany/nanny_details.dart';
 import 'package:nanny_co/data/model/dto_model/nany/post_appointment_data.dart';
 import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
+import 'package:nanny_co/data/model/dto_model/registter_sitter_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
 import 'package:nanny_co/data/model/verfiy_model.dart';
@@ -34,7 +35,10 @@ abstract class AppServiceClient {
   @POST('/login')
   Future<LoginResponseModel> login(@Body() LoginModel loginModel);
   @POST('/register')
-  Future<LoginResponseModel> register(@Body() RegisterModel registerModel);
+  Future<LoginResponseModel> registerParent(@Body() RegisterModelParent registerModel);
+  
+  @POST('/register')
+  Future<LoginResponseModel> registerSitter(@Body() RegisterModelSitter registerModel);
   @POST('/nanny/update-profile')
   Future<LoginResponseModel> updateSister({
     @Header('Authorization') required token,

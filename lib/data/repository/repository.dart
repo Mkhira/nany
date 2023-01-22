@@ -18,6 +18,7 @@ import 'package:nanny_co/data/model/dto_model/nany/nanny_search_model.dart';
 import 'package:nanny_co/data/model/dto_model/nany/post_appointment_data.dart';
 import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
+import 'package:nanny_co/data/model/dto_model/registter_sitter_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
 import 'package:nanny_co/data/model/updae_parent_model.dart';
@@ -35,8 +36,8 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<LoginResponseModel> register(RegisterModel registerModel) {
-    return _remoteDataSource.register(registerModel);
+  Future<LoginResponseModel> registerParent(RegisterModelParent registerModel) {
+    return _remoteDataSource.registerParent(registerModel);
   }
 
   @override
@@ -122,5 +123,10 @@ class RepositoryImpl extends Repository {
   @override
   Future<Bookings> getParentBooking() {
      return _remoteDataSource.getParentBooking();
+  }
+
+  @override
+  Future<LoginResponseModel> registerSitter(RegisterModelSitter registerModel) {
+    return _remoteDataSource.registerSitter(registerModel);
   }
 }

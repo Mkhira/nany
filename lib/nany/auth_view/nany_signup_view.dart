@@ -10,6 +10,7 @@ import 'package:nanny_co/constants.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/Model/nannyDataModel.dart';
 import 'package:nanny_co/nany/widget/TextFeild.dart';
+import 'package:nanny_co/parent/auth_view/verify.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 
 import '../nanny_bottombar_view/nanny_bottombar_view.dart';
@@ -63,7 +64,7 @@ class _NannySignupViewState extends State<NannySignupView> {
                 child: Container(
                   height: sh * 0.76,
                   width: sw,
-                  padding: const EdgeInsets.all(20),
+                  padding: const EdgeInsets.all(0),
                   decoration: const BoxDecoration(
                       color: Colors.white, borderRadius: BorderRadius.only(topLeft: Radius.circular(50), topRight: Radius.circular(50))),
                   child: SingleChildScrollView(
@@ -184,6 +185,7 @@ class _NannySignupViewState extends State<NannySignupView> {
                           ),
                           TextFieldNany(
                               height: height,
+
                               validation: (String? value) {
                                 if (value == '') {
                                   return 'Please fill out this field'.translate();
@@ -191,8 +193,9 @@ class _NannySignupViewState extends State<NannySignupView> {
                                   return null;
                                 }
                               },
-                              hintText: 'Password dont match'.translate(),
+                              hintText: 'Phone'.translate(),
                               controller: phone,
+
                               suffixIcon: Icon(
                                 Icons.phone_android,
                                 color: Colors.grey.shade400,
@@ -225,6 +228,276 @@ class _NannySignupViewState extends State<NannySignupView> {
                           const SizedBox(
                             height: 20,
                           ),
+                          const SizedBox(height: 10,),
+                          SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            child: Row(
+
+                              children: [
+                                SizedBox(
+                                  height: 50,
+
+                                  width: MediaQuery.of(context).size.width/2-5,
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        injector.get<AuthCubit>().sitterType =
+                                        'Home Sitter';
+                                      });
+                                    },
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        hintText: 'Home Sitter'.translate(),
+                                        enabled: false,
+                                        contentPadding: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 10),
+                                        prefixIcon: InkWell(
+                                          onTap: () {
+                                            setState(() {
+
+                                              injector.get<AuthCubit>().sitterType  = 'Home Sitter';
+                                            });
+                                          },
+                                          child: Container(
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                color:  injector.get<AuthCubit>().sitterType ==
+                                                    "Home Sitter"
+                                                    ? Colors.green
+                                                    : Colors.white,
+                                                borderRadius: const BorderRadius.only(
+                                                    bottomLeft: Radius.circular(15),
+                                                    topLeft: Radius.circular(15)),
+                                                border: Border.all(
+                                                    color: Colors.grey, width: 1)),
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.check,
+                                                    color:  injector.get<AuthCubit>().sitterType ==
+                                                        "Home Sitter"
+                                                        ? Colors.white
+                                                        : Colors.grey.shade400,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.raleway(
+                                            color: Colors.grey.shade400,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+SizedBox(width: 10,),
+                                SizedBox(
+                                  height: 50,
+                                  width: MediaQuery.of(context).size.width/2-5,
+                                  child: InkWell(
+                                    onTap: () {
+                                      setState(() {
+                                        injector.get<AuthCubit>().sitterType =
+                                        'Goto Sitter';
+                                      });
+                                    },
+                                    child: TextField(
+                                      decoration: InputDecoration(
+                                        enabled: false,
+                                        fillColor: Colors.white,
+                                        filled: true,
+                                        hintText: 'Goto Sitter'.translate(),
+                                        contentPadding: const EdgeInsets.symmetric(
+                                            vertical: 5, horizontal: 10),
+                                        prefixIcon: InkWell(
+                                          onTap: () {
+                                            setState(() {
+                                              injector.get<AuthCubit>().sitterType = 'Goto Sitter';
+                                            });
+                                          },
+                                          child:  Container(
+                                            width: 50,
+                                            decoration: BoxDecoration(
+                                                color:  injector.get<AuthCubit>().sitterType ==
+                                                    "Goto Sitter"
+                                                    ? Colors.green
+                                                    : Colors.white,
+                                                borderRadius: const BorderRadius.only(
+                                                    bottomLeft:
+                                                    Radius.circular(15),
+                                                    topLeft:
+                                                    Radius.circular(15)),
+                                                border: Border.all(
+                                                    color: Colors.grey,
+                                                    width: 1)),
+                                            child: Row(
+                                              children: [
+                                                Padding(
+                                                  padding:
+                                                  const EdgeInsets.all(8.0),
+                                                  child: Icon(
+                                                    Icons.check,
+                                                    color:  injector.get<AuthCubit>().sitterType ==
+                                                        "Goto Sitter"
+                                                        ? Colors.white
+                                                        : Colors.grey.shade400,
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                        hintStyle: GoogleFonts.raleway(
+                                            color: Colors.grey.shade400,
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 16),
+                                        border: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        disabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderRadius: BorderRadius.circular(15),
+                                          borderSide: const BorderSide(
+                                              width: 1, color: Colors.grey),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          const SizedBox(height: 10,),
+                          Text(
+                            'Lesson type',
+                            style: GoogleFonts.raleway(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    injector.get<AuthCubit>().lessonsType = 1;
+                                  });
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: sw * 0.43,
+                                  decoration: BoxDecoration(
+                                      color:  injector.get<AuthCubit>().lessonsType== 1
+                                          ? Colors.green.shade500
+                                          : Colors.white,
+                                      borderRadius: EasyLocalization.of(context)!.currentLocale!.languageCode =='en'?const BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          bottomLeft: Radius.circular(15)):const BorderRadius.only(
+                                          topRight: Radius.circular(15),
+                                          bottomRight: Radius.circular(15)),
+                                      border: Border.all(
+                                          width: 1,
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'Follow lessons'.translate(),
+                                        style: GoogleFonts.raleway(
+                                            color:  injector.get<AuthCubit>().lessonsType ==
+                                                1
+                                                ? Colors.white
+                                                : Colors.grey.shade400,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  setState(() {
+                                    injector.get<AuthCubit>().lessonsType = 2;
+                                  });
+                                },
+                                child: Container(
+                                  height: 50,
+                                  width: sw * 0.45,
+                                  decoration: BoxDecoration(
+                                      color:  injector.get<AuthCubit>().lessonsType ==
+                                          2
+                                          ? Colors.green
+                                          : Colors.white,
+                                      borderRadius: EasyLocalization.of(context)!.currentLocale!.languageCode =='ar'?const BorderRadius.only(
+                                          topLeft: Radius.circular(15),
+                                          bottomLeft: Radius.circular(15)):const BorderRadius.only(
+                                          topRight: Radius.circular(15),
+                                          bottomRight: Radius.circular(15)),
+                                      border: Border.all(
+                                          width: 1,
+                                          color: Colors.grey.shade400)),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        'the lessons online'.translate(),
+                                        style: GoogleFonts.raleway(
+                                            color:  injector.get<AuthCubit>().lessonsType ==
+                                                2
+                                                ? Colors.white
+                                                : Colors.grey.shade400,
+                                            fontSize: 14),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Padding(
                             padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Row(
@@ -244,6 +517,8 @@ class _NannySignupViewState extends State<NannySignupView> {
                                         borderRadius: BorderRadius.circular(5), side: const BorderSide(width: 1, color: Colors.grey)),
                                   ),
                                 ),
+                                
+
                                 Text(
                                   'Terms & Conditions'.translate(),
                                   style: GoogleFonts.raleway(color: Colors.grey.shade400, fontSize: 14),
@@ -251,6 +526,7 @@ class _NannySignupViewState extends State<NannySignupView> {
                               ],
                             ),
                           ),
+
                           const SizedBox(
                             height: 30,
                           ),
@@ -271,7 +547,7 @@ class _NannySignupViewState extends State<NannySignupView> {
                                             type: type,
                                             userName: userName.text)
                                         .then((value) {
-                                      if (value == true) {
+                                      if (value == 200) {
                                         // NanyAuthController().signInWithEmailAndPassword(email.text, password.text, context).then((value) {
                                         //   SaveData();
                                         //   if (value == true) {
@@ -280,11 +556,12 @@ class _NannySignupViewState extends State<NannySignupView> {
                                         //     });
                                         //   }
                                         // });
-                                        Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(builder: (context) => const nanny_bottombar_view()),
-                                          (route) => false,
-                                        );
-                                      } else {
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const nany_signin_view()));
+
+                                      } else if( value ==405) {
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>  const VerifyAccount()));
+
+                                      }else{
                                         Navigator.pop(context);
                                       }
                                     });

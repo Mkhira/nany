@@ -14,6 +14,7 @@ import 'package:nanny_co/data/model/dto_model/cyhange_password.dart';
 import 'package:nanny_co/data/model/dto_model/login_model.dart';
 import 'package:nanny_co/data/model/dto_model/login_response_model.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
+import 'package:nanny_co/data/model/dto_model/registter_sitter_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
 import 'package:nanny_co/data/model/verfiy_model.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
@@ -27,13 +28,15 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit() : super(AuthInitial());
   final LoginUseCase _loginUseCase = injector.get<LoginUseCase>();
-  final RegisterUseCase _registerUseCase = injector.get<RegisterUseCase>();
+  final RegisterParentUseCase _registerUseCase = injector.get<RegisterParentUseCase>();
+  final RegisterSitterUseCase _registerSitterUseCase = injector.get<RegisterSitterUseCase>();
   final CheckEmailUseCase _checkEmailUseCase = injector.get<CheckEmailUseCase>();
   final VerifyUseCase _verifyUseCase = injector.get<VerifyUseCase>();
   final ChangePasswordUseCase _changePasswordUseCase = injector.get<ChangePasswordUseCase>();
   TextEditingController emailController = TextEditingController();
   OtpFieldController otpController = OtpFieldController();
-
+   String? sitterType;
+   int? lessonsType;
   Future<int> signInWithEmailAndPassword(String email, String password, context) async {
     try {
       LoginResponseModel loginResponseModel = await _loginUseCase.execute(LoginModel(
@@ -51,7 +54,10 @@ class AuthCubit extends Cubit<AuthState> {
       if (loginResponseModel.status! == 200) {
         return 200;
       }  if (loginResponseModel.status! == 405) {
+        Alerts.showSnackBar(context: context, message: loginResponseModel.message ?? '');
+
         return 405;
+
       }else {
         Alerts.showSnackBar(context: context, message: loginResponseModel.message ?? '');
 
@@ -66,7 +72,7 @@ class AuthCubit extends Cubit<AuthState> {
     }
   }
 
-  Future<bool> signUpWithEmailAndPassword({
+  Future<int> signUpWithEmailAndPassword({
     required String email,
     required String password,
     required context,
@@ -74,9 +80,12 @@ class AuthCubit extends Cubit<AuthState> {
     required String userName,
     required String phone,
     required String type,
+
   }) async {
     try {
-      LoginResponseModel loginResponseModel = await _registerUseCase.execute(RegisterModel(
+      LoginResponseModel loginResponseModel =LoginResponseModel();
+      if(type !='sitter'){
+       loginResponseModel = await _registerUseCase.execute(RegisterModelParent(
           appType: type,
           fullName: fullName,
           phone: phone,
@@ -84,18 +93,33 @@ class AuthCubit extends Cubit<AuthState> {
           email: email,
           password: password,
           firebaseToken: SettingsProvider.current.appSettings.fireBaseToken ?? '',
-          deviceToken: SettingsProvider.current.appSettings.fireBaseToken ?? ''));
+          deviceToken: SettingsProvider.current.appSettings.fireBaseToken ?? ''));}
+      else{
+    loginResponseModel = await _registerSitterUseCase.execute(RegisterModelSitter(
+        appType: type,
+        fullName: fullName,
+        phone: phone,
+        userName: userName,
+        email: email,
+        password: password,
+        firebaseToken: SettingsProvider.current.appSettings.fireBaseToken ?? '',
+        deviceToken: SettingsProvider.current.appSettings.fireBaseToken ?? '',lessonType: '${lessonsType??'1'}',sitterType: sitterType??'Home Sitter'));
+      }
       if (loginResponseModel.status! == 200) {
-        return true;
+        return 200;
+      }  else if(loginResponseModel.status! == 405) {
+        Alerts.showSnackBar(context: context, message: loginResponseModel.message ?? '');
+
+        return 405;
       } else {
         Alerts.showSnackBar(context: context, message: loginResponseModel.message ?? '');
 
-        return false;
+        return 1;
       }
     } catch (e) {
       Alerts.showSnackBar(context: context, message: 'Check Connection');
 
-      return false;
+      return 1;
     }
   }
 

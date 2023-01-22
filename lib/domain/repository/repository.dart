@@ -22,11 +22,13 @@ import 'package:nanny_co/data/model/verfiy_model.dart';
 
 import '../../data/model/dto_model/basic_response.dart';
 import '../../data/model/dto_model/cyhange_password.dart';
+import '../../data/model/dto_model/registter_sitter_model.dart';
 
 abstract class Repository {
   Future<LoginResponseModel> login(LoginModel loginModel);
 
-  Future<LoginResponseModel> register(RegisterModel registerModel);
+  Future<LoginResponseModel> registerParent(RegisterModelParent registerModel);
+  Future<LoginResponseModel> registerSitter(RegisterModelSitter registerModel);
   Future<LoginResponseModel> updateParent(ParentUpdateModel parentUpdateModel);
   Future<LoginResponseModel> updateSister(PostUpdateSisterProfileModel postUpdateSisterProfileModel);
   Future<BasicResponseModel> checkEmail(CheckEmailModel checkEmailModel);

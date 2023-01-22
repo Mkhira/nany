@@ -9,6 +9,8 @@ import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/nany_signin_view.dart';
 import 'package:nanny_co/nany/widget/TextFeild.dart';
 import 'package:nanny_co/parent/auth_view/Model/parentDataModel.dart';
+import 'package:nanny_co/parent/auth_view/verify.dart';
+import 'package:nanny_co/parent/parent_nanny_booking/parent_sitting_started_view.dart';
 import 'package:nanny_co/shared_cubit/auth_cubit/auth_cubit.dart';
 
 import '../../common/widget/ProgressPopUp.dart';
@@ -190,7 +192,7 @@ class _ParentSignupViewState extends State<ParentSignupView> {
                                   return null;
                                 }
                               },
-                              hintText: 'Mobile Number'.translate(),
+                              hintText: 'Phone'.translate(),
                               controller: phone,
                               suffixIcon: Icon(
                                 Icons.phone_android,
@@ -241,7 +243,7 @@ class _ParentSignupViewState extends State<ParentSignupView> {
                                             type: type,
                                             phone: phone.text)
                                         .then((value) {
-                                      if (value == true) {
+                                      if (value == 200) {
                                         Navigator.pop(context);
                                         // parentFirebaseAuthController()
                                         //     .signInWithEmailAndPassword(email.text, password.text, context)
@@ -252,10 +254,13 @@ class _ParentSignupViewState extends State<ParentSignupView> {
                                         //   });
                                         // });
                                         Navigator.of(context).pushAndRemoveUntil(
-                                          MaterialPageRoute(builder: (context) => const parent_bottombar_view()),
+                                          MaterialPageRoute(builder: (context) =>  parent_sitting_started_view()),
                                           (route) => false,
                                         );
-                                      } else {
+                                      } else if(value ==405){
+                                        Navigator.push(context, MaterialPageRoute(builder: (context)=>  VerifyAccount()));
+
+                                      }else {
                                         Navigator.pop(context);
                                       }
                                     });

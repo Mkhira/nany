@@ -24,11 +24,13 @@ import 'package:nanny_co/data/network/api.dart';
 import 'package:nanny_co/domain/config/setting_provider.dart';
 
 import '../model/dto_model/login_model.dart';
+import '../model/dto_model/registter_sitter_model.dart';
 
 abstract class RemoteDataSource {
   Future<LoginResponseModel> login(LoginModel loginModel);
 
-  Future<LoginResponseModel> register(RegisterModel registerModel);
+  Future<LoginResponseModel> registerParent(RegisterModelParent registerModel);
+  Future<LoginResponseModel> registerSitter(RegisterModelSitter registerModel);
   Future<LoginResponseModel> updateParent(ParentUpdateModel parentUpdateModel);
   Future<LoginResponseModel> updateSister(PostUpdateSisterProfileModel postUpdateSisterProfileModel);
   Future<BasicResponseModel> checkEmail(CheckEmailModel checkEmailModel);
@@ -59,8 +61,12 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<LoginResponseModel> register(RegisterModel registerModel) {
-    return _appServiceClient.register(registerModel);
+  Future<LoginResponseModel> registerParent(RegisterModelParent registerModel) {
+    return _appServiceClient.registerParent(registerModel);
+  }
+  @override
+  Future<LoginResponseModel> registerSitter(RegisterModelSitter registerModel) {
+    return _appServiceClient.registerSitter(registerModel);
   }
 
   @override

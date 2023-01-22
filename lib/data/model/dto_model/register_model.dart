@@ -3,7 +3,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'register_model.g.dart';
 
 @JsonSerializable()
-class RegisterModel {
+class RegisterModelParent {
   @JsonKey(name: "full_name")
   final String fullName;
   @JsonKey(name: "user_name")
@@ -18,7 +18,7 @@ class RegisterModel {
   @JsonKey(name: "device_token")
   final String deviceToken;
 
-  RegisterModel(
+  RegisterModelParent(
       {required this.fullName,
       required this.userName,
       required this.password,
@@ -28,7 +28,8 @@ class RegisterModel {
       required this.firebaseToken,
       required this.deviceToken});
 
-  factory RegisterModel.fromJson(Map<String, dynamic> json) => _$RegisterModelFromJson(json);
+  factory RegisterModelParent.fromJson(Map<String, dynamic> json) => _$RegisterModelParentFromJson(json);
 
-  Map<String, dynamic> toJson() => _$RegisterModelToJson(this);
+  Map<String, dynamic> toJson() => _$RegisterModelParentToJson(this);
 }
+

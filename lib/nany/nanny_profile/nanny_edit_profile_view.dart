@@ -439,7 +439,8 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                 ),
                               )
                             ],
-                          ),     Text(
+                          ),
+                          Text(
                             'Lesson type',
                             style: GoogleFonts.raleway(
                                 color: Colors.grey,

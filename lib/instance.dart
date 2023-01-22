@@ -62,7 +62,8 @@ Future<void> initAppModule() async {
 
   //UseCase
   injector.registerLazySingleton<LoginUseCase>(() => LoginUseCase(injector()));
-  injector.registerLazySingleton<RegisterUseCase>(() => RegisterUseCase(injector()));
+  injector.registerLazySingleton<RegisterParentUseCase>(() => RegisterParentUseCase(injector()));
+  injector.registerLazySingleton<RegisterSitterUseCase>(() => RegisterSitterUseCase(injector()));
   injector.registerLazySingleton<ChangePasswordUseCase>(() => ChangePasswordUseCase(injector()));
   injector.registerLazySingleton<CheckEmailUseCase>(() => CheckEmailUseCase(injector()));
   injector.registerLazySingleton<VerifyUseCase>(() => VerifyUseCase(injector()));

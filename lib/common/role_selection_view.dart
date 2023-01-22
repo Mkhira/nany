@@ -25,7 +25,7 @@ class _role_selection_viewState extends State<role_selection_view> {
             Container(
               height: sh*0.6,
               width: sw,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                       fit: BoxFit.fill,
                       image: AssetImage('assets/images/Group 723.png')
@@ -37,7 +37,7 @@ class _role_selection_viewState extends State<role_selection_view> {
               child: Container(
                 height: sh*0.46,
                 width: sw,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   color: Colors.white,
                     borderRadius: BorderRadius.only(topLeft: Radius.circular(50),topRight: Radius.circular(50))
                 ),
@@ -52,7 +52,7 @@ class _role_selection_viewState extends State<role_selection_view> {
                           fontSize: 30
                       ),
                     ),
-                    SizedBox(height: 10,),
+                    const SizedBox(height: 10,),
                     Text(
                       'Please select one option.'.translate(),
                       style: GoogleFonts.raleway(
@@ -60,19 +60,19 @@ class _role_selection_viewState extends State<role_selection_view> {
                           fontSize: 14
                       ),
                     ),
-                    SizedBox(height: 20,),
+                    const SizedBox(height: 20,),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         InkWell(
                           onTap:(){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>ParentSignInView()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const ParentSignInView()));
                           },
                           child: Container(
                             height: 50,
                             width: sw*0.4,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)),
+                              borderRadius: Localizations.localeOf(context).languageCode=='en'? const BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)):const BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
                               border: Border.all(width: 1,color: Colors.grey.shade400)
                             ),
                             child: Row(
@@ -91,13 +91,13 @@ class _role_selection_viewState extends State<role_selection_view> {
                         ),
                         InkWell(
                           onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>nany_signin_view()));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const nany_signin_view()));
                           },
                           child: Container(
                             height: 50,
                             width: sw*0.4,
                             decoration: BoxDecoration(
-                                borderRadius: BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
+                                borderRadius: Localizations.localeOf(context).languageCode =='en'?const BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)):const BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)),
                                 border: Border.all(width: 1,color: Colors.grey.shade400)
                             ),
                             child: Row(
