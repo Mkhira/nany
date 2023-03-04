@@ -85,4 +85,6 @@ Future<void> initAppModule() async {
   injector.registerLazySingleton<NannyPostAppointment>(() => NannyPostAppointment());
   injector.registerLazySingleton<ConfirmBookUseCase>(() => ConfirmBookUseCase());
   injector.registerLazySingleton<BookingHistoryUseCase>(() => BookingHistoryUseCase());
+  injector.registerLazySingleton<NewBooking>(() => NewBooking());
+  injector.registerLazySingleton<UpCommingHistory>(() => UpCommingHistory());
 }

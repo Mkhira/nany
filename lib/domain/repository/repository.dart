@@ -46,5 +46,5 @@ abstract class Repository {
   Future<dynamic> postAppointment(PostAppointment postAppointment);
   Future<Appointments> getAppointments();
   Future<dynamic> confirmBook(BookPostModel bookPostModel);
-  Future<Bookings> getParentBooking();
+  Future<Bookings> getParentBooking(String flag);
 }

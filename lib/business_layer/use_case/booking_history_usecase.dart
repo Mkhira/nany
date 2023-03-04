@@ -29,6 +29,20 @@ class BookingHistoryUseCase extends BaseCase<void ,Bookings>{
   final _repository = injector.get<Repository>();
   @override
   Future<Bookings> execute(void input) {
-    return _repository.getParentBooking();
+    return _repository.getParentBooking('3');
+  }
+}class NewBooking extends BaseCase<void ,Bookings>{
+
+  final _repository = injector.get<Repository>();
+  @override
+  Future<Bookings> execute(void input) {
+    return _repository.getParentBooking('2');
+  }
+}class UpCommingHistory extends BaseCase<void ,Bookings>{
+
+  final _repository = injector.get<Repository>();
+  @override
+  Future<Bookings> execute(void input) {
+    return _repository.getParentBooking('1');
   }
 }

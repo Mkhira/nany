@@ -75,11 +75,32 @@ class SearchNannyCubit extends Cubit<SearchNanyState> {
   }
 
 
-  Bookings? bookings;
+  Bookings? bookingsHistory;
   getBookingHistory()async{
-    bookings = await injector.get<BookingHistoryUseCase>().execute(null);
+    bookingsHistory = await injector.get<BookingHistoryUseCase>().execute(null);
     emit(SearchNannySearch());
 
   }
+  Bookings? upcomming;
+  getBUpcomming()async{
+    emit(NannyLoading());
+    bookingsHistory = await injector.get<UpCommingHistory>().execute(null);
+    emit(NannyGetData());
+
+  }
+  // Bookings? bookingsHistory;
+  // getBookingHistory()async{
+  //   bookingsHistory = await injector.get<BookingHistoryUseCase>().execute(null);
+  //   emit(SearchNannySearch());
+  //
+  // }
+
+
+
+
+
+
+
+
 
 }

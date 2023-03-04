@@ -116,8 +116,8 @@ abstract class AppServiceClient {
   Future<NannyDetails> getNannyDetails(@Header('Authorization') token,@Path('id') id);
   @GET('/nanny/appointment')
   Future<Appointments> getAppointments(@Header('Authorization') token);
-  @GET('/bookings?flag=3')
-  Future<Bookings> getParentBooking(@Header('Authorization') token);
+  @GET('/bookings?flag={flag}')
+  Future<Bookings> getBooking(@Header('Authorization') token,@Path('flag') flag);
 
   @POST('/nanny/appointment/add')
   Future<dynamic> addAppointmentNanny(@Header('Authorization') token,@Body() PostAppointment appointment);

@@ -119,12 +119,12 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                           Container(
                               padding: const EdgeInsets.only(left: 10, right: 10),
                               height: sh * 0.642,
-                              child: injector.get<SearchNannyCubit>().bookings != null? ListView.builder(
-                                  itemCount: injector.get<SearchNannyCubit>().bookings!.data!.data!.length,
+                              child: injector.get<SearchNannyCubit>().bookingsHistory != null? ListView.builder(
+                                  itemCount: injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.length,
                                   itemBuilder: (context, index) {
                                     return InkWell(
                                       onTap: (){
-                                        bookingId=injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).id!.toString();
+                                        bookingId=injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).id!.toString();
                                         parent_bottombar_viewState.selectedIndex=8;
                                         Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const parent_bottombar_view()));
                                       },
@@ -163,7 +163,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                         MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Text(
-                                                            '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).fullName}',
+                                                            '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).fullName}',
                                                             style: GoogleFonts.raleway(
                                                                 color:
                                                                 Colors.black,
@@ -174,7 +174,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                             height: 5,
                                                           ),
                                                           Text(
-                                                            '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).entryTime} - ${injector.get<SearchNannyCubit>().bookings!.data!.data![index].exitTime}',
+                                                            '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).entryTime} - ${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data![index].exitTime}',
                                                             style: GoogleFonts.raleway(
                                                                 color: Colors.grey.shade800,
                                                                 fontWeight: FontWeight.bold,
@@ -184,7 +184,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                             height: 5,
                                                           ),
                                                           Text(
-                                                            '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).city}',
+                                                            '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).city}',
                                                             style: GoogleFonts.raleway(
                                                                 color: Colors.grey.shade800,
                                                                 fontWeight: FontWeight.bold,
@@ -199,7 +199,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                         MainAxisAlignment.start,
                                                         children: [
                                                           Text(
-                                                            '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).price} Riyal',
+                                                            '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).price} Riyal',
                                                             style: GoogleFonts.raleway(
                                                                 color:
                                                                 Theme.of(context).primaryColor,
@@ -226,7 +226,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                   Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                     children: [
                                                       Text(
-                                                        'Type: ${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).sitterType}',
+                                                        'Type: ${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).sitterType}',
                                                         style: GoogleFonts.raleway(
                                                             color:
                                                             Colors.red,
@@ -234,7 +234,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                             fontSize: 12),
                                                       ),
                                                       Text(
-                                                        'Payment Mode:${injector.get<SearchNannyCubit>().bookings!.data!.data![index].paymentMode}',
+                                                        'Payment Mode:${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data![index].paymentMode}',
                                                         style: GoogleFonts.raleway(
                                                             color:
                                                             Colors.green,
@@ -258,7 +258,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                                 color: Theme.of(context).primaryColor,
                                                                 fontSize: 12),
                                                           ), Text(
-                                                            '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).exitTime} (${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).date})',
+                                                            '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).exitTime} (${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).date})',
                                                             style: GoogleFonts.raleway(
                                                                 color: Theme.of(context).primaryColor,
                                                                 fontWeight: FontWeight.bold,
@@ -275,7 +275,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                                 color: Theme.of(context).primaryColor,
                                                                 fontSize: 12),
                                                           ), Text(
-                                                            '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).exitTime} (${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).date})',
+                                                            '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).exitTime} (${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).date})',
                                                             style: GoogleFonts.raleway(
                                                                 color: Theme.of(context).primaryColor,
                                                                 fontWeight: FontWeight.bold,
@@ -325,8 +325,8 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                   const SizedBox(height: 10,),
                                                   Container(
                                                     height: 70,
-                                                    child: injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!=null?ListView.builder(
-                                                        itemCount: injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!.length,
+                                                    child: injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!=null?ListView.builder(
+                                                        itemCount: injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.length,
                                                         scrollDirection: Axis.horizontal,
                                                         padding: const EdgeInsets.all(5),
                                                         itemBuilder: (context,index2){
@@ -359,7 +359,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                                             image: DecorationImage(
                                                                                 fit: BoxFit.fill,
                                                                                 image: NetworkImage(
-                                                                                    '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!.elementAt(index2).image}'
+                                                                                    '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.elementAt(index2).image}'
                                                                                 )
                                                                             )
                                                                         ),
@@ -370,7 +370,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                                       children: [
                                                                         Text(
-                                                                          '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!.elementAt(index2).name}',
+                                                                          '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.elementAt(index2).name}',
                                                                           style: GoogleFonts.raleway(
                                                                               color: Theme.of(context).primaryColor,
                                                                               fontWeight: FontWeight.bold ,
@@ -378,7 +378,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                                           ),
                                                                         ),
                                                                         Text(
-                                                                          '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!.elementAt(index2).gender}',
+                                                                          '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.elementAt(index2).gender}',
                                                                           style: GoogleFonts.raleway(
                                                                               color:Colors.redAccent,
                                                                               fontSize: 12
@@ -400,7 +400,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                             Padding(
                                               padding: const EdgeInsets.all(20.0),
                                               child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [Text(
-                                                'Rate ${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).userName}',
+                                                'Rate ${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).userName}',
                                                 style: GoogleFonts.raleway(
                                                     color: Colors.white,
                                                     fontWeight: FontWeight.bold,

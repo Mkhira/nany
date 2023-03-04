@@ -23,7 +23,7 @@ class nanny_bottombar_view extends StatefulWidget {
 class nanny_bottombar_viewState extends State<nanny_bottombar_view> {
   static var selectedIndex=0;
   List pages=[
-    nanny_home_view(),
+    NannyHomeView(),
     nanny_booking_history_view(),
     nanny_wallet_view(),
     NannyProfileView(),

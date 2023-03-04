@@ -71,7 +71,8 @@ class _AppServiceClient implements AppServiceClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = registerModel;
+    final _data = <String, dynamic>{};
+    _data.addAll(registerModel.toJson());
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<LoginResponseModel>(Options(
       method: 'POST',
@@ -725,7 +726,10 @@ class _AppServiceClient implements AppServiceClient {
   }
 
   @override
-  Future<Bookings> getParentBooking(token) async {
+  Future<Bookings> getBooking(
+    token,
+    flag,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
@@ -739,7 +743,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              '/bookings?flag=3',
+              '/bookings?flag=$flag',
               queryParameters: queryParameters,
               data: _data,
             )

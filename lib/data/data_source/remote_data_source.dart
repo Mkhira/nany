@@ -47,7 +47,7 @@ abstract class RemoteDataSource {
   Future<Appointments> getAppointments();
   Future<dynamic> postAppointments(PostAppointment postAppointment);
   Future<dynamic> confirmBook(BookPostModel bookPostModel);
-  Future<Bookings> getParentBooking();
+  Future<Bookings> getParentBooking(String flag);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -196,7 +196,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
   }
 
   @override
-  Future<Bookings> getParentBooking() {
-       return _appServiceClient.getParentBooking('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}');
+  Future<Bookings> getParentBooking(String flag) {
+       return _appServiceClient.getBooking('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}',flag);
   }
 }

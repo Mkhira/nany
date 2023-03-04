@@ -2,12 +2,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/Controller/Auth_controller.dart';
 import 'package:nanny_co/nany/nanny_booking_view/Controller/nannyBooking_Controller.dart';
 import 'package:nanny_co/nany/nanny_booking_view/nanny_booking_detail_view.dart';
@@ -17,21 +19,35 @@ import 'package:nanny_co/parent/add_child/parent_children_view.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/Model/parentBookingModel.dart';
 import 'package:nanny_co/parent/parent_nanny_booking/parent_nanny_details.dart';
+import 'package:nanny_co/parent/search_view/Controller/search_nany_cubit.dart';
 
 import '../../parent/parent_drawer.dart/parent_drawer_view.dart';
 import '../nanny_drawer.dart/nanny_drawer_view.dart';
 import '../nanny_notification_view/nanny_notifications_view.dart';
 
-class nanny_home_view extends StatelessWidget {
-  nanny_home_view();
-  final GlobalKey<ScaffoldState> scaffoldkey = new GlobalKey<ScaffoldState>();
-  nannyBooking_Controller booking_controller=Get.put(nannyBooking_Controller());
+class NannyHomeView extends StatefulWidget {
+  NannyHomeView();
+
+  @override
+  State<NannyHomeView> createState() => _NannyHomeViewState();
+}
+
+class _NannyHomeViewState extends State<NannyHomeView> {
+  final GlobalKey<ScaffoldState> scaffoldkey =  GlobalKey<ScaffoldState>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    injector.get<SearchNannyCubit>().getBUpcomming();
+
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         key: scaffoldkey,
         drawer: nanny_drawer_view(),
-        body: Container(
+        body: SizedBox(
             height: sh,
             width: sw,
             child: Stack(children: [
@@ -53,7 +69,7 @@ class nanny_home_view extends StatelessWidget {
                                   onTap: () {
                                     scaffoldkey.currentState!.openDrawer();
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.menu,
                                     size: 20,
                                     color: Colors.white,
@@ -65,7 +81,7 @@ class nanny_home_view extends StatelessWidget {
                                   },
                                   child: Stack(
                                     children: [
-                                      Container(
+                                      const SizedBox(
                                         height: 30,
                                         width: 30,
                                         child: Icon(
@@ -84,7 +100,7 @@ class nanny_home_view extends StatelessWidget {
                                             color:Colors.purple.shade400,
                                             shape: BoxShape.circle,
                                           ),
-                                          child: Center(
+                                          child: const Center(
                                             child: Text('11',
                                               style: TextStyle(color: Colors.white,fontSize:8),),
                                           ),
@@ -106,7 +122,7 @@ class nanny_home_view extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Image(
+                                const Image(
                                     image:
                                     AssetImage('assets/images/dots.png')),
                               ],
@@ -123,7 +139,7 @@ class nanny_home_view extends StatelessWidget {
                   width: sw,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
                   ),
@@ -132,7 +148,7 @@ class nanny_home_view extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                            padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -153,29 +169,28 @@ class nanny_home_view extends StatelessWidget {
                             ),
                           ),
                           Container(
-                              padding: EdgeInsets.only(left: 10, right: 10),
+                              padding: const EdgeInsets.only(left: 10, right: 10),
                               height: sh * 0.642,
                               child:NotificationListener<OverscrollIndicatorNotification>(
                                 onNotification: (OverscrollIndicatorNotification overscroll) {
                                   overscroll.disallowGlow();
                                   return false;
                                 },
-                                child: StreamBuilder<List<parentBookingModel>>(
-                                  stream: booking_controller.GetAllUpComingBookings(),
-                                  builder: (context, snapshot) {
-                                    if(snapshot.connectionState==ConnectionState.done){
+                                child: BlocBuilder<SearchNannyCubit,SearchNanyState>(
+                                  builder: (context, state) {
+                                    if(state is NannyGetData){
                                     return ListView.builder(
-                                        itemCount: snapshot.data?.length,
+                                        itemCount: injector.get<SearchNannyCubit>().upcomming?.data?.data?.length??0,
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: (
                                             ){
-                                              nannyBookingId=snapshot.data!.elementAt(index).bookingId!.toString();
+                                              nannyBookingId='${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).id}';
                                               nanny_bottombar_viewState.selectedIndex=5;
-                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>nanny_bottombar_view()));
+                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const nanny_bottombar_view()));
                                             },
                                             child: Container(
-                                              margin: EdgeInsets.only(
+                                              margin: const EdgeInsets.only(
                                                   bottom: 20, left: 10, right: 10),
                                               decoration: BoxDecoration(
                                                 color: Colors.purple.shade700,
@@ -191,7 +206,7 @@ class nanny_home_view extends StatelessWidget {
                                               child: Column(
                                                 children: [
                                                   Container(
-                                                    padding: EdgeInsets.all(20),
+                                                    padding: const EdgeInsets.all(20),
                                                     decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       borderRadius: BorderRadius.circular(20),
@@ -209,28 +224,28 @@ class nanny_home_view extends StatelessWidget {
                                                               MainAxisAlignment.spaceBetween,
                                                               children: [
                                                                 Text(
-                                                                  '${snapshot.data?.elementAt(index).parentName}',
+                                                                  '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).userName}',
                                                                   style: GoogleFonts.raleway(
                                                                       color:
                                                                       Colors.black,
                                                                       fontWeight: FontWeight.bold,
                                                                       fontSize: 18),
                                                                 ),
-                                                                SizedBox(
+                                                                const SizedBox(
                                                                   height: 5,
                                                                 ),
                                                                 Text(
-                                                                  '${snapshot.data?.elementAt(index).availability?.startTime} - ${snapshot.data?.elementAt(index).availability?.endTime}',
+                                                                  '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).entryTime} - ${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).exitTime}',
                                                                   style: GoogleFonts.raleway(
                                                                       color: Colors.grey.shade800,
                                                                       fontWeight: FontWeight.bold,
                                                                       fontSize: 12),
                                                                 ),
-                                                                SizedBox(
+                                                                const SizedBox(
                                                                   height: 5,
                                                                 ),
                                                                 Text(
-                                                                  '${snapshot.data?.elementAt(index).city} (1.5 KM)',
+                                                                  '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).city} ',
                                                                   style: GoogleFonts.raleway(
                                                                       color: Colors.grey.shade800,
                                                                       fontWeight: FontWeight.bold,
@@ -245,14 +260,14 @@ class nanny_home_view extends StatelessWidget {
                                                               MainAxisAlignment.start,
                                                               children: [
                                                                 Text(
-                                                                  '${snapshot.data?.elementAt(index).price} Riyal',
+                                                                  '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).price} Riyal',
                                                                   style: GoogleFonts.raleway(
                                                                       color:
                                                                       Theme.of(context).primaryColor,
                                                                       fontWeight: FontWeight.bold,
                                                                       fontSize: 18),
                                                                 ),
-                                                                SizedBox(
+                                                                const SizedBox(
                                                                   height: 5,
                                                                 ),
                                                                 Text(
@@ -266,13 +281,13 @@ class nanny_home_view extends StatelessWidget {
                                                             )
                                                           ],
                                                         ),
-                                                        SizedBox(
+                                                        const SizedBox(
                                                           height: 5,
                                                         ),
                                                         Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                                         children: [
                                                           Text(
-                                                            'Type:${snapshot.data?.elementAt(index).Type}',
+                                                            'Type:${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).sitterType}',
                                                             style: GoogleFonts.raleway(
                                                                 color:
                                                                 Colors.red,
@@ -280,7 +295,7 @@ class nanny_home_view extends StatelessWidget {
                                                                 fontSize: 12),
                                                           ),
                                                           Text(
-                                                            'Payment Mode:${snapshot.data?.elementAt(index).PaymentMethod}',
+                                                            'Payment Mode:${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).paymentMode}',
                                                             style: GoogleFonts.raleway(
                                                                 color:
                                                                 Colors.green,
@@ -290,7 +305,7 @@ class nanny_home_view extends StatelessWidget {
 
                                                         ],
                                                         ),
-                                                        SizedBox(height: 10,),
+                                                        const SizedBox(height: 10,),
                                                         Row(
                                                           crossAxisAlignment: CrossAxisAlignment.start,
                                                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -304,7 +319,7 @@ class nanny_home_view extends StatelessWidget {
                                                                       color: Theme.of(context).primaryColor,
                                                                       fontSize: 12),
                                                                 ), Text(
-                                                                  '${snapshot.data?.elementAt(index).availability?.startTime} (${snapshot.data?.elementAt(index).availability?.date})',
+                                                                  '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).entryTime} (${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).date})',
                                                                   style: GoogleFonts.raleway(
                                                                       color: Theme.of(context).primaryColor,
                                                                       fontWeight: FontWeight.bold,
@@ -321,7 +336,7 @@ class nanny_home_view extends StatelessWidget {
                                                                       color: Theme.of(context).primaryColor,
                                                                       fontSize: 12),
                                                                 ), Text(
-                                                                  '${snapshot.data?.elementAt(index).availability?.endTime} (${snapshot.data?.elementAt(index).availability?.date})',
+                                                                  '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).exitTime} (${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).date})',
                                                                   style: GoogleFonts.raleway(
                                                                       color: Theme.of(context).primaryColor,
                                                                       fontWeight: FontWeight.bold,
@@ -331,7 +346,7 @@ class nanny_home_view extends StatelessWidget {
                                                             )
                                                           ],
                                                         ),
-                                                        SizedBox(height: 10,),
+                                                        const SizedBox(height: 10,),
                                                         Row(
                                                           children: [
                                                             Container(
@@ -355,7 +370,7 @@ class nanny_home_view extends StatelessWidget {
                                                             ),
                                                           ],
                                                         ),
-                                                        SizedBox(height: 10,),
+                                                        const SizedBox(height: 10,),
                                                         Row(
                                                           children: [
                                                             Text(
@@ -368,17 +383,17 @@ class nanny_home_view extends StatelessWidget {
                                                             ),
                                                           ],
                                                         ),
-                                                        SizedBox(height: 10,),
-                                                        Container(
+                                                        const SizedBox(height: 10,),
+                                                        SizedBox(
                                                           height: 70,
-                                                          child: snapshot.data?.elementAt(index).children!=null?ListView.builder(
-                                                              itemCount: snapshot.data?.elementAt(index).children?.length,
+                                                          child: injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).childrenList!=null?ListView.builder(
+                                                              itemCount: injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).childrenList?.length??0,
                                                               scrollDirection: Axis.horizontal,
-                                                              padding: EdgeInsets.all(5),
+                                                              padding: const EdgeInsets.all(5),
                                                               itemBuilder: (context,index2){
                                                                 return Container(
                                                                   height: 50,
-                                                                  margin: EdgeInsets.only(right: 10),
+                                                                  margin: const EdgeInsets.only(right: 10),
                                                                   child: Column(
                                                                     mainAxisAlignment: MainAxisAlignment.center,
                                                                     children: [
@@ -386,7 +401,7 @@ class nanny_home_view extends StatelessWidget {
                                                                         crossAxisAlignment: CrossAxisAlignment.center,
                                                                         children: [
                                                                           Container(
-                                                                            padding: EdgeInsets.all(5),
+                                                                            padding: const EdgeInsets.all(5),
                                                                             decoration: BoxDecoration(
                                                                                 shape: BoxShape.circle,
                                                                                 color: Colors.white,  boxShadow: [
@@ -405,18 +420,18 @@ class nanny_home_view extends StatelessWidget {
                                                                                   image: DecorationImage(
                                                                                       fit: BoxFit.fill,
                                                                                       image: NetworkImage(
-                                                                                          '${snapshot.data?.elementAt(index).children?.elementAt(index2).image}'
+                                                                                          '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).childrenList?.elementAt(index2).image}'
                                                                                       )
                                                                                   )
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                          SizedBox(width: 5,),
+                                                                          const SizedBox(width: 5,),
                                                                           Column(
                                                                             crossAxisAlignment: CrossAxisAlignment.start,
                                                                             children: [
                                                                               Text(
-                                                                                '${snapshot.data?.elementAt(index).children?.elementAt(index2).name}',
+                                                                                '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).childrenList?.elementAt(index2).name}',
                                                                                 style: GoogleFonts.raleway(
                                                                                     color: Theme.of(context).primaryColor,
                                                                                     fontWeight: FontWeight.bold ,
@@ -424,7 +439,7 @@ class nanny_home_view extends StatelessWidget {
                                                                                 ),
                                                                               ),
                                                                               Text(
-                                                                                '${snapshot.data?.elementAt(index).children?.elementAt(index2).gender}',
+                                                                                '${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).childrenList?.elementAt(index2).gender}',
                                                                                 style: GoogleFonts.raleway(
                                                                                     color:Colors.redAccent,
                                                                                     fontSize: 12

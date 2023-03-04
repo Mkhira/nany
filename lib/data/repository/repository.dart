@@ -121,8 +121,8 @@ class RepositoryImpl extends Repository {
   }
 
   @override
-  Future<Bookings> getParentBooking() {
-     return _remoteDataSource.getParentBooking();
+  Future<Bookings> getParentBooking(String flag) {
+     return _remoteDataSource.getParentBooking(flag);
   }
 
   @override

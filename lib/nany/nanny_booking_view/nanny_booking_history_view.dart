@@ -171,12 +171,12 @@ class _nanny_booking_history_viewState
                               return false;
                             },
                             child:
-                                injector.get<SearchNannyCubit>().bookings !=
+                                injector.get<SearchNannyCubit>().bookingsHistory !=
                                         null
                                     ? ListView.builder(
                                         itemCount: injector
                                             .get<SearchNannyCubit>()
-                                            .bookings!
+                                            .bookingsHistory!
                                             .data!
                                             .data!
                                             .length,
@@ -185,7 +185,7 @@ class _nanny_booking_history_viewState
                                             onTap: () {
                                               nannyBookingId = injector
                                                   .get<SearchNannyCubit>()
-                                                  .bookings!
+                                                  .bookingsHistory!
                                                   .data!
                                                   .data!
                                                   .elementAt(index)
@@ -255,7 +255,7 @@ class _nanny_booking_history_viewState
                                                                             .spaceBetween,
                                                                     children: [
                                                                       Text(
-                                                                        '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).userName}',
+                                                                        '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).userName}',
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Colors.black,
@@ -267,7 +267,7 @@ class _nanny_booking_history_viewState
                                                                             5,
                                                                       ),
                                                                       Text(
-                                                                        '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).entryTime} - ${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).exitTime}',
+                                                                        '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).entryTime} - ${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).exitTime}',
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Colors.grey.shade800,
@@ -279,7 +279,7 @@ class _nanny_booking_history_viewState
                                                                             5,
                                                                       ),
                                                                       Text(
-                                                                        '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).city} ',
+                                                                        '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).city} ',
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Colors.grey.shade800,
@@ -297,7 +297,7 @@ class _nanny_booking_history_viewState
                                                                             .start,
                                                                     children: [
                                                                       Text(
-                                                                        '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).price} Riyal',
+                                                                        '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).price} Riyal',
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Theme.of(context).primaryColor,
@@ -329,7 +329,7 @@ class _nanny_booking_history_viewState
                                                                         .spaceBetween,
                                                                 children: [
                                                                   Text(
-                                                                    'Type:${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).sitterType}',
+                                                                    'Type:${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).sitterType}',
                                                                     style: GoogleFonts.raleway(
                                                                         color: Colors
                                                                             .red,
@@ -340,7 +340,7 @@ class _nanny_booking_history_viewState
                                                                             12),
                                                                   ),
                                                                   Text(
-                                                                    'Payment Mode:${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).paymentMode}',
+                                                                    'Payment Mode:${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).paymentMode}',
                                                                     style: GoogleFonts.raleway(
                                                                         color: Colors
                                                                             .green,
@@ -376,7 +376,7 @@ class _nanny_booking_history_viewState
                                                                             fontSize: 12),
                                                                       ),
                                                                       Text(
-                                                                        '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).entryTime} (${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).date})',
+                                                                        '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).entryTime} (${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).date})',
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Theme.of(context).primaryColor,
@@ -398,7 +398,7 @@ class _nanny_booking_history_viewState
                                                                             fontSize: 12),
                                                                       ),
                                                                       Text(
-                                                                        '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).exitTime} (${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).date})',
+                                                                        '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).exitTime} (${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).date})',
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Theme.of(context).primaryColor,
@@ -473,14 +473,14 @@ class _nanny_booking_history_viewState
                                                                 height: 70,
                                                                 child: injector
                                                                             .get<SearchNannyCubit>()
-                                                                            .bookings!
+                                                                            .bookingsHistory!
                                                                             .data!
                                                                             .data!
                                                                             .elementAt(index)
                                                                             .childrenList !=
                                                                         null
                                                                     ? ListView.builder(
-                                                                        itemCount: injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!.length,
+                                                                        itemCount: injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.length,
                                                                         scrollDirection: Axis.horizontal,
                                                                         padding: EdgeInsets.all(5),
                                                                         itemBuilder: (context, index2) {
@@ -504,7 +504,7 @@ class _nanny_booking_history_viewState
                                                                                       child: Container(
                                                                                         height: 40,
                                                                                         width: 40,
-                                                                                        decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(fit: BoxFit.fill, image: NetworkImage('${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!.elementAt(index2).image}'))),
+                                                                                        decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(fit: BoxFit.fill, image: NetworkImage('${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.elementAt(index2).image}'))),
                                                                                       ),
                                                                                     ),
                                                                                     SizedBox(
@@ -514,11 +514,11 @@ class _nanny_booking_history_viewState
                                                                                       crossAxisAlignment: CrossAxisAlignment.start,
                                                                                       children: [
                                                                                         Text(
-                                                                                          '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!.elementAt(index2).name}',
+                                                                                          '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.elementAt(index2).name}',
                                                                                           style: GoogleFonts.raleway(color: Theme.of(context).primaryColor, fontWeight: FontWeight.bold, fontSize: 14),
                                                                                         ),
                                                                                         Text(
-                                                                                          '${injector.get<SearchNannyCubit>().bookings!.data!.data!.elementAt(index).childrenList!.elementAt(index2).gender}',
+                                                                                          '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.elementAt(index2).gender}',
                                                                                           style: GoogleFonts.raleway(color: Colors.redAccent, fontSize: 12),
                                                                                         ),
                                                                                       ],
