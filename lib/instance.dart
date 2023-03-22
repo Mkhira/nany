@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nanny_co/business_layer/use_case/add_remove_favorite_use_case.dart';
+import 'package:nanny_co/business_layer/use_case/change_booking_status.dart';
 import 'package:nanny_co/business_layer/use_case/child/delete_child.dart';
 import 'package:nanny_co/business_layer/use_case/child/get_child_use_case.dart';
 import 'package:nanny_co/business_layer/use_case/confirm_book_useusecase.dart';
@@ -31,6 +32,7 @@ import 'data/network/dio_factory.dart';
 import 'data/repository/repository.dart';
 import 'domain/config/setting_provider.dart';
 import 'domain/repository/repository.dart';
+import 'nany/nanny_notification_view/nany_notifiation_cuibt_cubit.dart';
 import 'nany/nanny_profile/Controller/update_nanny_profile_cubit.dart';
 
 final injector = GetIt.instance;
@@ -85,6 +87,8 @@ Future<void> initAppModule() async {
   injector.registerLazySingleton<NannyPostAppointment>(() => NannyPostAppointment());
   injector.registerLazySingleton<ConfirmBookUseCase>(() => ConfirmBookUseCase());
   injector.registerLazySingleton<BookingHistoryUseCase>(() => BookingHistoryUseCase());
-  injector.registerLazySingleton<NewBooking>(() => NewBooking());
+  injector.registerLazySingleton<NewBookingUseCase>(() => NewBookingUseCase());
   injector.registerLazySingleton<UpCommingHistory>(() => UpCommingHistory());
+  injector.registerLazySingleton<ChangeBookingStatusUseCase>(() => ChangeBookingStatusUseCase(injector()));
+  injector.registerLazySingleton<NanyNotifiationCuibtCubit>(() => NanyNotifiationCuibtCubit());
 }

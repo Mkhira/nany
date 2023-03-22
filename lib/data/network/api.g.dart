@@ -6,6 +6,8 @@ part of 'api.dart';
 // RetrofitGenerator
 // **************************************************************************
 
+// ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
+
 class _AppServiceClient implements AppServiceClient {
   _AppServiceClient(
     this._dio, {
@@ -376,6 +378,7 @@ class _AppServiceClient implements AppServiceClient {
       method: 'POST',
       headers: _headers,
       extra: _extra,
+      contentType: 'multipart/form-data',
     )
             .compose(
               _dio.options,
@@ -465,7 +468,7 @@ class _AppServiceClient implements AppServiceClient {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<CitiesModel>(Options(
       method: 'GET',
@@ -489,7 +492,7 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<FavouriteDto>(Options(
       method: 'GET',
@@ -545,7 +548,7 @@ class _AppServiceClient implements AppServiceClient {
     queryParameters.addAll(queries);
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<SearchForNannyModel>(Options(
       method: 'GET',
@@ -633,7 +636,7 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch(_setStreamType<dynamic>(Options(
       method: 'DELETE',
       headers: _headers,
@@ -641,7 +644,7 @@ class _AppServiceClient implements AppServiceClient {
     )
         .compose(
           _dio.options,
-          '/nanny/delete-child/$id',
+          '/nanny/delete-child/${id}',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -656,7 +659,7 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<ChildResponse>(Options(
       method: 'GET',
@@ -683,7 +686,7 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<NannyDetails>(Options(
       method: 'GET',
@@ -692,7 +695,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              '/nanny/details?id=$id',
+              '/nanny/details?id=${id}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -707,7 +710,7 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result = await _dio
         .fetch<Map<String, dynamic>>(_setStreamType<Appointments>(Options(
       method: 'GET',
@@ -734,7 +737,7 @@ class _AppServiceClient implements AppServiceClient {
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{r'Authorization': token};
     _headers.removeWhere((k, v) => v == null);
-    final _data = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
     final _result =
         await _dio.fetch<Map<String, dynamic>>(_setStreamType<Bookings>(Options(
       method: 'GET',
@@ -743,7 +746,7 @@ class _AppServiceClient implements AppServiceClient {
     )
             .compose(
               _dio.options,
-              '/bookings?flag=$flag',
+              '/bookings?flag=${flag}',
               queryParameters: queryParameters,
               data: _data,
             )
@@ -803,6 +806,34 @@ class _AppServiceClient implements AppServiceClient {
         )
         .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
     final value = _result.data;
+    return value;
+  }
+
+  @override
+  Future<SuccessModel> changeStatusBooking(
+    token,
+    bookingChangeStatusPostModel,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{};
+    final _headers = <String, dynamic>{r'Authorization': token};
+    _headers.removeWhere((k, v) => v == null);
+    final _data = <String, dynamic>{};
+    _data.addAll(bookingChangeStatusPostModel.toJson());
+    final _result = await _dio
+        .fetch<Map<String, dynamic>>(_setStreamType<SuccessModel>(Options(
+      method: 'POST',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/change-status-booking',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(baseUrl: baseUrl ?? _dio.options.baseUrl)));
+    final value = SuccessModel.fromJson(_result.data!);
     return value;
   }
 

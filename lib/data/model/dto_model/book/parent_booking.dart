@@ -41,12 +41,12 @@ class Data {
     this.meta,
   });
 
-  List<Datum>? data;
+  List<BokingData>? data;
   LinksDto? links;
   MetaDto? meta;
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+    data: List<BokingData>.from(json["data"].map((x) => BokingData.fromJson(x))),
     links: LinksDto.fromJson(json["links"]),
     meta: MetaDto.fromJson(json["meta"]),
   );
@@ -58,8 +58,8 @@ class Data {
   };
 }
 
-class Datum {
-  Datum({
+class BokingData {
+  BokingData({
     this.id,
     this.price,
     this.sitterType,
@@ -93,7 +93,7 @@ class Datum {
   String ?rate;
   List<ChildrenList>? childrenList;
 
-  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+  factory BokingData.fromJson(Map<String, dynamic> json) => BokingData(
     id: json["id"],
     price: json["price"],
     sitterType: json["sitter_type"],

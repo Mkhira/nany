@@ -81,10 +81,13 @@ class SearchNannyCubit extends Cubit<SearchNanyState> {
     emit(SearchNannySearch());
 
   }
+
+
+
   Bookings? upcomming;
   getBUpcomming()async{
     emit(NannyLoading());
-    bookingsHistory = await injector.get<UpCommingHistory>().execute(null);
+    upcomming = await injector.get<UpCommingHistory>().execute(null);
     emit(NannyGetData());
 
   }

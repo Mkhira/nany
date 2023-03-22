@@ -67,7 +67,7 @@ class _nanny_booking_history_viewState
                                   onTap: () {
                                     scaffoldkey.currentState!.openDrawer();
                                   },
-                                  child: Icon(
+                                  child: const Icon(
                                     Icons.menu,
                                     size: 20,
                                     color: Colors.white,
@@ -78,14 +78,14 @@ class _nanny_booking_history_viewState
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  nanny_notifications_view()));
+                                                  NannyNotificationsView()));
                                     },
                                     child: Stack(
                                       children: [
                                         Container(
                                           height: 30,
                                           width: 30,
-                                          child: Icon(
+                                          child: const Icon(
                                             FontAwesomeIcons.solidBell,
                                             size: 25,
                                             color: Colors.white,
@@ -101,7 +101,7 @@ class _nanny_booking_history_viewState
                                               color: Colors.purple.shade400,
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Center(
+                                            child: const Center(
                                               child: Text(
                                                 '11',
                                                 style: TextStyle(
@@ -125,7 +125,7 @@ class _nanny_booking_history_viewState
                                       fontWeight: FontWeight.bold,
                                       fontSize: 20),
                                 ),
-                                Image(
+                                const Image(
                                     image:
                                         AssetImage('assets/images/dots.png')),
                               ],
@@ -142,7 +142,7 @@ class _nanny_booking_history_viewState
                   width: sw,
                   decoration: BoxDecoration(
                     color: Colors.grey.shade200,
-                    borderRadius: BorderRadius.only(
+                    borderRadius: const BorderRadius.only(
                         topLeft: Radius.circular(30),
                         topRight: Radius.circular(30)),
                   ),
@@ -151,7 +151,7 @@ class _nanny_booking_history_viewState
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Padding(
-                        padding: EdgeInsets.only(left: 20, right: 20, top: 20),
+                        padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
                         child: Text(
                           'Booking History'.translate(),
                           style: GoogleFonts.raleway(
@@ -161,7 +161,7 @@ class _nanny_booking_history_viewState
                         ),
                       ),
                       Container(
-                          padding: EdgeInsets.only(left: 10, right: 10),
+                          padding: const EdgeInsets.only(left: 10, right: 10),
                           height: sh * 0.655,
                           child: NotificationListener<
                               OverscrollIndicatorNotification>(
@@ -196,10 +196,10 @@ class _nanny_booking_history_viewState
                                               Navigator.of(context).pushReplacement(
                                                   MaterialPageRoute(
                                                       builder: (context) =>
-                                                          nanny_bottombar_view()));
+                                                          const nanny_bottombar_view()));
                                             },
                                             child: Container(
-                                              margin: EdgeInsets.only(
+                                              margin: const EdgeInsets.only(
                                                   bottom: 20,
                                                   left: 10,
                                                   right: 10),
@@ -229,7 +229,7 @@ class _nanny_booking_history_viewState
                                                       children: [
                                                         Container(
                                                           padding:
-                                                              EdgeInsets.all(
+                                                              const EdgeInsets.all(
                                                                   20),
                                                           decoration:
                                                               BoxDecoration(
@@ -255,14 +255,14 @@ class _nanny_booking_history_viewState
                                                                             .spaceBetween,
                                                                     children: [
                                                                       Text(
-                                                                        '${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).userName}',
+                                                                        injector.get<SearchNannyCubit>().bookingsHistory?.data?.data?.elementAt(index).userName??'',
                                                                         style: GoogleFonts.raleway(
                                                                             color:
                                                                                 Colors.black,
                                                                             fontWeight: FontWeight.bold,
                                                                             fontSize: 18),
                                                                       ),
-                                                                      SizedBox(
+                                                                      const SizedBox(
                                                                         height:
                                                                             5,
                                                                       ),
@@ -274,7 +274,7 @@ class _nanny_booking_history_viewState
                                                                             fontWeight: FontWeight.bold,
                                                                             fontSize: 12),
                                                                       ),
-                                                                      SizedBox(
+                                                                      const SizedBox(
                                                                         height:
                                                                             5,
                                                                       ),
@@ -304,7 +304,7 @@ class _nanny_booking_history_viewState
                                                                             fontWeight: FontWeight.bold,
                                                                             fontSize: 18),
                                                                       ),
-                                                                      SizedBox(
+                                                                      const SizedBox(
                                                                         height:
                                                                             5,
                                                                       ),
@@ -320,7 +320,7 @@ class _nanny_booking_history_viewState
                                                                   )
                                                                 ],
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 5,
                                                               ),
                                                               Row(
@@ -352,7 +352,7 @@ class _nanny_booking_history_viewState
                                                                   ),
                                                                 ],
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 10,
                                                               ),
                                                               Row(
@@ -409,7 +409,7 @@ class _nanny_booking_history_viewState
                                                                   )
                                                                 ],
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 10,
                                                               ),
                                                               Row(
@@ -448,7 +448,7 @@ class _nanny_booking_history_viewState
                                                                   ),
                                                                 ],
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 10,
                                                               ),
                                                               Row(
@@ -466,7 +466,7 @@ class _nanny_booking_history_viewState
                                                                   ),
                                                                 ],
                                                               ),
-                                                              SizedBox(
+                                                              const SizedBox(
                                                                 height: 10,
                                                               ),
                                                               Container(
@@ -482,13 +482,13 @@ class _nanny_booking_history_viewState
                                                                     ? ListView.builder(
                                                                         itemCount: injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.length,
                                                                         scrollDirection: Axis.horizontal,
-                                                                        padding: EdgeInsets.all(5),
+                                                                        padding: const EdgeInsets.all(5),
                                                                         itemBuilder: (context, index2) {
                                                                           return Container(
                                                                             height:
                                                                                 50,
                                                                             margin:
-                                                                                EdgeInsets.only(right: 10),
+                                                                                const EdgeInsets.only(right: 10),
                                                                             child:
                                                                                 Column(
                                                                               mainAxisAlignment: MainAxisAlignment.center,
@@ -497,7 +497,7 @@ class _nanny_booking_history_viewState
                                                                                   crossAxisAlignment: CrossAxisAlignment.center,
                                                                                   children: [
                                                                                     Container(
-                                                                                      padding: EdgeInsets.all(5),
+                                                                                      padding: const EdgeInsets.all(5),
                                                                                       decoration: BoxDecoration(shape: BoxShape.circle, color: Colors.white, boxShadow: [
                                                                                         BoxShadow(color: Colors.grey.shade300, spreadRadius: 3, blurRadius: 5)
                                                                                       ]),
@@ -507,7 +507,7 @@ class _nanny_booking_history_viewState
                                                                                         decoration: BoxDecoration(shape: BoxShape.circle, image: DecorationImage(fit: BoxFit.fill, image: NetworkImage('${injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.elementAt(index2).image}'))),
                                                                                       ),
                                                                                     ),
-                                                                                    SizedBox(
+                                                                                    const SizedBox(
                                                                                       width: 5,
                                                                                     ),
                                                                                     Column(

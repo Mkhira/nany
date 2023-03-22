@@ -52,7 +52,7 @@ class nanny_wallet_view extends StatelessWidget {
                                 ),
                                 InkWell(
                                     onTap: () {
-                                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>nanny_notifications_view()));
+                                      Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NannyNotificationsView()));
                                     },
                                     child: Stack(
                                       children: [

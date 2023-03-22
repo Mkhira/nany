@@ -9,11 +9,13 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:intl/intl.dart';
 import 'package:nanny_co/constants.dart';
+import 'package:nanny_co/data/model/dto_model/book/book_post_model.dart';
 import 'package:nanny_co/instance.dart';
 import 'package:nanny_co/nany/auth_view/Controller/Auth_controller.dart';
 import 'package:nanny_co/nany/nanny_booking_view/Controller/nannyBooking_Controller.dart';
 import 'package:nanny_co/nany/nanny_booking_view/nanny_booking_detail_view.dart';
 import 'package:nanny_co/nany/nanny_bottombar_view/nanny_bottombar_view.dart';
+import 'package:nanny_co/nany/nanny_notification_view/nany_notifiation_cuibt_cubit.dart';
 import 'package:nanny_co/parent/add_child/parent_add_child_view.dart';
 import 'package:nanny_co/parent/add_child/parent_children_view.dart';
 import 'package:nanny_co/parent/auth_view/parent_signin_view.dart';
@@ -77,7 +79,7 @@ class _NannyHomeViewState extends State<NannyHomeView> {
                                 ),
                                 InkWell(
                                   onTap: () {
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>nanny_notifications_view()));
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>NannyNotificationsView()));
                                   },
                                   child: Stack(
                                     children: [
@@ -101,7 +103,7 @@ class _NannyHomeViewState extends State<NannyHomeView> {
                                             shape: BoxShape.circle,
                                           ),
                                           child: const Center(
-                                            child: Text('11',
+                                            child: Text('',
                                               style: TextStyle(color: Colors.white,fontSize:8),),
                                           ),
                                         ),
@@ -160,7 +162,7 @@ class _NannyHomeViewState extends State<NannyHomeView> {
                                       fontSize: 20),
                                 ),
                             Text(
-                              '${DateFormat('HH MMM,yyyy').format(DateTime.now())}',
+                              DateFormat('HH MMM,yyyy').format(DateTime.now()),
                               style: GoogleFonts.raleway(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold,
@@ -179,15 +181,16 @@ class _NannyHomeViewState extends State<NannyHomeView> {
                                 child: BlocBuilder<SearchNannyCubit,SearchNanyState>(
                                   builder: (context, state) {
                                     if(state is NannyGetData){
+                                      print(injector.get<SearchNannyCubit>().upcomming?.data?.data?.length);
                                     return ListView.builder(
                                         itemCount: injector.get<SearchNannyCubit>().upcomming?.data?.data?.length??0,
                                         itemBuilder: (context, index) {
                                           return InkWell(
                                             onTap: (
                                             ){
-                                              nannyBookingId='${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).id}';
-                                              nanny_bottombar_viewState.selectedIndex=5;
-                                              Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const nanny_bottombar_view()));
+                                              // nannyBookingId='${injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).id}';
+                                              // nanny_bottombar_viewState.selectedIndex=5;
+                                              // Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=>const nanny_bottombar_view()));
                                             },
                                             child: Container(
                                               margin: const EdgeInsets.only(
@@ -454,6 +457,45 @@ class _NannyHomeViewState extends State<NannyHomeView> {
                                                                 );
                                                               }):Center(child: Text('Not Available',style: TextStyle(color: Colors.grey.shade500),),),
                                                         ),
+                                                        const SizedBox(height: 10,),
+
+
+                                                        Padding(
+                                                          padding: const EdgeInsets.symmetric(horizontal: 30.0,vertical: 10),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                            MainAxisAlignment.spaceBetween,
+                                                            children: [
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  injector.get<NanyNotifiationCuibtCubit>().changeBookingStatus(BookingChangeStatusPostModel(bookingId: injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).id, status: 5),context);
+                                                                },
+                                                                child: Text(
+                                                                  '✔ Start',
+                                                                  style: GoogleFonts.raleway(
+                                                                      color: Colors.green,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 16),
+                                                                ),
+                                                              ),
+                                                              Container(height: 30,color: Colors.grey,width: 2,),
+                                                              InkWell(
+                                                                onTap: (){
+                                                                  injector.get<NanyNotifiationCuibtCubit>().changeBookingStatus(BookingChangeStatusPostModel(bookingId: injector.get<SearchNannyCubit>().upcomming?.data?.data?.elementAt(index).id, status: 4),context);
+
+                                                                },
+                                                                child: Text(
+                                                                  '✘ Decline',
+                                                                  style: GoogleFonts.raleway(
+                                                                      color: Colors.red,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      fontSize: 16),
+                                                                ),
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+
                                                       ],
                                                     ),
                                                   ),

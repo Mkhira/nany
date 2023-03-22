@@ -70,7 +70,6 @@ class _role_selection_viewState extends State<role_selection_view> {
                           },
                           child: Container(
                             height: 50,
-                            width: sw*0.4,
                             decoration: BoxDecoration(
                               borderRadius: Localizations.localeOf(context).languageCode=='en'? const BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)):const BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)),
                               border: Border.all(width: 1,color: Colors.grey.shade400)
@@ -95,7 +94,6 @@ class _role_selection_viewState extends State<role_selection_view> {
                           },
                           child: Container(
                             height: 50,
-                            width: sw*0.4,
                             decoration: BoxDecoration(
                                 borderRadius: Localizations.localeOf(context).languageCode =='en'?const BorderRadius.only(topRight: Radius.circular(15),bottomRight: Radius.circular(15)):const BorderRadius.only(topLeft: Radius.circular(15),bottomLeft: Radius.circular(15)),
                                 border: Border.all(width: 1,color: Colors.grey.shade400)

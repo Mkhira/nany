@@ -19,6 +19,7 @@ import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/registter_sitter_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
+import 'package:nanny_co/data/model/success_model.dart';
 import 'package:nanny_co/data/model/verfiy_model.dart';
 import 'package:retrofit/retrofit.dart';
 
@@ -123,6 +124,8 @@ abstract class AppServiceClient {
   Future<dynamic> addAppointmentNanny(@Header('Authorization') token,@Body() PostAppointment appointment);
   @POST('/confirm-booking')
   Future<dynamic> confirmBook(@Header('Authorization') token,@Body() BookPostModel bookPostModel);
+  @POST('/change-status-booking')
+  Future<SuccessModel> changeStatusBooking(@Header('Authorization') token,@Body() BookingChangeStatusPostModel bookingChangeStatusPostModel);
 
 
 

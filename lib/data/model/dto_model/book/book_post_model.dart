@@ -52,3 +52,30 @@ class BookPostModel {
     "child_ids": childIds,
   };
 }
+
+
+
+class BookingChangeStatusPostModel {
+  BookingChangeStatusPostModel({
+    required this.bookingId,
+    required  this.status,
+
+  });
+
+  int? bookingId;
+  int ?status;
+
+
+  factory BookingChangeStatusPostModel.fromJson(Map<String, dynamic> json) => BookingChangeStatusPostModel(
+      bookingId: json["booking_id"],
+      status: json["status_id"],
+
+  );
+
+  Map<String, dynamic> toJson() => {
+    "booking_id": bookingId,
+    "status_id": status,
+
+  };
+}
+

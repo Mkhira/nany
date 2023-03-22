@@ -17,6 +17,7 @@ import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
+import 'package:nanny_co/data/model/success_model.dart';
 import 'package:nanny_co/data/model/updae_parent_model.dart';
 import 'package:nanny_co/data/model/verfiy_model.dart';
 
@@ -47,4 +48,5 @@ abstract class Repository {
   Future<Appointments> getAppointments();
   Future<dynamic> confirmBook(BookPostModel bookPostModel);
   Future<Bookings> getParentBooking(String flag);
+  Future<SuccessModel?> changeStatusBooking(BookingChangeStatusPostModel flag);
 }

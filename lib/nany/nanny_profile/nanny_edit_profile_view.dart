@@ -109,7 +109,7 @@ class _NannyEditProfileViewState extends State<NannyEditProfileView> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  nanny_notifications_view()));
+                                                  NannyNotificationsView()));
                                     },
                                     child: Stack(
                                       children: [

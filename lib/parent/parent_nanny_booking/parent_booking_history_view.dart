@@ -40,7 +40,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
     return Scaffold(
         key: scaffoldkey,
         drawer: parent_drawer_view(),
-        body: BlocBuilder<SearchNannyCubit,SearchNanyState>(builder: (context,state)=> Container(
+        body: BlocBuilder<SearchNannyCubit,SearchNanyState>(builder: (context,state)=> SizedBox(
             height: sh,
             width: sw,
             child: Stack(children: [
@@ -323,7 +323,7 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                     ],
                                                   ),
                                                   const SizedBox(height: 10,),
-                                                  Container(
+                                                  SizedBox(
                                                     height: 70,
                                                     child: injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!=null?ListView.builder(
                                                         itemCount: injector.get<SearchNannyCubit>().bookingsHistory!.data!.data!.elementAt(index).childrenList!.length,
@@ -397,6 +397,8 @@ class _ParentBookingHistoryState extends State<ParentBookingHistory> {
                                                 ],
                                               ),
                                             ),
+
+                                            // ElevatedButton(onPressed: (){}, child: Text('Confirm Booking'.translate())),
                                             Padding(
                                               padding: const EdgeInsets.all(20.0),
                                               child: Row(mainAxisAlignment:MainAxisAlignment.spaceBetween,children: [Text(

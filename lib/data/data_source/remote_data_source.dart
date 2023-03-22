@@ -18,6 +18,7 @@ import 'package:nanny_co/data/model/dto_model/nany/search_for_nanny.dart';
 import 'package:nanny_co/data/model/dto_model/register_model.dart';
 import 'package:nanny_co/data/model/dto_model/update_profile/post_update_sister_profile_model.dart';
 import 'package:nanny_co/data/model/dto_model/verify_code.dart';
+import 'package:nanny_co/data/model/success_model.dart';
 import 'package:nanny_co/data/model/updae_parent_model.dart';
 import 'package:nanny_co/data/model/verfiy_model.dart';
 import 'package:nanny_co/data/network/api.dart';
@@ -48,6 +49,7 @@ abstract class RemoteDataSource {
   Future<dynamic> postAppointments(PostAppointment postAppointment);
   Future<dynamic> confirmBook(BookPostModel bookPostModel);
   Future<Bookings> getParentBooking(String flag);
+  Future<SuccessModel?> changeStatusBooking(BookingChangeStatusPostModel bookingChangeStatusPostModel);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -186,6 +188,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
 
   @override
   Future postAppointments(PostAppointment postAppointment) {
+
     return _appServiceClient.addAppointmentNanny('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', postAppointment);
   }
 
@@ -197,6 +200,12 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
 
   @override
   Future<Bookings> getParentBooking(String flag) {
+    print('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}');
        return _appServiceClient.getBooking('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}',flag);
+  }
+
+  @override
+  Future<SuccessModel?> changeStatusBooking(BookingChangeStatusPostModel bookingChangeStatusPostModel) {
+    return _appServiceClient.changeStatusBooking('Bearer ${SettingsProvider.current.appSettings.userData?.jwtToken}', bookingChangeStatusPostModel);
   }
 }

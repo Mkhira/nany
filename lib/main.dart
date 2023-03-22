@@ -19,6 +19,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 import 'instance.dart';
+import 'nany/nanny_notification_view/nany_notifiation_cuibt_cubit.dart';
 import 'nany/nanny_profile/Controller/update_nanny_profile_cubit.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -101,6 +102,7 @@ void main() async {
             BlocProvider.value(value: injector.get<UpdateNannyProfileCubit>()),
             BlocProvider.value(value: injector.get<AddChildCubit>()),
             BlocProvider.value(value: injector.get<SearchNannyCubit>()),
+            BlocProvider.value(value: injector.get<NanyNotifiationCuibtCubit>()),
           ], child: EasyLocalization(
           supportedLocales: [Locale('en', 'EN'), Locale('ar', 'AR')],
           path: 'assets/lang', // <-
